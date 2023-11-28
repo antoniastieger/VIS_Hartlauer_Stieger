@@ -1,0 +1,3 @@
+C:/Sandra Hartlauer/MC/WS2023_24/VIS/VIS_Project/VIS/cmake-build-debug/CMakeFiles/HelloWorld.dir
+C:/Sandra Hartlauer/MC/WS2023_24/VIS/VIS_Project/VIS/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Sandra Hartlauer/MC/WS2023_24/VIS/VIS_Project/VIS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
