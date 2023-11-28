@@ -10,6 +10,8 @@
 rootProject.name = "VIS-Testbed"
 include(
     ":java:HelloWorld",
-    ":cpp:HelloWorld",
+    ":socket:cpp:Hello",
     ":java:Hello",
-    ":cpp:Hello")
+    ":socket:cpp:Primitive_SocketClient",
+    ":socket:cpp:Primitive_SocketServer"
+    )

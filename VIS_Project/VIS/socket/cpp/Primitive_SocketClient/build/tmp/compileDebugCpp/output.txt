@@ -1,0 +1,8 @@
+See file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+compiling Primitive_SocketClient.cpp successful.
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/src/main/cpp/Primitive_SocketClient.cpp:51:21: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+    char* sendMsg = "Hello World!\0";
+                    ^
+1 warning generated.
+
+Finished compileDebugCpp, see full log file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt.
