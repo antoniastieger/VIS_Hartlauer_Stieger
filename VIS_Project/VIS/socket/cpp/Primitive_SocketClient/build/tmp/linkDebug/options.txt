@@ -1,0 +1,5 @@
+-o
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/exe/main/debug/Primitive_SocketClient
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/obj/main/debug/83qitb76864rxfz0mwwe191vh/Primitive_SocketClient.o
+-arch
+arm64
