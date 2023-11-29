@@ -1,0 +1,7 @@
+
+@echo off
+SETLOCAL
+SET PATH=%PATH%
+CALL "%~dp0lib\Hello.exe" %*
+EXIT /B %ERRORLEVEL%
+ENDLOCAL
