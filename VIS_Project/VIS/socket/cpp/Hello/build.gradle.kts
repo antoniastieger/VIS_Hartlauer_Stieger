@@ -13,15 +13,15 @@ tasks.register("run", Exec::class) {
     var exeFile: String? = null
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {
-            exeFile = "HelloWorld.exe"
+            exeFile = "Hello.exe"
 			commandLine("cmd", "/k", exeDir+exeFile) // start command in cmd shell
         }
         Os.isFamily(Os.FAMILY_MAC) -> {
-            exeFile = "HelloWorld"
+            exeFile = "Hello"
 			commandLine("bash", "-c", exeDir+exeFile) // start command in cmd shell
         }
         Os.isFamily(Os.FAMILY_UNIX) -> {
-            exeFile = "HelloWorld"
+            exeFile = "Hello"
 			commandLine("bash", "-c", exeDir+exeFile) // start command in cmd shell
         }
         else -> { throw GradleException(":cpp:HelloWorld run-target -> unknown OS family encountered")}

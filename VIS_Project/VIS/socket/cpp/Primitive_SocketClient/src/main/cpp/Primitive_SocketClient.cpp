@@ -5,6 +5,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <cstring>
 
 #define BUFFER_SIZE 1024
 
@@ -21,7 +22,7 @@ int main(int _argc, char** _argv) {
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(4949);
-    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP address TODO
+    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP address
     memset(&(serverAddress.sin_zero),'\0',8);
 
     int connectRVal = connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));

@@ -7,11 +7,11 @@
  * in the user manual at https://docs.gradle.org/7.5.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = "VIS-Testbed"
+rootProject.name = "VIS"
 include(
     ":java:HelloWorld",
     ":socket:cpp:Hello",
     ":java:Hello",
-    ":socket:cpp:Primitive_SocketClient",
-    ":socket:cpp:Primitive_SocketServer"
+    ":socket:cpp:Primitive_SocketServer",
+    ":socket:cpp:Primitive_SocketClient"
     )

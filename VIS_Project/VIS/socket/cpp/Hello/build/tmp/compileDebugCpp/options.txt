@@ -4,7 +4,7 @@ c++
 -g
 -nostdinc
 -I
-"C:\\Sandra Hartlauer\\MC\\WS2023_24\\VIS\\VIS\\VIS\\cpp\\HelloWorld\\src\\main\\headers"
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Hello\\src\\main\\headers
 -isystem
 C:\\cygwin64\\lib\\gcc\\x86_64-pc-cygwin\\11\\include\\c++
 -isystem

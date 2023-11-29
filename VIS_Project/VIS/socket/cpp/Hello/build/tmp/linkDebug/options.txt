@@ -1,5 +1,5 @@
 -o
-"C:\\Sandra Hartlauer\\MC\\WS2023_24\\VIS\\VIS\\VIS\\cpp\\HelloWorld\\build\\exe\\main\\debug\\HelloWorld.exe"
-"C:\\Sandra Hartlauer\\MC\\WS2023_24\\VIS\\VIS\\VIS\\cpp\\HelloWorld\\build\\obj\\main\\debug\\8zzurp8bey03786rcegmuafaa\\Foo.obj"
-"C:\\Sandra Hartlauer\\MC\\WS2023_24\\VIS\\VIS\\VIS\\cpp\\HelloWorld\\build\\obj\\main\\debug\\biznmyfp3z431mmtf5jlwqjsh\\main.obj"
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Hello\\build\\exe\\main\\debug\\Hello.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Hello\\build\\obj\\main\\debug\\8zzurp8bey03786rcegmuafaa\\Foo.obj
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Hello\\build\\obj\\main\\debug\\biznmyfp3z431mmtf5jlwqjsh\\main.obj
 -m64

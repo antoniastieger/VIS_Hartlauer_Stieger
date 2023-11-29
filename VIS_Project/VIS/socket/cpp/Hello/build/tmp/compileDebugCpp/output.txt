@@ -1,6 +1,6 @@
-See file:///C:/Sandra%20Hartlauer/MC/WS2023_24/VIS/VIS/VIS/cpp/HelloWorld/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Hello/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
 compiling Foo.cpp successful.
 
 compiling main.cpp successful.
 
-Finished compileDebugCpp, see full log file:///C:/Sandra%20Hartlauer/MC/WS2023_24/VIS/VIS/VIS/cpp/HelloWorld/build/tmp/compileDebugCpp/output.txt.
+Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Hello/build/tmp/compileDebugCpp/output.txt.

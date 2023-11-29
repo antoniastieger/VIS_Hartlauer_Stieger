@@ -42,6 +42,8 @@ int main() {
 
     std::cout << "Server is listening for connections..." << std::endl;
 
+    std::cout << "Primitive Socket Server waiting for clients on port 4949" << std::endl;
+
     // Accept a client connection
     sockaddr_in clientAddress;
     socklen_t clientAddressSize = sizeof(clientAddress);
@@ -54,7 +56,8 @@ int main() {
     }
 
     std::cout << "connection established with client on …\n"
-                 "SOCKET[client (127.0.0.1, 4465); server (127.0.0.1, 52145)]" << std::endl;
+                 "SOCKET[client (" << inet_ntoa(clientAddress.sin_addr) << ", " << ntohs(clientAddress.sin_port)
+              << "); server (127.0.0.1, 4949)]" << std::endl;
 
     // Send to client
     char* sendMsg = "Hello World!\0";
