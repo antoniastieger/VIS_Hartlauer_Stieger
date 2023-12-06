@@ -51,6 +51,7 @@ int main(int _argc, char** _argv) {
         std::string input;
         std::cout << "Enter a line: " << std::endl;
         std::getline(std::cin, input);
+        input.append("\0");
 
         // Check for the quit command
         if (input == "quit") {

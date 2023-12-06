@@ -72,7 +72,7 @@ int main() {
 
         std::cout << "connection established with client on …\n"
                      "SOCKET[client (" << inet_ntoa(clientAddress.sin_addr) << ", " << ntohs(clientAddress.sin_port)
-                  << "); server (127.0.0.1, 4949)]" << std::endl;
+                  << "); server (" << inet_ntoa(clientAddress.sin_addr) << ", " << ntohs(clientAddress.sin_port) << ")]" << std::endl;
 
         while(true) {
             // Receive from client

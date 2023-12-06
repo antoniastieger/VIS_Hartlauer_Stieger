@@ -13,5 +13,6 @@ include(
     ":socket:cpp:Hello",
     ":java:Hello",
     ":socket:cpp:Primitive_SocketServer",
-    ":socket:cpp:Primitive_SocketClient"
+    ":socket:cpp:Primitive_SocketClient",
+    ":socket:cpp:Echo_SocketServer"
     )
