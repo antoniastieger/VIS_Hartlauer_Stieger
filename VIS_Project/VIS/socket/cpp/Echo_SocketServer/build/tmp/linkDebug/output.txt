@@ -1,0 +1,4 @@
+See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/linkDebug/output.txt for all output for linkDebug.
+linking Echo_SocketServer.exe successful.
+
+Finished linkDebug, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/linkDebug/output.txt.
