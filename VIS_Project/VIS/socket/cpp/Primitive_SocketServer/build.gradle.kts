@@ -11,7 +11,7 @@ tasks.register("run", Exec::class) {
     group = "application"                // set task group
     standardInput = System.`in`    // enable commandline input
     val exeDir : String = "${buildDir}/exe/main/debug/"
-    val exeFile: String = "Primitive_SocketServer"
+    val exeFile: String = "Primitive_SocketServer.exe"
 
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {

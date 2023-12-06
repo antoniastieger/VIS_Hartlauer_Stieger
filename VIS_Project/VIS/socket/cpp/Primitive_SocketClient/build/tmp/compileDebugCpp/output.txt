@@ -1,8 +1,4 @@
 See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
 compiling Primitive_SocketClient.cpp successful.
-C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Primitive_SocketClient\src\main\cpp\Primitive_SocketClient.cpp: In function 'int main(int, char**)':
-C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Primitive_SocketClient\src\main\cpp\Primitive_SocketClient.cpp:52:21: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
-   52 |     char* sendMsg = "Hello World!\0";
-      |                     ^~~~~~~~~~~~~~~~
 
 Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt.
