@@ -41,13 +41,14 @@ int main() {
     sockaddr_in from;
     socklen_t fromSize = sizeof(from);
 
-    int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &from, &fromSize);
+    int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE - 1, 0, (struct sockaddr *) &from, &fromSize);
 
     if (recvRVal == -1) {
         std::cerr << "Error receiving data" << std::endl;
         close(udpServerSocket);
         return -1;
     } else {
+        buffer[recvRVal] = '\0';
         std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
     }
 
