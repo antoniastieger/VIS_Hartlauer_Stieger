@@ -28,12 +28,13 @@ add_executable(Primitive_SocketServer
 add_executable(Primitive_SocketClient
         ${PrimC}/cpp/Primitive_SocketClient.cpp)
 
-#[[
+
 # Exercise 1.2 a
 add_executable(Echo_SocketServer
         ${EcoS}/cpp/Echo_SocketServer.cpp
         ${EcoS}/headers/Echo_SocketServer.h)
 
+#[[
 # Exercise 1.2 b
 add_executable(Udp_SocketServer
         ${UdpS}/cpp/Udp_SocketServer.cpp
