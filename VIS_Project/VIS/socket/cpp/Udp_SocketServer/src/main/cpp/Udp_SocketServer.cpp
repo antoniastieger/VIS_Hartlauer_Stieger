@@ -1,3 +1,7 @@
+//
+// Created by Sandra Hartlauer on 13.12.2023.
+//
+
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
@@ -7,7 +11,6 @@
 #define BUFFER_SIZE 1024
 
 int main() {
-
     // create socket
     int udpServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -21,7 +24,7 @@ int main() {
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(4949);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
-    memset(&(serverAddress.sin_zero),'\0',8);
+    memset(&(serverAddress.sin_zero), '\0', 8);
 
     socklen_t length = sizeof(sockaddr);
     int bindRVal = bind(udpServerSocket, (struct sockaddr*)&serverAddress, length);
@@ -38,7 +41,7 @@ int main() {
         sockaddr_in from;
         socklen_t fromSize = sizeof(from);
 
-        int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE - 1, 0, (struct sockaddr *) &from, &fromSize);
+        int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&from, &fromSize);
 
         if (recvRVal == -1) {
             std::cerr << "Error receiving data" << std::endl;
@@ -49,7 +52,7 @@ int main() {
             // Send message to client
             char *sendMsg = "Server received your message!\0";
             int sendMsgSize = strlen(sendMsg);
-            int res = sendto(udpServerSocket, sendMsg, sendMsgSize, 0, (struct sockaddr *) &from, fromSize);
+            int res = sendto(udpServerSocket, sendMsg, sendMsgSize, 0, (struct sockaddr*)&from, fromSize);
 
             if (res == -1) {
                 std::cerr << "Error sending data" << std::endl;
@@ -59,8 +62,8 @@ int main() {
         }
     }
 
-    // close socket
-    close(udpServerSocket);
+    // close server socket
+    // close(udpServerSocket);
 
     return 0;
 }
