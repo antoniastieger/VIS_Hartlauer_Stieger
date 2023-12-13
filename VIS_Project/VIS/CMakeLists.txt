@@ -34,7 +34,6 @@ add_executable(Echo_SocketServer
         ${EcoS}/cpp/Echo_SocketServer.cpp
         ${EcoS}/headers/Echo_SocketServer.h)
 
-#[[
 # Exercise 1.2 b
 add_executable(Udp_SocketServer
         ${UdpS}/cpp/Udp_SocketServer.cpp
@@ -43,6 +42,8 @@ add_executable(Udp_SocketClient
         ${UdpC}/cpp/Udp_SocketClient.cpp
         ${UdpC}/headers/Udp_SocketClient.h)
 
+
+#[[
 # Exercise 1.2 c
 add_executable(Ipv6_SocketServer
         ${Ipv6S}/cpp/Ipv6_SocketServer.cpp
