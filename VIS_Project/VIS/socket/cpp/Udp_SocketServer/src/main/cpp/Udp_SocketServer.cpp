@@ -39,9 +39,9 @@ int main() {
     // receive data
     char buffer[BUFFER_SIZE];
     sockaddr_in from;
-    int fromSize = sizeof(from);
+    socklen_t fromSize = sizeof(from);
 
-    int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &from,&fromSize);
+    int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE, 0, (struct sockaddr *) &from, &fromSize);
 
     if (recvRVal == -1) {
         std::cerr << "Error receiving data" << std::endl;

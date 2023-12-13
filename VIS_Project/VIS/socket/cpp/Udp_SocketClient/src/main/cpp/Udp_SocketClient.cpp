@@ -42,9 +42,9 @@ int main() {
     // Receive acknowledgment from the server
     char ackBuffer[BUFFER_SIZE];
     sockaddr_in from;
-    int fromSize = sizeof(sockaddr_in);
+    socklen_t fromSize = sizeof(from);
 
-    int recvRVal = recvfrom(udpClientSocket, ackBuffer, BUFFER_SIZE, 0, (sockaddr *)&from, (socklen_t *)&fromSize);
+    int recvRVal = recvfrom(udpClientSocket, ackBuffer, BUFFER_SIZE, 0, (struct sockaddr *)&from, &fromSize);
 
     if (recvRVal == -1) {
         std::cerr << "Error receiving acknowledgment" << std::endl;
