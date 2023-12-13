@@ -47,6 +47,7 @@ int main() {
 
         if (recvRVal == -1) {
             std::cerr << "Error receiving data" << std::endl;
+            break;
         } else {
             buffer[recvRVal] = '\0';
             std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
@@ -58,6 +59,7 @@ int main() {
 
             if (res == -1) {
                 std::cerr << "Error sending data" << std::endl;
+                break;
             } else {
                 std::cout << "Sent " << res << " bytes of data" << std::endl;
             }
@@ -65,7 +67,7 @@ int main() {
     } // while true
 
     // close server socket
-    // close(udpServerSocket);
+    close(udpServerSocket);
 
     return 0;
 }
