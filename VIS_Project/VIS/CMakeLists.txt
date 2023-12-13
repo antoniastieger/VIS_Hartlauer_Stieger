@@ -43,7 +43,6 @@ add_executable(Udp_SocketClient
         ${UdpC}/headers/Udp_SocketClient.h)
 
 
-#[[
 # Exercise 1.2 c
 add_executable(Ipv6_SocketServer
         ${Ipv6S}/cpp/Ipv6_SocketServer.cpp
@@ -52,6 +51,7 @@ add_executable(Ipv6_SocketClient
         ${Ipv6C}/cpp/Ipv6_SocketClient.cpp
         ${Ipv6C}/headers/Ipv6_SocketClient.h)
 
+#[[
 # Exercise 1.2 d and 1.3 a
 add_executable(Environment_SocketServer
         ${EnvS}/cpp/Environment_SocketServer.cpp
