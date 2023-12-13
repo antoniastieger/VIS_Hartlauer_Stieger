@@ -1,4 +1,0 @@
--o
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Echo_SocketServer\\build\\exe\\main\\debug\\Echo_SocketServer.exe
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Echo_SocketServer\\build\\obj\\main\\debug\\d3o5060luem3v50btgv4h18fd\\Echo_SocketServer.obj
--m64

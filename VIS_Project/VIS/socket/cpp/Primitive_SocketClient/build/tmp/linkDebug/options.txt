@@ -1,4 +1,0 @@
--o
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Primitive_SocketClient\\build\\exe\\main\\debug\\Primitive_SocketClient.exe
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Primitive_SocketClient\\build\\obj\\main\\debug\\8oiinnriv4lsyqkdsxkuyupxp\\Primitive_SocketClient.obj
--m64
