@@ -23,7 +23,7 @@ tasks.register("run", Exec::class) {
         Os.isFamily(Os.FAMILY_UNIX) -> {
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
-        else -> { throw GradleException(":cpp:Primitive_SocketServer run-target -> unknown OS family encountered")}
+        else -> { throw GradleException(":cpp:Ipv6_SocketServer run-target -> unknown OS family encountered")}
     }
 }
 
@@ -43,7 +43,7 @@ tasks.register("kill", Exec::class) {
             commandLine("bash", "-c", "lsof -nti:${port} | xargs kill -9")
             // commandLine("sh", "-c", "kill \"\$(lsof -t -i:$port)\"") // possible alternative
         }
-        else -> { throw GradleException(":cpp:Primitive_SocketServer kill-target -> unknown OS family encountered")}
+        else -> { throw GradleException(":cpp:Ipv6_SocketServer kill-target -> unknown OS family encountered")}
     }
 }
 
