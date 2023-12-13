@@ -72,31 +72,35 @@ int main() {
             return -1;
         }
 
-        // receive data from the client
-        char buffer[BUFFER_SIZE];
-        int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+        while(true) {
+            // receive data from the client
+            char buffer[BUFFER_SIZE];
+            int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE, 0);
 
-        if (recvRVal == -1) {
-            std::cerr << "Error receiving data from client" << std::endl;
-            close(clientSocket);
-            close(v6ServerSocket);
-            return -1;
-        }
+            if (recvRVal == -1) {
+                std::cerr << "Error receiving data from client" << std::endl;
+                close(clientSocket);
+                close(v6ServerSocket);
+                return -1;
+            }
 
-        std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
-        std::cout << "Data: " << buffer << std::endl;
+            buffer[recvRVal] = '\0';
 
-        // Send to client
-        char *sendMsg = "Server received your message!\0";
-        int sendMsgSize = strlen(sendMsg);
-        int sendRVal = send(clientSocket, sendMsg, sendMsgSize, 0);
+            std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
+            std::cout << "Data: " << buffer << std::endl;
 
-        if (sendRVal == -1) {
-            std::cerr << "Error sending data" << std::endl;
-            break;
-        } else {
-            std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
-        }
+            // Send to client
+            char *sendMsg = "Server received your message!\0";
+            int sendMsgSize = strlen(sendMsg);
+            int sendRVal = send(clientSocket, sendMsg, sendMsgSize, 0);
+
+            if (sendRVal == -1) {
+                std::cerr << "Error sending data" << std::endl;
+                break;
+            } else {
+                std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+            }
+        } // while true
 
         // close the client socket
         int closeClient = close(clientSocket);
