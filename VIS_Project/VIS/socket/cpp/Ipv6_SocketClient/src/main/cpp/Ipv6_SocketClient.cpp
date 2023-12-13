@@ -50,6 +50,7 @@ int main() {
         int sendRVal = send(v6ClientSocket, input.c_str(), input.size(), 0);
         if (sendRVal == -1) {
             std::cerr << "Error sending data" << std::endl;
+            break;
         } else {
             std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
         }
@@ -60,6 +61,7 @@ int main() {
 
         if (recvRVal == -1) {
             std::cerr << "Error receiving acknowledgment" << std::endl;
+            break;
         } else {
             ackBuffer[recvRVal] = '\0'; // Null-terminate the acknowledgment
             std::cout << "Received acknowledgment from server: " << ackBuffer << std::endl;
