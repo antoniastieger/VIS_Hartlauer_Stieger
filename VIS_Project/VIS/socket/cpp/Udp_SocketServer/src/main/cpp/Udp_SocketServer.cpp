@@ -1,7 +1,3 @@
-//
-// Created by Sandra Hartlauer on 13.12.2023.
-//
-
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
@@ -36,43 +32,34 @@ int main() {
         return -1;
     }
 
-    // receive data
-    char buffer[BUFFER_SIZE];
-    sockaddr_in from;
-    socklen_t fromSize = sizeof(from);
+    // receive and respond to data in a loop
+    while (true) {
+        char buffer[BUFFER_SIZE];
+        sockaddr_in from;
+        socklen_t fromSize = sizeof(from);
 
-    int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE - 1, 0, (struct sockaddr *) &from, &fromSize);
+        int recvRVal = recvfrom(udpServerSocket, buffer, BUFFER_SIZE - 1, 0, (struct sockaddr *) &from, &fromSize);
 
-    if (recvRVal == -1) {
-        std::cerr << "Error receiving data" << std::endl;
-        close(udpServerSocket);
-        return -1;
-    } else {
-        buffer[recvRVal] = '\0';
-        std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
+        if (recvRVal == -1) {
+            std::cerr << "Error receiving data" << std::endl;
+        } else {
+            buffer[recvRVal] = '\0';
+            std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
+
+            // Send message to client
+            char *sendMsg = "Server received your message!\0";
+            int sendMsgSize = strlen(sendMsg);
+            int res = sendto(udpServerSocket, sendMsg, sendMsgSize, 0, (struct sockaddr *) &from, fromSize);
+
+            if (res == -1) {
+                std::cerr << "Error sending data" << std::endl;
+            } else {
+                std::cout << "Sent " << res << " bytes of data" << std::endl;
+            }
+        }
     }
 
-    buffer[recvRVal] = '\0';
-
-    // Send message to client
-    char *sendMsg = "Server received your message!\0";
-    int sendMsgSize = strlen(sendMsg);
-    sockaddr_in toAddr;
-    toAddr.sin_family = AF_INET;
-    toAddr.sin_port = htons(4949);
-    toAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    memset(&(toAddr.sin_zero), '\0', 8);
-
-    int toSize = sizeof(toAddr);
-    int res = sendto(udpServerSocket, sendMsg, sendMsgSize, 0, (struct sockaddr *) &toAddr, toSize);
-
-    if (res == -1) {
-        std::cerr << "Error sending data" << std::endl;
-    } else {
-        std::cout << "Sent " << res << " bytes of data" << std::endl;
-    }
-
-    // close the socket
+    // close socket
     close(udpServerSocket);
 
     return 0;
