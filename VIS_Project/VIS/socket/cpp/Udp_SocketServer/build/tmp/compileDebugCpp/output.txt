@@ -1,8 +1,8 @@
 See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
 compiling Udp_SocketServer.cpp successful.
 C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Udp_SocketServer\src\main\cpp\Udp_SocketServer.cpp: In function 'int main()':
-C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Udp_SocketServer\src\main\cpp\Udp_SocketServer.cpp:53:29: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
-   53 |             char *sendMsg = "Server received your message!\0";
+C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Udp_SocketServer\src\main\cpp\Udp_SocketServer.cpp:56:29: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   56 |             char *sendMsg = "Server received your message!\0";
       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/compileDebugCpp/output.txt.
