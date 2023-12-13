@@ -1,0 +1,4 @@
+-o
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Udp_SocketServer\\build\\exe\\main\\debug\\Udp_SocketServer.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Udp_SocketServer\\build\\obj\\main\\debug\\6e4hgfjevisglxebkht3hjiz9\\Udp_SocketServer.obj
+-m64
