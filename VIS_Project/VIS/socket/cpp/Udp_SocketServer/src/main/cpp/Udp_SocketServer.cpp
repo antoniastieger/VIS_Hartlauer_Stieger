@@ -35,6 +35,8 @@ int main() {
         return -1;
     }
 
+    std::cout << "Server is waiting for a message from the client" << std::endl;
+
     // receive and respond to data in a loop
     while (true) {
         char buffer[BUFFER_SIZE];
@@ -60,7 +62,7 @@ int main() {
                 std::cout << "Sent " << res << " bytes of data" << std::endl;
             }
         }
-    }
+    } // while true
 
     // close server socket
     // close(udpServerSocket);
