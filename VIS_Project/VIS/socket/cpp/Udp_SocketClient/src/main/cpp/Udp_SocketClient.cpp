@@ -33,7 +33,7 @@ int main() {
         memset(&(toAddr.sin_zero), '\0', 8);
         int toSize = sizeof(sockaddr_in);
 
-        int sendRVal = sendto(udpClientSocket, input.c_str(), input.size(), 0, (sockaddr *) &toAddr, toSize);
+        int sendRVal = sendto(udpClientSocket, input.c_str(), input.size(), 0, (struct sockaddr *) &toAddr, toSize);
         if (sendRVal == -1) {
             std::cerr << "Error sending data" << std::endl;
             break;
@@ -58,7 +58,7 @@ int main() {
             ackBuffer[recvRVal] = '\0'; // Null-terminate the acknowledgment
             std::cout << "Received acknowledgment from server: " << ackBuffer << std::endl;
         }
-    }
+    } // while true
 
     // Close the socket
     close(udpClientSocket);

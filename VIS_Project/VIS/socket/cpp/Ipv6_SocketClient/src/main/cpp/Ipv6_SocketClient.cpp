@@ -23,8 +23,9 @@ int main() {
     server_address.sin6_port = htons(4949);
     server_address.sin6_scope_id = 0;
 
+    //eventuell ::1
     int res = inet_pton(AF_INET6, "fe80::fd60:3f7a:c5b:c9dd", &(server_address.sin6_addr));
-    if (res <= 0) {
+    if (res == -1) {
         std::cerr << "Error converting IPv6 address" << std::endl;
         close(v6ClientSocket);
         return -1;
