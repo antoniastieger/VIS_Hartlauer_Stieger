@@ -44,11 +44,12 @@ int main() {
     sockaddr_in from;
     socklen_t fromSize = sizeof(from);
 
-    int recvRVal = recvfrom(udpClientSocket, ackBuffer, BUFFER_SIZE, 0, (struct sockaddr *)&from, &fromSize);
+    int recvRVal = recvfrom(udpClientSocket, ackBuffer, BUFFER_SIZE - 1, 0, (struct sockaddr *)&from, &fromSize);
 
     if (recvRVal == -1) {
         std::cerr << "Error receiving acknowledgment" << std::endl;
     } else {
+        ackBuffer[recvRVal] = '\0'; // Null-terminate the acknowledgment
         std::cout << "Received acknowledgment from server: " << ackBuffer << std::endl;
     }
 
