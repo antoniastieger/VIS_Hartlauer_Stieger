@@ -15,5 +15,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("at.fhooe.sail.vis.test.HelloWorld")
+    mainClass.set("at.fhooe.sail.vis.Echo_SocketServer")
 }

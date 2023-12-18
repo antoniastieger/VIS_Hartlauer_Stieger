@@ -23,6 +23,9 @@
             <option value="$PROJECT_DIR$/socket/cpp/Primitive_SocketServer" />
             <option value="$PROJECT_DIR$/socket/cpp/Udp_SocketClient" />
             <option value="$PROJECT_DIR$/socket/cpp/Udp_SocketServer" />
+            <option value="$PROJECT_DIR$/socket/java" />
+            <option value="$PROJECT_DIR$/socket/java/Echo_SocketClient" />
+            <option value="$PROJECT_DIR$/socket/java/Echo_SocketServer" />
           </set>
         </option>
       </GradleProjectSettings>
