@@ -17,6 +17,7 @@ public class Echo_SocketClient {
             while (true) {
                 // Read input from the console
                 System.out.print("Enter a message: ");
+                System.out.flush();
                 msg = consoleReader.readLine();
 
                 if ("exit".equalsIgnoreCase(msg)) {
