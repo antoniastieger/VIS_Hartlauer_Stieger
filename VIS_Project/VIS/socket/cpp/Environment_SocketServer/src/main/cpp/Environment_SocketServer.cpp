@@ -25,7 +25,7 @@ void handleClientRequest(int clientSocket, const std::string& request) {
 
     int timestamp = 123456879;
 
-    if (request == "getSensortypes()#") {
+    if (request.find("getSensortypes()#") != std::string::npos) {
         //std::cout << "getSensortypes()#:" << std::endl;
         std::string response = "light;noise;air#";
 
@@ -70,7 +70,7 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         int valAir2 = randomNumberGenerator();
         int valAir3 = randomNumberGenerator();
         std::string response = std::to_string(timestamp) + "|light;" + std::to_string(valLight) + "|noise;" +
-                               std::to_string(valNoise) + "|air" + std::to_string(valAir1) + ";" +
+                               std::to_string(valNoise) + "|air;" + std::to_string(valAir1) + ";" +
                                std::to_string(valAir2) + ";" + std::to_string(valAir3) + "#";
 
         int sendRVal = send(clientSocket, response.c_str(), response.size(), 0);
@@ -98,30 +98,28 @@ void *clientCommunication(void *_parameter) {
     int clientSocket = p->socket;
     sockaddr_in clientAddr = p->saddr;
 
-    // Your client communication logic here
+    while(true) {
+        char buffer[BUFFER_SIZE];
+        int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE, 0);
 
-    // For example:
-    char buffer[BUFFER_SIZE];
-    int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE - 1, 0);
-
-    if (recvRVal <= 0) {
-        // Handle client disconnection or error
-        close(clientSocket);
-        std::cout << "Client disconnected: " << clientSocket << std::endl;
-    } else {
-        buffer[recvRVal] = '\0'; // Null-terminate the received data
-        std::cout << "Received from client " << clientSocket << ": " << buffer << std::endl;
-
-        handleClientRequest(clientSocket, std::string(buffer));
-
-        /*// Echo the data back to the client
-        int sendRVal = send(clientSocket, buffer, recvRVal, 0);
-
-        if (sendRVal == -1) {
-            std::cerr << "Error sending data to client " << clientSocket << std::endl;
+        if (recvRVal <= 0) {
+            close(clientSocket);
+            std::cout << "Client disconnected: " << clientSocket << std::endl;
         } else {
-            std::cout << "Sent to client " << clientSocket << ": " << buffer << std::endl;
-        }*/
+            buffer[recvRVal] = '\0'; // Null-terminate the received data
+            std::cout << "Received from client " << clientSocket << ": " << buffer << std::endl;
+
+            handleClientRequest(clientSocket, std::string(buffer));
+
+            /*// Echo the data back to the client
+            int sendRVal = send(clientSocket, buffer, recvRVal, 0);
+
+            if (sendRVal == -1) {
+                std::cerr << "Error sending data to client " << clientSocket << std::endl;
+            } else {
+                std::cout << "Sent to client " << clientSocket << ": " << buffer << std::endl;
+            }*/
+        }
     }
 
     // Clean up allocated memory
