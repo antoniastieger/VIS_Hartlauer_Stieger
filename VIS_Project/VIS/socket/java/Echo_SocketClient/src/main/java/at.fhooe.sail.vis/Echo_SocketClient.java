@@ -2,6 +2,7 @@ package at.fhooe.sail.vis;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class Echo_SocketClient {
     public static void main(String[] _args) {
@@ -10,37 +11,35 @@ public class Echo_SocketClient {
             OutputStream out = socket.getOutputStream();
             InputStream in = socket.getInputStream();
 
-            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            Scanner consoleReader = new Scanner(System.in);
 
             String msg;
 
             while (true) {
                 // Read input from the console
                 System.out.print("Enter a message: ");
-                System.out.flush();
-                msg = consoleReader.readLine();
 
+                // Read the input from the console
+                msg = consoleReader.nextLine() + "\n";
+
+                // Check for the exit command
                 if ("exit".equalsIgnoreCase(msg)) {
                     break;
                 }
 
                 System.out.println("Sending: " + msg);
+
+                // Send the message to the server
                 out.write((msg + "\n").getBytes());
                 out.flush();
 
-                StringBuilder response = new StringBuilder();
-                int data;
-                while ((data = in.read()) != -1) {
-                    response.append((char) data);
-                    if (response.toString().endsWith("\n")) {
-                        break;
-                    }
-                }
+                // Receive acknowledgment from the server
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String response = reader.readLine();
 
-                System.out.println("Received: " + response.toString().trim());
+                System.out.println("Received: " + response);
             }
 
-            out.close();
             in.close();
             socket.close();
             consoleReader.close();
