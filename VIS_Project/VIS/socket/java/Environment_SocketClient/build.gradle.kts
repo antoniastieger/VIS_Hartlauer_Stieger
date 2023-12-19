@@ -15,5 +15,10 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("at.fhooe.sail.vis.Echo_SocketClient")
+    mainClass.set("at.fhooe.sail.vis.Environment_SocketClient")
+}
+
+tasks.named<JavaExec>("run") {
+    // Pass command line arguments to the application.
+    standardInput = System.`in`
 }

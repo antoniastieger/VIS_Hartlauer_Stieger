@@ -21,5 +21,6 @@ include(
     ":socket:cpp:Ipv6_SocketClient",
     ":socket:cpp:Environment_SocketServer",
     ":socket:java:Echo_SocketServer",
-    ":socket:java:Echo_SocketClient"
+    ":socket:java:Echo_SocketClient",
+    ":socket:java:Environment_SocketClient"
     )

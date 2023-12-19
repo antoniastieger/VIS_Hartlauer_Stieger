@@ -4,10 +4,11 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-public class Echo_SocketClient {
-    public static void main(String[] _args) {
+public class Environment_SocketClient {
+    public static void main(String[] args) {
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
+
             OutputStream out = socket.getOutputStream();
             InputStream in = socket.getInputStream();
 
@@ -15,25 +16,19 @@ public class Echo_SocketClient {
 
             String msg;
 
-            while (true) {
-                // Read input from the console
+            while(true) {
                 System.out.print("Enter a message: ");
-
-                // Read the input from the console
                 msg = consoleReader.nextLine() + "\n";
 
-                // Check for the exit command
-                if ("exit".equalsIgnoreCase(msg)) {
+                if("exit".equalsIgnoreCase(msg)) {
                     break;
                 }
 
                 System.out.println("Sending: " + msg);
 
-                // Send the message to the server
                 out.write((msg).getBytes());
                 out.flush();
 
-                // Receive acknowledgment from the server
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String response = reader.readLine();
 

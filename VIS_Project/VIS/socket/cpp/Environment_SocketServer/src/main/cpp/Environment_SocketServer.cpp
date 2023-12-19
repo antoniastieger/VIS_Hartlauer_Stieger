@@ -25,9 +25,13 @@ void handleClientRequest(int clientSocket, const std::string& request) {
 
     int timestamp = 123456879;
 
-    if (request.find("getSensortypes()#") != std::string::npos) {
+     std::string cleanedRequest = request;
+        cleanedRequest.erase(std::remove(cleanedRequest.begin(), cleanedRequest.end(), '\n'), cleanedRequest.end());
+
+    if (cleanedRequest.find("getSensortypes()#") != std::string::npos) {
         //std::cout << "getSensortypes()#:" << std::endl;
         std::string response = "light;noise;air#";
+        response.append(std::to_string("\n"));
 
         int sendRVal = send(clientSocket, response.c_str(), response.size(), 0);
 
@@ -37,10 +41,10 @@ void handleClientRequest(int clientSocket, const std::string& request) {
             std::cout << "Sent to client " << clientSocket << ": " << response
                       << std::endl;
         }
-    } else if (request.find("getSensor(") != std::string::npos) {
-        size_t start = request.find("(") + 1;
-        size_t end = request.find(")");
-        std::string sensor = request.substr(start, end - start);
+    } else if (cleanedRequest.find("getSensor(") != std::string::npos) {
+        size_t start = cleanedRequest.find("(") + 1;
+        size_t end = cleanedRequest.find(")");
+        std::string sensor = cleanedRequest.substr(start, end - start);
 
         std::cout << "getSensor(" << sensor << "):" << std::endl;
         int val = randomNumberGenerator();
@@ -48,9 +52,11 @@ void handleClientRequest(int clientSocket, const std::string& request) {
 
         if (sensor == "light" || sensor == "noise") {
             response = std::to_string(timestamp) + "|" + std::to_string(val) + "#";
+            response.append(std::to_string("\n"));
         } else if (sensor == "air") {
             response = std::to_string(timestamp) + "|" + std::to_string(val) + ";" + std::to_string(val) + ";" +
                        std::to_string(val) + "#";
+            response.append(std::to_string("\n"));
         } else {
             response = "sensor not found#";
         }
@@ -62,7 +68,7 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         } else {
             std::cout << "Sent to client " << clientSocket << ": " << response << std::endl;
         }
-    } else if (request.find("getAllSensors()#") != std::string::npos) {
+    } else if (cleanedRequest.find("getAllSensors()#") != std::string::npos) {
         //std::cout << "getAllSensors()#:" << std::endl;
         int valLight = randomNumberGenerator();
         int valNoise = randomNumberGenerator();
@@ -72,6 +78,7 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         std::string response = std::to_string(timestamp) + "|light;" + std::to_string(valLight) + "|noise;" +
                                std::to_string(valNoise) + "|air;" + std::to_string(valAir1) + ";" +
                                std::to_string(valAir2) + ";" + std::to_string(valAir3) + "#";
+        response.append(std::to_string("\n"));
 
         int sendRVal = send(clientSocket, response.c_str(), response.size(), 0);
 
@@ -82,12 +89,12 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         }
     } else {
         // Echo the data back to the client
-        int sendRVal = send(clientSocket, request.c_str(), request.size(), 0);
+        int sendRVal = send(clientSocket, cleanedRequest.c_str(), cleanedRequest.size(), 0);
 
         if (sendRVal == -1) {
             std::cerr << "Error sending data to client " << clientSocket << std::endl;
         } else {
-            std::cout << "Sent to client " << clientSocket << ": " << request << std::endl;
+            std::cout << "Sent to client " << clientSocket << ": " << cleanedRequest << std::endl;
         }
 
     }

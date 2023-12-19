@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/socket/java" />
             <option value="$PROJECT_DIR$/socket/java/Echo_SocketClient" />
             <option value="$PROJECT_DIR$/socket/java/Echo_SocketServer" />
+            <option value="$PROJECT_DIR$/socket/java/Environment_SocketClient" />
           </set>
         </option>
       </GradleProjectSettings>
