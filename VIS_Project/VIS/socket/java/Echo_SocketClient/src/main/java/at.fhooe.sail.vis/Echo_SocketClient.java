@@ -3,7 +3,6 @@ package at.fhooe.sail.vis;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-
 public class Echo_SocketClient {
     public static void main(String[] _args) {
         try {

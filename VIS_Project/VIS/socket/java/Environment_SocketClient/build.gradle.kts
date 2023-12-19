@@ -10,7 +10,9 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
+    implementation(project(":EnvironmentI"))
     implementation("com.google.guava:guava:31.0.1-jre")
+
 }
 
 application {

@@ -1,10 +1,28 @@
 package at.fhooe.sail.vis;
 
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class Environment_SocketClient {
+    /*
+    @Override
+    public String[] requestEnvironmentDataTypes() {
+        // Implementation
+        return new String[0];
+    }
+
+    @Override
+    public EnvData requestEnvironmentData(String _type) {
+        // Implementation
+        return null;
+    }
+
+    @Override
+    public EnvData[] requestAll() {
+        // Implementation
+        return new EnvData[0];
+    }*/
     public static void main(String[] args) {
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
