@@ -20,7 +20,7 @@ public class Environment_SocketClient {
                 System.out.print("Enter a message: ");
                 msg = consoleReader.nextLine() + "\n";
 
-                if("exit".equalsIgnoreCase(msg)) {
+                if("exit\n".equalsIgnoreCase(msg)) {
                     break;
                 }
 

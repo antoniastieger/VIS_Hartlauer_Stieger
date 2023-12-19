@@ -26,12 +26,11 @@ void handleClientRequest(int clientSocket, const std::string& request) {
     int timestamp = 123456879;
 
      std::string cleanedRequest = request;
-        cleanedRequest.erase(std::remove(cleanedRequest.begin(), cleanedRequest.end(), '\n'), cleanedRequest.end());
 
     if (cleanedRequest.find("getSensortypes()#") != std::string::npos) {
         //std::cout << "getSensortypes()#:" << std::endl;
         std::string response = "light;noise;air#";
-        response.append(std::to_string("\n"));
+        response.append("\n");
 
         int sendRVal = send(clientSocket, response.c_str(), response.size(), 0);
 
@@ -52,11 +51,11 @@ void handleClientRequest(int clientSocket, const std::string& request) {
 
         if (sensor == "light" || sensor == "noise") {
             response = std::to_string(timestamp) + "|" + std::to_string(val) + "#";
-            response.append(std::to_string("\n"));
+            response.append("\n");
         } else if (sensor == "air") {
             response = std::to_string(timestamp) + "|" + std::to_string(val) + ";" + std::to_string(val) + ";" +
                        std::to_string(val) + "#";
-            response.append(std::to_string("\n"));
+            response.append("\n");
         } else {
             response = "sensor not found#";
         }
@@ -78,7 +77,7 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         std::string response = std::to_string(timestamp) + "|light;" + std::to_string(valLight) + "|noise;" +
                                std::to_string(valNoise) + "|air;" + std::to_string(valAir1) + ";" +
                                std::to_string(valAir2) + ";" + std::to_string(valAir3) + "#";
-        response.append(std::to_string("\n"));
+        response.append("\n");
 
         int sendRVal = send(clientSocket, response.c_str(), response.size(), 0);
 
@@ -112,6 +111,7 @@ void *clientCommunication(void *_parameter) {
         if (recvRVal <= 0) {
             close(clientSocket);
             std::cout << "Client disconnected: " << clientSocket << std::endl;
+            break;
         } else {
             buffer[recvRVal] = '\0'; // Null-terminate the received data
             std::cout << "Received from client " << clientSocket << ": " << buffer << std::endl;
@@ -135,7 +135,7 @@ void *clientCommunication(void *_parameter) {
     pthread_exit(NULL);
 }
 
-int main() {
+int main() { // wenn ein Client disconnected, dann wird in Dauerschleife ausgegeben, dass der Client disconnected ist
     // Create a socket
     int serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
