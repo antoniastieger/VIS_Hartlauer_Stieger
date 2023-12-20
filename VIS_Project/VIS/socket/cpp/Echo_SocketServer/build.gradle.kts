@@ -11,16 +11,19 @@ tasks.register("run", Exec::class) {
     group = "application"                // set task group
     standardInput = System.`in`    // enable commandline input
     val exeDir : String = "${buildDir}/exe/main/debug/"
-    val exeFile: String = "Echo_SocketServer.exe"
+    val exeFile: String
 
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {
+            exeFile = "Echo_SocketServer.exe"
 			commandLine("cmd", "/k", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_MAC) -> {
+            exeFile = "Echo_SocketServer"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_UNIX) -> {
+            exeFile = "Echo_SocketServer"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         else -> { throw GradleException(":cpp:Echo_SocketServer run-target -> unknown OS family encountered")}
