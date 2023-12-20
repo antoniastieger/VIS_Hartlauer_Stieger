@@ -42,10 +42,10 @@ void handleClientRequest(int clientSocket, const std::string& request) {
         }
     } else if (cleanedRequest.find("getSensor(") != std::string::npos) {
         size_t start = cleanedRequest.find("(") + 1;
-        size_t end = cleanedRequest.find(")");
+        size_t end = cleanedRequest.find(")#");
         std::string sensor = cleanedRequest.substr(start, end - start);
 
-        std::cout << "getSensor(" << sensor << "):" << std::endl;
+        std::cout << "getSensor(" << sensor << ")#:" << std::endl;
         int val = randomNumberGenerator();
         std::string response;
 

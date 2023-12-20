@@ -22,7 +22,7 @@ public class Echo_SocketClient {
                 msg = consoleReader.nextLine() + "\n";
 
                 // Check for the exit command
-                if ("exit".equalsIgnoreCase(msg)) {
+                if ("exit\n".equalsIgnoreCase(msg)) {
                     break;
                 }
 

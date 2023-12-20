@@ -10,13 +10,13 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
+    // implementation(project(":EnvironmentI"))
     implementation("com.google.guava:guava:31.0.1-jre")
-    implementation(project(":general:EnvironmentI"))
 }
 
 application {
     // Define the main class for the application.
-    mainClass.set("at.fhooe.sail.vis.Environment_SocketClient")
+    mainClass.set("at.fhooe.sail.vis.Echo_SocketClient")
 }
 
 tasks.named<JavaExec>("run") {
