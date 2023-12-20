@@ -4,6 +4,21 @@ import java.io.*;
 import java.net.*;
 
 public class Echo_SocketServer {
+
+    private static void sendCommand(Socket socket, String command) {
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            byte[] commandBytes = command.getBytes();
+            outputStream.write(commandBytes, 0, commandBytes.length);
+            outputStream.flush();
+
+            System.out.println("Sent " + commandBytes.length + " bytes of data");
+        } catch (IOException e) {
+            System.err.println("Error sending command");
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] _args) {
         try {
             ServerSocket serverSocket = new ServerSocket(4949);
@@ -29,6 +44,18 @@ public class Echo_SocketServer {
                         while ((data = in.read()) != -1) {
                             if (data == '\n') {
                                 System.out.println("Client " + finalClientCounter + " sent: " + line);
+
+                                // Check for client commands quit, drop or shutdown
+                                if (line.toString().equals("quit\n")) {
+                                    System.out.println("Client " + finalClientCounter + " requested to quit. Closing the connection");
+                                    break;
+                                } else if (line.toString().equals("drop\n")) {
+                                    System.out.println("Client " + finalClientCounter + " requested to drop. Closing the connection to the client.");
+                                    break;
+                                } else if (line.toString().equals("shutdown\n")) {
+                                    System.out.println("Client requested shutdown. Closing all connections and shutting down gracefully.");
+                                    System.exit(0);
+                                }
 
                                 // Send echo response
                                 System.out.println("Sending to Client " + finalClientCounter + ": " + line);
