@@ -31,6 +31,19 @@ public class Environment_SocketClient implements IEnvService {
                 new EnvData("Light", System.currentTimeMillis(), new int[]{16, 17, 18})
         };
     }
+    private static void sendCommand(Socket socket, String command) {
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            byte[] commandBytes = command.getBytes();
+            outputStream.write(commandBytes, 0, commandBytes.length);
+            outputStream.flush();
+
+            System.out.println("Sent " + commandBytes.length + " bytes of data");
+        } catch (IOException e) {
+            System.err.println("Error sending command");
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         try {
@@ -49,6 +62,21 @@ public class Environment_SocketClient implements IEnvService {
 
                 if("exit\n".equalsIgnoreCase(msg)) {
                     break;
+                }
+
+                // Check for client commands quit, drop or shutdown
+                if (msg.equals("quit\n")) {
+                    System.out.println("Client requested to quit. Closing the connection");
+                    sendCommand(socket, "quit\n");
+                    break;
+                } else if (msg.equals("drop\n")) {
+                    System.out.println("Client requested to drop. Closing the connection to the client.");
+                    sendCommand(socket, "drop\n");
+                    break;
+                } else if (msg.equals("shutdown\n")) {
+                    System.out.println("Client requested shutdown. Closing all connections and shutting down gracefully.");
+                    sendCommand(socket, "shutdown\n");
+                    System.exit(0);
                 }
 
                 System.out.println("Sending: " + msg);

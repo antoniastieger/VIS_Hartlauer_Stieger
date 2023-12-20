@@ -48,12 +48,15 @@ public class Echo_SocketServer {
                                 // Check for client commands quit, drop or shutdown
                                 if (line.toString().equals("quit\n")) {
                                     System.out.println("Client " + finalClientCounter + " requested to quit. Closing the connection");
+                                    sendCommand(socket, "quit\n");
                                     break;
                                 } else if (line.toString().equals("drop\n")) {
                                     System.out.println("Client " + finalClientCounter + " requested to drop. Closing the connection to the client.");
+                                    sendCommand(socket, "drop\n");
                                     break;
                                 } else if (line.toString().equals("shutdown\n")) {
                                     System.out.println("Client requested shutdown. Closing all connections and shutting down gracefully.");
+                                    sendCommand(socket, "shutdown\n");
                                     System.exit(0);
                                 }
 
