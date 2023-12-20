@@ -11,16 +11,19 @@ tasks.register("run", Exec::class) {
     group = "application"                // set task group
     standardInput = System.`in`    // enable commandline input
     val exeDir : String = "${buildDir}/exe/main/debug/"
-    val exeFile: String = "Primitive_SocketClient.exe"
+    val exeFile: String
 
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {
+            exeFile = "Primitive_SocketClient.exe"
 			commandLine("cmd", "/k", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_MAC) -> {
+            exeFile = "Primitive_SocketClient"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_UNIX) -> {
+            exeFile = "Primitive_SocketClient"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         else -> { throw GradleException(":cpp:Primitive_SocketClient run-target -> unknown OS family encountered")}
