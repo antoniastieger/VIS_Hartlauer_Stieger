@@ -3,6 +3,10 @@ package at.fhooe.sail.vis;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
+import general.EnvData;
+import general.EnvironmentI;
+import general.IEnvService;
+
 
 public class Environment_SocketClient {
     /*
@@ -23,7 +27,7 @@ public class Environment_SocketClient {
         // Implementation
         return new EnvData[0];
     }*/
-    public static void main(String[] args) {
+    public static void main(String[] args) implements IEnvService {
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
 
@@ -60,5 +64,31 @@ public class Environment_SocketClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        IEnvService service = new Environment_SocketClient();
+        while (true) {
+            String[] sensors = service.requestEnvironmentDataTypes();
+
+            for (String sensor : sensors) {
+                EnvData dataO = service.requestEnvironmentData(sensor);
+                System.out.print(dataO)
+                System.out.println();
+                System.out.println(*****************************);
+            } // for sensor
+
+            System.out.println();
+            System.out.println();
+
+            EnvData[] dataOs = service.requestAll();
+            for (EnvData dataO : dataOs) {
+                System.out.println(dataO);
+            } // for data
+
+            try {
+                Thread.sleep(1000);
+            } catch (Exception _e) {
+                _e.printStackTrace();
+            }
+        } // while true
     }
 }
