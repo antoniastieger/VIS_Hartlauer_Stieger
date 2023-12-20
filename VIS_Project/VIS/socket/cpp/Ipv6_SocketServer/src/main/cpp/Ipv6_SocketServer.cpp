@@ -89,6 +89,21 @@ int main() {
             std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
             std::cout << "Data: " << buffer << std::endl;
 
+            // Check for client commands
+            if (strcmp(buffer, "quit") == 0) {
+                std::cout << "Client requested to quit. Closing the connection." << std::endl;
+                break;
+            } else if(strcmp(buffer, "drop") == 0) {
+                std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
+                sendCommand(clientSocket, "drop");
+                break;
+            } else if(strcmp(buffer, "shutdown") == 0) {
+                std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
+                sendCommand(clientSocket, "shutdown");
+                // You can implement the shutdown logic here
+                break;
+            }
+
             // Send to client
             char *sendMsg = "Server received your message!\0";
             int sendMsgSize = strlen(sendMsg);

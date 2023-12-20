@@ -8,6 +8,16 @@
 
 #define BUFFER_SIZE 1024
 
+void sendCommand(int socket, const std::string& command) {
+    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+
+    if (sendRVal == -1) {
+        std::cerr << "Error sending command" << std::endl;
+    } else {
+        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+    }
+}
+
 int main() {
     // Create a socket
     int v6ClientSocket = socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
@@ -45,6 +55,21 @@ int main() {
         std::cout << "Enter a line: " << std::endl;
         std::getline(std::cin, input);
         input.append("\0");
+
+        // Check for the quit command
+        if (input == "quit") {
+            std::cout << "Shutting down gracefully..." << std::endl;
+            sendCommand(v6ClientSocket, "quit");
+            break;
+        } else if (input == "drop") {
+            std::cout << "Sending 'drop' command to the server..." << std::endl;
+            sendCommand(v6ClientSocket, "drop");
+            break; // Exit the loop and close the socket
+        } else if (input == "shutdown") {
+            std::cout << "Sending 'shutdown' command to the server..." << std::endl;
+            sendCommand(v6ClientSocket, "shutdown");
+            break;
+        }
 
         // Send the line to the server
         int sendRVal = send(v6ClientSocket, input.c_str(), input.size(), 0);

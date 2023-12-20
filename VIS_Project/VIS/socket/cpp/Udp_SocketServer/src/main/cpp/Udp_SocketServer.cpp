@@ -10,6 +10,16 @@
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
 
+void sendCommand(int socket, const std::string& command) {
+    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+
+    if (sendRVal == -1) {
+        std::cerr << "Error sending command" << std::endl;
+    } else {
+        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+    }
+}
+
 int main() {
     // create socket
     int udpServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -50,7 +60,22 @@ int main() {
             break;
         } else {
             buffer[recvRVal] = '\0';
-            std::cout << "Received " << recvRVal << " bytes of data" << std::endl;
+            std::cout << "Received " << recvRVal << " bytes of data: " << buffer << std::endl;
+
+            // Check for client commands
+            if (strcmp(buffer, "quit") == 0) { // TODO: noch zu machen
+                std::cout << "Client requested to quit. Closing the connection." << std::endl;
+                break;
+            } else if(strcmp(buffer, "drop") == 0) {
+                std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
+                sendCommand(udpServerSocket, "drop");
+                break;
+            } else if(strcmp(buffer, "shutdown") == 0) {
+                std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
+                sendCommand(udpServerSocket, "shutdown");
+                // You can implement the shutdown logic here
+                break;
+            }
 
             // Send message to client
             char *sendMsg = "Server received your message!\0";

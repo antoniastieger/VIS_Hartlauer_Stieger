@@ -9,6 +9,16 @@
 
 #define BUFFER_SIZE 1024
 
+void sendCommand(int socket, const std::string& command) {
+    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+
+    if (sendRVal == -1) {
+        std::cerr << "Error sending command" << std::endl;
+    } else {
+        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+    }
+}
+
 int main() {
     // Create a socket
     int udpClientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -24,6 +34,21 @@ int main() {
         std::cout << "Enter a line: " << std::endl;
         std::getline(std::cin, input);
         input.append("\0");
+
+        // Check for the quit command
+        if (input == "quit") {
+            std::cout << "Shutting down gracefully..." << std::endl;
+            sendCommand(udpClientSocket, "quit");
+            break;
+        } else if (input == "drop") {
+            std::cout << "Sending 'drop' command to the server..." << std::endl;
+            sendCommand(udpClientSocket, "drop");
+            break; // Exit the loop and close the socket
+        } else if (input == "shutdown") {
+            std::cout << "Sending 'shutdown' command to the server..." << std::endl;
+            sendCommand(udpClientSocket, "shutdown");
+            break;
+        }
 
         // Send the line to the server
         sockaddr_in toAddr;

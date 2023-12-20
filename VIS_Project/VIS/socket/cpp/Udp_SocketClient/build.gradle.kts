@@ -15,15 +15,15 @@ tasks.register("run", Exec::class) {
 
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {
-            exeFile = "Primitive_SocketClient.exe"
+            exeFile = "Udp_SocketClient.exe"
 			commandLine("cmd", "/k", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_MAC) -> {
-            exeFile = "Primitive_SocketClient"
+            exeFile = "Udp_SocketClient"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         Os.isFamily(Os.FAMILY_UNIX) -> {
-            exeFile = "Primitive_SocketClient"
+            exeFile = "Udp_SocketClient"
 			commandLine("bash", "-c", exeDir+exeFile, port)
         }
         else -> { throw GradleException(":cpp:Udp_SocketClient run-target -> unknown OS family encountered")}

@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/general" />
+            <option value="$PROJECT_DIR$/general/EnvironmentI" />
             <option value="$PROJECT_DIR$/java" />
             <option value="$PROJECT_DIR$/java/Hello" />
             <option value="$PROJECT_DIR$/java/HelloWorld" />

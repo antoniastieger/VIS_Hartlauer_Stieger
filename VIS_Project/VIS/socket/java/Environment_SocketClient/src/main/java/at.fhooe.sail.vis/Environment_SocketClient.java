@@ -1,33 +1,38 @@
 package at.fhooe.sail.vis;
 
+import at.fhooe.sail.vis.general.EnvData;
+import at.fhooe.sail.vis.general.IEnvService;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-import general.EnvData;
-import general.EnvironmentI;
-import general.IEnvService;
 
 
-public class Environment_SocketClient {
-    /*
+public class Environment_SocketClient implements IEnvService {
+
     @Override
-    public String[] requestEnvironmentDataTypes() {
-        // Implementation
-        return new String[0];
+    public String[] requestEnvironmentDataTypes() { // TODO: implement
+        return new String[]{"Wind", "Temperature", "Humidity", "Pressure", "Rain", "Light"};
     }
 
     @Override
-    public EnvData requestEnvironmentData(String _type) {
-        // Implementation
-        return null;
+    public EnvData requestEnvironmentData(String _type) { // TODO: implement
+        return new EnvData(_type, System.currentTimeMillis(), new int[]{1, 2, 3});
     }
 
     @Override
-    public EnvData[] requestAll() {
-        // Implementation
-        return new EnvData[0];
-    }*/
-    public static void main(String[] args) implements IEnvService {
+    public EnvData[] requestAll() { // TODO: implement
+        return new EnvData[]{
+                new EnvData("Wind", System.currentTimeMillis(), new int[]{1, 2, 3}),
+                new EnvData("Temperature", System.currentTimeMillis(), new int[]{4, 5, 6}),
+                new EnvData("Humidity", System.currentTimeMillis(), new int[]{7, 8, 9}),
+                new EnvData("Pressure", System.currentTimeMillis(), new int[]{10, 11, 12}),
+                new EnvData("Rain", System.currentTimeMillis(), new int[]{13, 14, 15}),
+                new EnvData("Light", System.currentTimeMillis(), new int[]{16, 17, 18})
+        };
+    }
+
+    public static void main(String[] args) {
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
 
@@ -71,9 +76,9 @@ public class Environment_SocketClient {
 
             for (String sensor : sensors) {
                 EnvData dataO = service.requestEnvironmentData(sensor);
-                System.out.print(dataO)
+                System.out.print(dataO);
                 System.out.println();
-                System.out.println(*****************************);
+                System.out.println("*****************************");
             } // for sensor
 
             System.out.println();
@@ -85,7 +90,7 @@ public class Environment_SocketClient {
             } // for data
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000000);
             } catch (Exception _e) {
                 _e.printStackTrace();
             }

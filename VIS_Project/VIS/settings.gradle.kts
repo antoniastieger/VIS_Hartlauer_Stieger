@@ -22,5 +22,6 @@ include(
     ":socket:cpp:Environment_SocketServer",
     ":socket:java:Echo_SocketServer",
     ":socket:java:Echo_SocketClient",
-    ":socket:java:Environment_SocketClient"
+    ":socket:java:Environment_SocketClient",
+    ":general:EnvironmentI"
     )
