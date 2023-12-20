@@ -11,17 +11,17 @@ import java.util.Scanner;
 public class Environment_SocketClient implements IEnvService {
 
     @Override
-    public String[] requestEnvironmentDataTypes() { // TODO: implement
+    public String[] requestEnvironmentDataTypes() {
         return new String[]{"Wind", "Temperature", "Humidity", "Pressure", "Rain", "Light"};
     }
 
     @Override
-    public EnvData requestEnvironmentData(String _type) { // TODO: implement
+    public EnvData requestEnvironmentData(String _type) {
         return new EnvData(_type, System.currentTimeMillis(), new int[]{1, 2, 3});
     }
 
     @Override
-    public EnvData[] requestAll() { // TODO: implement
+    public EnvData[] requestAll() {
         return new EnvData[]{
                 new EnvData("Wind", System.currentTimeMillis(), new int[]{1, 2, 3}),
                 new EnvData("Temperature", System.currentTimeMillis(), new int[]{4, 5, 6}),
