@@ -10,8 +10,9 @@
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
 
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+void sendCommand(int socket, const std::string& command, const sockaddr_in& toAddr) {
+    ssize_t sendRVal = sendto(socket, command.c_str(), command.size(), 0,
+                              (struct sockaddr*)&toAddr, sizeof(toAddr));
 
     if (sendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
@@ -68,11 +69,11 @@ int main() {
                 break;
             } else if(strcmp(buffer, "drop") == 0) {
                 std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
-                sendCommand(udpServerSocket, "drop");
+                sendCommand(udpServerSocket, "drop", from);
                 break;
             } else if(strcmp(buffer, "shutdown") == 0) {
                 std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
-                sendCommand(udpServerSocket, "shutdown");
+                sendCommand(udpServerSocket, "shutdown", from);
                 // You can implement the shutdown logic here
                 break;
             }

@@ -9,8 +9,9 @@
 
 #define BUFFER_SIZE 1024
 
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+void sendCommand(int socket, const std::string& command, const sockaddr_in& toAddr) {
+    ssize_t sendRVal = sendto(socket, command.c_str(), command.size(), 0,
+                              (struct sockaddr*)&toAddr, sizeof(toAddr));
 
     if (sendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
@@ -35,21 +36,6 @@ int main() {
         std::getline(std::cin, input);
         input.append("\0");
 
-        // Check for the quit command
-        if (input == "quit") {
-            std::cout << "Shutting down gracefully..." << std::endl;
-            sendCommand(udpClientSocket, "quit");
-            break;
-        } else if (input == "drop") {
-            std::cout << "Sending 'drop' command to the server..." << std::endl;
-            sendCommand(udpClientSocket, "drop");
-            break; // Exit the loop and close the socket
-        } else if (input == "shutdown") {
-            std::cout << "Sending 'shutdown' command to the server..." << std::endl;
-            sendCommand(udpClientSocket, "shutdown");
-            break;
-        }
-
         // Send the line to the server
         sockaddr_in toAddr;
         toAddr.sin_family = AF_INET;
@@ -57,6 +43,21 @@ int main() {
         toAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
         memset(&(toAddr.sin_zero), '\0', 8);
         int toSize = sizeof(sockaddr_in);
+
+        // Check for the quit command
+        if (input == "quit\0") {
+            std::cout << "Shutting down gracefully..." << std::endl;
+            sendCommand(udpClientSocket, "quit", toAddr);
+            break;
+        } else if (input == "drop\0") {
+            std::cout << "Sending 'drop' command to the server..." << std::endl;
+            sendCommand(udpClientSocket, "drop", toAddr);
+            break;
+        } else if (input == "shutdown\0") {
+            std::cout << "Sending 'shutdown' command to the server..." << std::endl;
+            sendCommand(udpClientSocket, "shutdown", toAddr);
+            break;
+        }
 
         int sendRVal = sendto(udpClientSocket, input.c_str(), input.size(), 0, (struct sockaddr *) &toAddr, toSize);
         if (sendRVal == -1) {
