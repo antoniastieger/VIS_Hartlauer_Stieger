@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <vector>
 
 #define BUFFER_SIZE 1024
 #define PORT 4949
@@ -16,6 +17,14 @@ struct SocketParam {
     int socket;
     sockaddr_in saddr;
 };
+
+void closeClientSockets();
+void* clientCommunication(void* parameter);
+
+std::vector<int> clientSockets;
+int serverSocket;
+bool shouldExit = false;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void sendCommand(int socket, const std::string& command) {
     int sendRVal = send(socket, command.c_str(), command.size(), 0);
@@ -109,7 +118,13 @@ void handleClientRequest(int clientSocket, const std::string& request) {
     }
 }
 
+void cleanupHandler(void* parameter) {
+    pthread_mutex_unlock(&mutex);
+    closeClientSockets();
+}
+
 void *clientCommunication(void *_parameter) {
+    pthread_cleanup_push(cleanupHandler, NULL);
     SocketParam *p = static_cast<SocketParam *>(_parameter);
     int clientSocket = p->socket;
     sockaddr_in clientAddr = p->saddr;
@@ -126,22 +141,26 @@ void *clientCommunication(void *_parameter) {
             buffer[recvRVal] = '\0'; // Null-terminate the received data
             std::cout << "Received from client " << clientSocket << ": " << buffer << std::endl;
 
+            pthread_mutex_lock(&mutex);
+
             // Check for client commands
-            if (strcmp(buffer, "quit") == 0) {
+            if (strcmp(buffer, "quit\n") == 0) {
                 std::cout << "Client requested to quit. Closing the connection." << std::endl;
                 break;
-            } else if(strcmp(buffer, "drop") == 0) {
+            } else if(strcmp(buffer, "drop\n") == 0) {
                 std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
-                sendCommand(clientSocket, "drop");
+                sendCommand(clientSocket, "drop\n");
                 break;
-            } else if(strcmp(buffer, "shutdown") == 0) {
+            } else if(strcmp(buffer, "shutdown\n") == 0) {
                 std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
-                sendCommand(clientSocket, "shutdown");
-                // You can implement the shutdown logic here
+                sendCommand(clientSocket, "shutdown\n");
+                closeClientSockets();
+                shouldExit = true;
                 break;
             }
 
             handleClientRequest(clientSocket, std::string(buffer));
+            pthread_mutex_unlock(&mutex);
 
             /*// Echo the data back to the client
             int sendRVal = send(clientSocket, buffer, recvRVal, 0);
@@ -153,16 +172,24 @@ void *clientCommunication(void *_parameter) {
             }*/
         }
     }
-
     // Clean up allocated memory
     delete p;
+    pthread_cleanup_pop(1);
 
     pthread_exit(NULL);
 }
 
+void closeClientSockets() {
+    for (int clientSocket : clientSockets) {
+        close(clientSocket);
+    }
+    clientSockets.clear();
+    close(serverSocket);
+}
+
 int main() { // wenn ein Client disconnected, dann wird in Dauerschleife ausgegeben, dass der Client disconnected ist
     // Create a socket
-    int serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     if (serverSocket == -1) {
         std::cerr << "Error creating server socket" << std::endl;
@@ -199,12 +226,16 @@ int main() { // wenn ein Client disconnected, dann wird in Dauerschleife ausgege
         socklen_t clientSize = sizeof(sockaddr_in);
         int clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientSize);
 
+        if (shouldExit) {
+            break;
+        }
         if (clientSocket == -1) {
             std::cerr << "Error accepting client connection" << std::endl;
             continue;
         }
 
         std::cout << "New client connected: " << clientSocket << std::endl; // starts with 4 ???
+        clientSockets.push_back(clientSocket);
 
         // Create a new thread for client communication
         pthread_t threadID;
