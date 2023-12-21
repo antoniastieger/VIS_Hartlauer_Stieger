@@ -1,0 +1,4 @@
+-o
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Environment_SocketServer\\build\\exe\\main\\debug\\Environment_SocketServer.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Environment_SocketServer\\build\\obj\\main\\debug\\didta283t481dc07uzdrkohmo\\Environment_SocketServer.obj
+-m64
