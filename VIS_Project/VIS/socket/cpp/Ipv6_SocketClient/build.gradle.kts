@@ -5,7 +5,7 @@ plugins {
 }
 
 val port: String = "4949"
-val IPAddress: String = "127.0.0.1"
+val IPAddress: String = "::1"
 
 // task to run cpp client
 tasks.register("run", Exec::class) {

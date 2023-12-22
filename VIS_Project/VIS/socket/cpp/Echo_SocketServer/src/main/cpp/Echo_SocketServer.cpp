@@ -5,9 +5,10 @@
 #include "../headers/Echo_SocketServer.h"
 
 #define BUFFER_SIZE 1024
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
- * @brief Sends a command to the specified socket.
+ * Sends a command to the specified socket.
  *
  * @param _socket The socket to send the command to.
  * @param _command The command to be sent.
@@ -34,19 +35,28 @@ EchoSocketServer::~EchoSocketServer() {
 }
 
 /**
- * @brief Initializes the socket and handles client connections.
+ * Initializes the socket and handles client connections.
  *
  * @param _ipAddress The IP address to bind the server to.
  * @param _port The port number to bind the server to.
  */
-
 void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
+
+    int mPort;
+
+    if (_port == 0) {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+    }
+
     // Create a socket
     mServerSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (mServerSocket == -1) {
         std::cerr << "Error creating socket" << std::endl;
         exit(1);
     }
+
+    bool mShouldExit = false;
 
     // Bind socket to IP address and port
     sockaddr_in serverAddress;
@@ -113,11 +123,12 @@ void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
                 } else if(strcmp(buffer, "drop") == 0) {
                     std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
                     sendCommand(mClientSocket, "drop");
+                    close(mClientSocket);
                     break;
                 } else if(strcmp(buffer, "shutdown") == 0) {
                     std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
                     sendCommand(mClientSocket, "shutdown");
-                    // You can implement the shutdown logic here
+                    mShouldExit = true;
                     break;
                 }
 
@@ -134,6 +145,11 @@ void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
                 }
             }
         } // while true
+
+        if(mShouldExit) {
+            break;
+        }
+
     } // while true
 
     // Close the client socket
