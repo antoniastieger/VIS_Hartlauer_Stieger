@@ -1,7 +1,12 @@
 package at.fhooe.sail.vis;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Echo_SocketServer {
 
@@ -19,7 +24,19 @@ public class Echo_SocketServer {
         }
     }
 
+    static void closeClientSockets(ArrayList<Integer> clientSockets, Socket clientSocketToClose) {
+        for (int clientSocket : clientSockets) {
+            System.out.println("Closing connection to Client " + clientSocket);
+            sendCommand(clientSocketToClose, "quit\n");
+        }
+        clientSockets.clear();
+    }
+
     public static void main(String[] _args) {
+
+        AtomicBoolean shouldExit = new AtomicBoolean(false);
+        ArrayList<Integer> clientSockets = new ArrayList<Integer>();
+
         try {
             ServerSocket serverSocket = new ServerSocket(4949);
             System.out.println("Server is running...");
@@ -29,8 +46,15 @@ public class Echo_SocketServer {
             System.out.println("Waiting for a client...");
 
             while (true) {
+                if (shouldExit.get()) {
+                    System.out.println("Shutting down...");
+                    break;
+                }
+
                 Socket socket = serverSocket.accept();
                 System.out.println("Client " + ++clientCounter + " connected.");
+
+                clientSockets.add(clientCounter);
 
                 // Start a new thread for each client
                 int finalClientCounter = clientCounter;
@@ -57,7 +81,9 @@ public class Echo_SocketServer {
                                 } else if (line.toString().equals("shutdown\n")) {
                                     System.out.println("Client requested shutdown. Closing all connections and shutting down gracefully.");
                                     sendCommand(socket, "shutdown\n");
-                                    System.exit(0);
+                                    closeClientSockets(clientSockets, socket);
+                                    shouldExit.set(true);
+                                    break;
                                 }
 
                                 // Send echo response
