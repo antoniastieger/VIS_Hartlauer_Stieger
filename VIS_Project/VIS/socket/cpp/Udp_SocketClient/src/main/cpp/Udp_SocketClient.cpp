@@ -8,9 +8,10 @@
 #include <cstring>
 
 #define BUFFER_SIZE 1024
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
- * @brief Sends a command to the specified socket and address.
+ * Sends a command to the specified socket and address.
  * @param _socket The socket to which the command is sent.
  * @param _command The command to be sent.
  * @param _toAddr The destination address.
@@ -27,10 +28,38 @@ void sendCommand(int _socket, const std::string& _command, const sockaddr_in& _t
 }
 
 /**
- * @brief Main function for the UDP client.
+ * Port number to connect to the server.
+ */
+int mPort;
+
+/**
+ * IP address of the server.
+ */
+std::string mIPAddress;
+
+/**
+ * Main function for the UDP client.
+ * @param _argc Number of command line arguments.
+ * @param _argv Array of command line arguments.
  * @return 0 on successful execution, -1 on error.
  */
-int main() {
+int main(int _argc, char* _argv[]) {
+
+    if (_argc == 3) {
+        try {
+            mPort = atoi(_argv[1]);
+            mIPAddress = _argv[2];
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+        std::cout << "Enter the IP Address: ";
+        std::cin >> mIPAddress;
+    }
+
     // Create a socket
     int udpClientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -38,6 +67,8 @@ int main() {
         std::cerr << "Error creating client socket" << std::endl;
         return -1;
     }
+
+    bool mShouldExit = false;
 
     while(true) {
         // Read a line from the command line
@@ -62,10 +93,14 @@ int main() {
         } else if (input == "drop\0") {
             std::cout << "Sending 'drop' command to the server..." << std::endl;
             sendCommand(udpClientSocket, "drop", toAddr);
-            break;
+            mShouldExit = true;
         } else if (input == "shutdown\0") {
             std::cout << "Sending 'shutdown' command to the server..." << std::endl;
             sendCommand(udpClientSocket, "shutdown", toAddr);
+            break;
+        }
+
+        if (mShouldExit) {
             break;
         }
 

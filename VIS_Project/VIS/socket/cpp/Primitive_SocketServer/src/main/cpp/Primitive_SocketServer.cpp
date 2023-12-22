@@ -9,11 +9,10 @@
 
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
-
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
- * @brief Sends a command to the specified socket.
+ * Sends a command to the specified socket.
  * @param _socket The socket to which the command is sent.
  * @param _command The command to be sent.
  */
@@ -28,19 +27,17 @@ void sendCommand(int _socket, const std::string& _command) {
 }
 
 /**
- * @brief Main function for the primitive socket server.
+ * Main function for the primitive socket server.
  * @param _argc Number of command-line arguments.
  * @param _argv Command-line arguments.
  * @return 0 on successful execution, -1 on error.
  */
 int main(int _argc, char* _argv[]) {
 
-    // Declare and initialize member variable
     int mPort;
 
     if (_argc == 2) {
         try {
-            // Manually initialize member variable
             mPort = atoi(_argv[1]);
         } catch (const std::exception& ex) {
             perror(STRING_CONVERSION_ERROR);
@@ -59,7 +56,7 @@ int main(int _argc, char* _argv[]) {
         return -1;
     }
 
-    bool shouldExit = false;
+    bool mShouldExit = false;
 
     // Bind the socket to an IP address and port
     sockaddr_in serverAddress;
@@ -133,7 +130,7 @@ int main(int _argc, char* _argv[]) {
                 } else if(strcmp(buffer, "shutdown") == 0) {
                     std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
                     sendCommand(clientSocket, "shutdown");
-                    shouldExit = true;
+                    mShouldExit = true;
                     break;
                 }
             }
@@ -151,7 +148,7 @@ int main(int _argc, char* _argv[]) {
             }
         } // while true
 
-        if(shouldExit) {
+        if(mShouldExit) {
             break;
         }
 

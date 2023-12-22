@@ -9,9 +9,10 @@
 
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
- * @brief Sends a command to the specified socket and address.
+ * Sends a command to the specified socket and address.
  * @param _socket The socket to which the command is sent.
  * @param _command The command to be sent.
  * @param _toAddr The destination address.
@@ -28,10 +29,27 @@ void sendCommand(int _socket, const std::string& _command, const sockaddr_in& _t
 }
 
 /**
- * @brief Main function for the UDP server.
+ * Main function for the UDP server.
+ * @param _argc Number of command-line arguments.
+ * @param _argv Command-line arguments.
  * @return 0 on successful execution, -1 on error.
  */
-int main() {
+int main(int _argc, char* _argv[]) {
+
+    int mPort;
+
+    if (_argc == 2) {
+        try {
+            mPort = atoi(_argv[1]);
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+    }
+
     // Create socket
     int udpServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -58,6 +76,8 @@ int main() {
 
     std::cout << "Server is waiting for a message from the client" << std::endl;
 
+    bool mShouldExit = false;
+
     // Receive and respond to data in a loop
     while (true) {
         char buffer[BUFFER_SIZE];
@@ -76,15 +96,16 @@ int main() {
             // Check for client commands
             if (strcmp(buffer, "quit") == 0) {
                 std::cout << "Client requested to quit. Closing the connection." << std::endl;
-                break;
             } else if(strcmp(buffer, "drop") == 0) {
                 std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
                 sendCommand(udpServerSocket, "drop", from);
-                break;
             } else if(strcmp(buffer, "shutdown") == 0) {
                 std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
                 sendCommand(udpServerSocket, "shutdown", from);
-                // You can implement the shutdown logic here
+                mShouldExit = true;
+            }
+
+            if (mShouldExit) {
                 break;
             }
 

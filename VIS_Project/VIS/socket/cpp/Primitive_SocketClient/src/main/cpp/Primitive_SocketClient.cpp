@@ -8,7 +8,6 @@
 #include <cstring>
 
 #define BUFFER_SIZE 1024
-
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
@@ -28,15 +27,22 @@ void sendCommand(int _socket, const std::string& _command) {
 }
 
 /**
+ * Port number to connect to the server.
+ */
+int mPort;
+
+/**
+ * IP address of the server.
+ */
+std::string mIPAddress;
+
+/**
  * Main function for the client.
  *
  * @param _argc Number of command line arguments.
  * @param _argv Array of command line arguments.
  * @return Exit code.
  */
-int mPort;
-std::string mIPAddress;
-
 int main(int _argc, char* _argv[]) {
 
     if (_argc == 3) {
@@ -62,7 +68,7 @@ int main(int _argc, char* _argv[]) {
         return -1;
     }
 
-    bool shouldExit = false;
+    bool mShouldExit = false;
 
     // Connect to the server
     sockaddr_in mServerAddress;
@@ -96,7 +102,7 @@ int main(int _argc, char* _argv[]) {
             break;
         } else if (mInput == "drop") {
             std::cout << "Sending 'drop' command to the server..." << std::endl;
-            shouldExit = true;
+            mShouldExit = true;
         } else if (mInput == "shutdown") {
             std::cout << "Sending 'shutdown' command to the server..." << std::endl;
             sendCommand(mClientSocket, "shutdown");
@@ -116,7 +122,7 @@ int main(int _argc, char* _argv[]) {
             std::cout << "Sent " << mSendRVal << " bytes of data" << std::endl;
         }
 
-        if (shouldExit) {
+        if (mShouldExit) {
             break;
         }
 

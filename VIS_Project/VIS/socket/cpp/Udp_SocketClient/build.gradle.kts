@@ -5,6 +5,7 @@ plugins {
 }
 
 val port: String = "4949"
+val IPAddress: String = "127.0.0.1"
 
 // task to run cpp client
 tasks.register("run", Exec::class) {
@@ -16,15 +17,15 @@ tasks.register("run", Exec::class) {
     when {
         Os.isFamily(Os.FAMILY_WINDOWS) -> {
             exeFile = "Udp_SocketClient.exe"
-			commandLine("cmd", "/k", exeDir+exeFile, port)
+			commandLine("cmd", "/k", exeDir+exeFile, port, IPAddress)
         }
         Os.isFamily(Os.FAMILY_MAC) -> {
             exeFile = "Udp_SocketClient"
-			commandLine("bash", "-c", exeDir+exeFile, port)
+			commandLine("bash", "-c", exeDir+exeFile, port, IPAddress)
         }
         Os.isFamily(Os.FAMILY_UNIX) -> {
             exeFile = "Udp_SocketClient"
-			commandLine("bash", "-c", exeDir+exeFile, port)
+			commandLine("bash", "-c", exeDir+exeFile, port, IPAddress)
         }
         else -> { throw GradleException(":cpp:Udp_SocketClient run-target -> unknown OS family encountered")}
     }
