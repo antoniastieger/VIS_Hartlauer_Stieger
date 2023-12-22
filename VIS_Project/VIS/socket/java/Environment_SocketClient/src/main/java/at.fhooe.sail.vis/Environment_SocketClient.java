@@ -54,7 +54,7 @@ public class Environment_SocketClient implements IEnvService {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
-        /*try {
+        try {
             Socket socket = new Socket("127.0.0.1", 4949);
 
             OutputStream out = socket.getOutputStream();
@@ -104,7 +104,7 @@ public class Environment_SocketClient implements IEnvService {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
         IEnvService service = new Environment_SocketClient();
         while (true) {
