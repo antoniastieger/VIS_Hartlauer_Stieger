@@ -1,17 +1,12 @@
-
 package at.fhooe.sail.vis;
 
 import at.fhooe.sail.env.EnvData;
 import at.fhooe.sail.env.IEnvService;
 
+public class runClientMain {
 
-/**
- * The main entry point of the Environment_SocketClient application.
- *
- * @param args Command-line arguments (not used).
- */
-public static void main(String[] args) {
-    IEnvService service = new Environment_SocketClient();
+    public static void main(String[] args) {
+        IEnvService service = new Environment_SocketClient();
         while (true) {
             String[] sensors = service.requestEnvironmentDataTypes();
 
@@ -36,4 +31,5 @@ public static void main(String[] args) {
                 _e.printStackTrace();
             }
         } // while true
+    }
 }
