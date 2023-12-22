@@ -18,6 +18,8 @@ public class EnvData {
 
 package at.fhooe.sail.vis.general;
 
+import java.util.Arrays;
+
 /**
  * Represents environmental data, including sensor name, timestamp, and values.
  */
@@ -39,5 +41,24 @@ public class EnvData {
         mValues = _values;
     }
 
-    // Constructor, toString, and any additional functionality
+    /**
+     * Converts the EnvData object to its string representation.
+     *
+     * @return A string representation of the EnvData object, including its type, timestamp,
+     * and values.
+     *
+     * The string is formatted as follows:
+     * "EnvData{type='[type]', timestamp=[timestamp], values=[array_of_values]}"
+     *
+     * Example:
+     * "EnvData{type='light', timestamp=123456789, values=[10, 20, 30]}"
+     */
+    @Override
+    public String toString() {
+        return "EnvData{" +
+                "type='" + mSensorName + '\'' +
+                ", timestamp=" + mTimestamp +
+                ", values=" + Arrays.toString(mValues) +
+                '}';
+    }
 }

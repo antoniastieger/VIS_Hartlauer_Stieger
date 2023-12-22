@@ -312,8 +312,12 @@ void handleClientRequest(int _clientSocket, const std::string& _request) {
             response = std::to_string(timestamp) + "|" + std::to_string(val) + "#";
             response.append("\n");
         } else if (sensor == "air") {
-            response = std::to_string(timestamp) + "|" + std::to_string(val) + ";" + std::to_string(val) + ";" +
-                       std::to_string(val) + "#";
+            int val1 = randomNumberGenerator();
+            int val2 = randomNumberGenerator();
+            int val3 = randomNumberGenerator();
+
+            response = std::to_string(timestamp) + "|" + std::to_string(val1) + ";" + std::to_string(val2) + ";" +
+                       std::to_string(val3) + "#";
             response.append("\n");
         } else {
             response = "sensor not found#";
