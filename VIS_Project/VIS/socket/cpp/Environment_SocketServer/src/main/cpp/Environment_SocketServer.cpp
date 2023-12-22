@@ -7,24 +7,49 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <thread>
 #include <vector>
 
 #define BUFFER_SIZE 1024
 #define PORT 4949
 #define MAX_CLIENTS 10
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
 
+/**
+ * Struct to hold parameters for the client thread.
+ */
 struct SocketParam {
-    int mSocket;
-    sockaddr_in mSocketAddress;
+    int mSocket; /**< The client socket. */
+    sockaddr_in mSocketAddress; /**< The client socket address. */
 };
 
 /**
- * @brief Closes all client sockets.
+ * Vector to store client sockets.
+ */
+std::vector<int> mClientSockets;
+
+/**
+ * The server socket.
+ */
+int mServerSocket;
+
+/**
+ * Flag indicating whether the server should exit.
+ */
+bool mShouldExit = false;
+
+/**
+ *Mutex for ensuring thread safety.
+ */
+pthread_mutex_t mMutex = PTHREAD_MUTEX_INITIALIZER;
+
+/**
+ * Closes all client sockets.
  */
 void closeClientSockets();
 
 /**
- * @brief Handles client communication.
+ * Handles client communication.
  *
  * @param _parameter The parameters for the client thread.
  * @return void* The result of the thread.
@@ -32,7 +57,7 @@ void closeClientSockets();
 void* clientCommunication(void* _parameter);
 
 /**
- * @brief Sends a command to the specified socket.
+ * Sends a command to the specified socket.
  *
  * @param _socket The socket to send the command to.
  * @param _command The command to be sent.
@@ -40,14 +65,14 @@ void* clientCommunication(void* _parameter);
 void sendCommand(int _socket, const std::string& _command);
 
 /**
- * @brief Generates a random number.
+ * Generates a random number.
  *
  * @return int The generated random number.
  */
 int randomNumberGenerator();
 
 /**
- * @brief Handles the client request based on the received data.
+ * Handles the client request based on the received data.
  *
  * @param _clientSocket The client socket.
  * @param _request The request received from the client.
@@ -55,31 +80,37 @@ int randomNumberGenerator();
 void handleClientRequest(int _clientSocket, const std::string& _request);
 
 /**
- * @brief Cleanup handler for pthread_cleanup_push.
+ * Cleanup handler for pthread_cleanup_push.
  *
  * @param _parameter The cleanup parameter.
  */
 void cleanupHandler(void* _parameter);
 
-/**
- * @brief Closes all client sockets and the server socket.
- */
-void closeClientSockets() {
-    for (int clientSocket : clientSockets) {
-        close(clientSocket);
-    }
-    clientSockets.clear();
-    close(serverSocket);
-}
 
 /**
- * @brief Main function of the server.
- *
- * @return int The exit status.
+ * Main function for the primitive socket server.
+ * @param _argc Number of command-line arguments.
+ * @param _argv Command-line arguments.
+ * @return 0 on successful execution, -1 on error.
  */
-int main() {
+int main(int _argc, char* _argv[]) {
+
+    int mPort;
+
+    if (_argc == 2) {
+        try {
+            mPort = atoi(_argv[1]);
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+    }
+
     // Create a server socket
-    int mServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    mServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     if (mServerSocket == -1) {
         std::cerr << "Error creating server socket" << std::endl;
@@ -116,16 +147,17 @@ int main() {
         socklen_t clientSize = sizeof(sockaddr_in);
         int clientSocket = accept(mServerSocket, (struct sockaddr*)&clientAddress, &clientSize);
 
-        if (shouldExit) {
+        if (mShouldExit) {
             break;
         }
+
         if (clientSocket == -1) {
             std::cerr << "Error accepting client connection" << std::endl;
             continue;
         }
 
         std::cout << "New client connected: " << clientSocket << std::endl;
-        clientSockets.push_back(clientSocket);
+        mClientSockets.push_back(clientSocket);
 
         // Create a new thread for client communication
         pthread_t threadID;
@@ -134,6 +166,10 @@ int main() {
         if (pthread_create(&threadID, NULL, clientCommunication, static_cast<void*>(parameter)) != 0) {
             std::cerr << "Error creating thread for client " << clientSocket << std::endl;
             delete parameter; // Clean up allocated memory
+        }
+
+        if (mShouldExit) {
+            break;
         }
 
         // Detach the thread to avoid memory leaks
@@ -150,11 +186,10 @@ int main() {
  * @brief Closes all client sockets.
  */
 void closeClientSockets() {
-    for (int clientSocket : clientSockets) {
+    for (int clientSocket : mClientSockets) {
         close(clientSocket);
     }
-    clientSockets.clear();
-    close(serverSocket);
+    mClientSockets.clear();
 }
 
 /**
@@ -181,7 +216,7 @@ void* clientCommunication(void* _parameter) {
             buffer[recvRVal] = '\0'; // Null-terminate the received data
             std::cout << "Received from client " << clientSocket << ": " << buffer << std::endl;
 
-            pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mMutex);
 
             // Check for client commands
             if (strcmp(buffer, "quit\n") == 0) {
@@ -191,29 +226,34 @@ void* clientCommunication(void* _parameter) {
                 std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
                 sendCommand(clientSocket, "drop\n");
                 break;
-            } else if (strcmp(buffer, "shutdown\n") == 0) {
+            } else if (strcmp(buffer, "shutdown\n") == 0) { // server not closing properly
                 std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully."
                           << std::endl;
                 sendCommand(clientSocket, "shutdown\n");
                 closeClientSockets();
-                shouldExit = true;
+                close(mServerSocket);
+                mShouldExit = true;
                 break;
             }
 
             handleClientRequest(clientSocket, std::string(buffer));
-            pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mMutex);
         }
-    }
+    } // while true
 
     // Clean up allocated memory
     delete p;
     pthread_cleanup_pop(1);
 
+    if (mShouldExit) {
+        return NULL;
+    }
+
     pthread_exit(NULL);
 }
 
 /**
- * @brief Sends a command to the specified socket.
+ * Sends a command to the specified socket.
  *
  * @param _socket The socket to send the command to.
  * @param _command The command to be sent.
@@ -229,7 +269,7 @@ void sendCommand(int _socket, const std::string& _command) {
 }
 
 /**
- * @brief Generates a random number.
+ * Generates a random number.
  *
  * @return int The generated random number.
  */
@@ -238,7 +278,7 @@ int randomNumberGenerator() {
 }
 
 /**
- * @brief Handles the client request based on the received data.
+ * Handles the client request based on the received data.
  *
  * @param _clientSocket The client socket.
  * @param _request The request received from the client.
@@ -316,11 +356,11 @@ void handleClientRequest(int _clientSocket, const std::string& _request) {
 }
 
 /**
- * @brief Cleanup handler for pthread_cleanup_push.
+ * Cleanup handler for pthread_cleanup_push.
  *
  * @param _parameter The cleanup parameter.
  */
 void cleanupHandler(void* _parameter) {
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mMutex);
     closeClientSockets();
 }

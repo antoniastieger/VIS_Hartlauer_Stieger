@@ -131,6 +131,7 @@ int main(int _argc, char* _argv[]) {
         int mRecvRVal = recv(mClientSocket, mAckBuffer, BUFFER_SIZE, 0);
 
         if (mRecvRVal == -1) {
+            close(mClientSocket);
             std::cerr << "Error receiving acknowledgment" << std::endl;
             break;
         } else if (mRecvRVal == 0) {
