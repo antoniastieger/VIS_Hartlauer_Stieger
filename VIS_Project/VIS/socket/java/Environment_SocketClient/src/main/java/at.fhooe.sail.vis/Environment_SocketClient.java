@@ -106,7 +106,7 @@ public class Environment_SocketClient implements IEnvService {
             throw new RuntimeException(e);
         }
 
-        IEnvService service = new Environment_SocketClient();
+        /*IEnvService service = new Environment_SocketClient();
         while (true) {
             String[] sensors = service.requestEnvironmentDataTypes();
 
@@ -130,7 +130,7 @@ public class Environment_SocketClient implements IEnvService {
             } catch (Exception _e) {
                 _e.printStackTrace();
             }
-        } // while true
+        } // while true*/
     }
 
     /**
