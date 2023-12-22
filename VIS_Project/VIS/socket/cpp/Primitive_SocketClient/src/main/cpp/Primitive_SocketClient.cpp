@@ -11,16 +11,29 @@
 
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
 
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+/**
+ * Sends a command to the connected server.
+ *
+ * @param _socket The socket to send the command to.
+ * @param _command The command to send.
+ */
+void sendCommand(int _socket, const std::string& _command) {
+    int mSendRVal = send(_socket, _command.c_str(), _command.size(), 0);
 
-    if (sendRVal == -1) {
+    if (mSendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
     } else {
-        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+        std::cout << "Sent " << mSendRVal << " bytes of data" << std::endl;
     }
 }
 
+/**
+ * Main function for the client.
+ *
+ * @param _argc Number of command line arguments.
+ * @param _argv Array of command line arguments.
+ * @return Exit code.
+ */
 int mPort;
 std::string mIPAddress;
 
@@ -42,9 +55,9 @@ int main(int _argc, char* _argv[]) {
     }
 
     // Create a socket
-    int clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    int mClientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-    if (clientSocket == -1) {
+    if (mClientSocket == -1) {
         std::cerr << "Error creating socket" << std::endl;
         return -1;
     }
@@ -52,17 +65,17 @@ int main(int _argc, char* _argv[]) {
     bool shouldExit = false;
 
     // Connect to the server
-    sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(4949);
-    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP address
-    memset(&(serverAddress.sin_zero),'\0',8);
+    sockaddr_in mServerAddress;
+    mServerAddress.sin_family = AF_INET;
+    mServerAddress.sin_port = htons(4949);
+    mServerAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP address
+    memset(&(mServerAddress.sin_zero),'\0',8);
 
-    int connectRVal = connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+    int mConnectRVal = connect(mClientSocket, (struct sockaddr*)&mServerAddress, sizeof(mServerAddress));
 
-    if (connectRVal == -1) {
+    if (mConnectRVal == -1) {
         std::cerr << "Error connecting to server" << std::endl;
-        close(clientSocket);
+        close(mClientSocket);
         return -1;
     }
 
@@ -71,36 +84,36 @@ int main(int _argc, char* _argv[]) {
     while(true) {
 
         // Read a line from the command line
-        std::string input;
+        std::string mInput;
         std::cout << "Enter a line: " << std::endl;
-        std::getline(std::cin, input);
-        input.append("\0");
+        std::getline(std::cin, mInput);
+        mInput.append("\0");
 
         // Check for the quit command
-        if (input == "quit") {
+        if (mInput == "quit") {
             std::cout << "Shutting down gracefully..." << std::endl;
-            sendCommand(clientSocket, "quit");
+            sendCommand(mClientSocket, "quit");
             break;
-        } else if (input == "drop") {
+        } else if (mInput == "drop") {
             std::cout << "Sending 'drop' command to the server..." << std::endl;
             shouldExit = true;
-        } else if (input == "shutdown") {
+        } else if (mInput == "shutdown") {
             std::cout << "Sending 'shutdown' command to the server..." << std::endl;
-            sendCommand(clientSocket, "shutdown");
+            sendCommand(mClientSocket, "shutdown");
             break;
         }
 
         // Send to server
         // char *sendMsg = "Hello World!\0";
         // int sendMsgSize = strlen(sendMsg);
-        // int sendRVal = send(clientSocket, sendMsg, sendMsgSize, 0);
+        // int sendRVal = send(mClientSocket, sendMsg, sendMsgSize, 0);
 
-        int sendRVal = send(clientSocket, input.c_str(), input.size(), 0);
-        if (sendRVal == -1) {
+        int mSendRVal = send(mClientSocket, mInput.c_str(), mInput.size(), 0);
+        if (mSendRVal == -1) {
             std::cerr << "Error sending data" << std::endl;
             break;
         } else {
-            std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+            std::cout << "Sent " << mSendRVal << " bytes of data" << std::endl;
         }
 
         if (shouldExit) {
@@ -108,25 +121,24 @@ int main(int _argc, char* _argv[]) {
         }
 
         // Receive acknowledgment from the server
-        char ackBuffer[BUFFER_SIZE];
-        int recvRVal = recv(clientSocket, ackBuffer, BUFFER_SIZE, 0);
+        char mAckBuffer[BUFFER_SIZE];
+        int mRecvRVal = recv(mClientSocket, mAckBuffer, BUFFER_SIZE, 0);
 
-        if (recvRVal == -1) {
+        if (mRecvRVal == -1) {
             std::cerr << "Error receiving acknowledgment" << std::endl;
             break;
-        } else if (recvRVal == 0) {
+        } else if (mRecvRVal == 0) {
             std::cerr << "Connection closed by the server" << std::endl;
             break;
         } else {
-            ackBuffer[recvRVal] = '\0';
-            std::cout << "Received acknowledgment from server: " << ackBuffer << std::endl;
+            mAckBuffer[mRecvRVal] = '\0';
+            std::cout << "Received acknowledgment from server: " << mAckBuffer << std::endl;
         }
 
     } // while true
 
     // Close the socket
-    close(clientSocket);
+    close(mClientSocket);
 
     return 0;
 }
-

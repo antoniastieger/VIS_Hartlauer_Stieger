@@ -6,71 +6,82 @@
 
 #define BUFFER_SIZE 1024
 
-Echo_SocketServer::Echo_SocketServer() : serverSocket(-1), clientSocket(-1) {}
+/**
+ * @brief Sends a command to the specified socket.
+ *
+ * @param _socket The socket to send the command to.
+ * @param _command The command to be sent.
+ */
+void sendCommand(int _socket, const std::string& _command) {
+    int sendResult = send(_socket, _command.c_str(), _command.size(), 0);
 
-Echo_SocketServer::~Echo_SocketServer() {
-    if (serverSocket != -1) {
-        close(serverSocket);
-    }
-    if (clientSocket != -1) {
-        close(clientSocket);
-    }
-}
-
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
-
-    if (sendRVal == -1) {
+    if (sendResult == -1) {
         std::cerr << "Error sending command" << std::endl;
     } else {
-        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+        std::cout << "Sent " << sendResult << " bytes of data" << std::endl;
     }
 }
 
-void Echo_SocketServer::InitializeSocket(const char *ipAddress, int port) {
+EchoSocketServer::EchoSocketServer() : mServerSocket(-1), mClientSocket(-1) {}
+
+EchoSocketServer::~EchoSocketServer() {
+    if (mServerSocket != -1) {
+        close(mServerSocket);
+    }
+    if (mClientSocket != -1) {
+        close(mClientSocket);
+    }
+}
+
+/**
+ * @brief Initializes the socket and handles client connections.
+ *
+ * @param _ipAddress The IP address to bind the server to.
+ * @param _port The port number to bind the server to.
+ */
+
+void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
     // Create a socket
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverSocket == -1) {
+    mServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (mServerSocket == -1) {
         std::cerr << "Error creating socket" << std::endl;
         exit(1);
     }
 
-    // Bind socket to ip address and port
+    // Bind socket to IP address and port
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(port);
-    serverAddress.sin_addr.s_addr = inet_addr(ipAddress);
+    serverAddress.sin_port = htons(_port);
+    serverAddress.sin_addr.s_addr = inet_addr(_ipAddress);
     memset(serverAddress.sin_zero, '\0', 8);
 
     socklen_t length = sizeof(sockaddr);
-    int rValBind = bind(serverSocket, (struct sockaddr*)&serverAddress, length);
+    int bindResult = bind(mServerSocket, (struct sockaddr*)&serverAddress, length);
 
-    if (rValBind == -1) {
+    if (bindResult == -1) {
         std::cerr << "Error binding socket" << std::endl;
-        close(serverSocket);
+        close(mServerSocket);
         return;
     }
-
-    // SetOptions
 
     // Listen for connections
-    if (listen(serverSocket, 5) == -1) {
+    if (listen(mServerSocket, 5) == -1) {
         std::cerr << "Error listening for connections" << std::endl;
-        close(serverSocket);
+        close(mServerSocket);
         return;
     }
 
-    std::cout << "Server is listening for connections on " << ipAddress << ":" << port << std::endl;
+    std::cout << "Server is listening for connections on " << _ipAddress << ":" << _port << std::endl;
 
-    while(true) {
+    while (true) {
         // Accept a connection
         sockaddr_in clientAddress;
         socklen_t clientAddressSize = sizeof(clientAddress);
-        clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
+        mClientSocket = accept(mServerSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
 
-        if (clientSocket == -1) {
+        if (mClientSocket == -1) {
             std::cerr << "Error accepting connection" << std::endl;
-            close(serverSocket);
+            close(mServerSocket);
             break;
         }
 
@@ -82,16 +93,16 @@ void Echo_SocketServer::InitializeSocket(const char *ipAddress, int port) {
         while (true) {
             // Receive message from client
             char buffer[BUFFER_SIZE];
-            int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+            int recvResult = recv(mClientSocket, buffer, BUFFER_SIZE, 0);
 
-            if (recvRVal == -1) {
+            if (recvResult == -1) {
                 std::cerr << "Error receiving data" << std::endl;
                 break;
-            } else if (recvRVal == 0) {
+            } else if (recvResult == 0) {
                 std::cerr << "Connection closed by the client" << std::endl;
                 break;
             } else {
-                buffer[recvRVal] = '\0';
+                buffer[recvResult] = '\0';
 
                 std::cout << "Received from the client: " << buffer << std::endl;
 
@@ -101,11 +112,11 @@ void Echo_SocketServer::InitializeSocket(const char *ipAddress, int port) {
                     break;
                 } else if(strcmp(buffer, "drop") == 0) {
                     std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
-                    sendCommand(clientSocket, "drop");
+                    sendCommand(mClientSocket, "drop");
                     break;
                 } else if(strcmp(buffer, "shutdown") == 0) {
                     std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
-                    sendCommand(clientSocket, "shutdown");
+                    sendCommand(mClientSocket, "shutdown");
                     // You can implement the shutdown logic here
                     break;
                 }
@@ -113,23 +124,23 @@ void Echo_SocketServer::InitializeSocket(const char *ipAddress, int port) {
                 // Send message to client
                 std::string echoMsg = "ECHO: ";
                 echoMsg.append(buffer);
-                int sendRVal = send(clientSocket, echoMsg.c_str(), echoMsg.length(), 0);
+                int sendResult = send(mClientSocket, echoMsg.c_str(), echoMsg.length(), 0);
 
-                if (sendRVal == -1) {
+                if (sendResult == -1) {
                     std::cerr << "Error sending data" << std::endl;
                     break;
                 } else {
-                    std::cout << "Sent " << sendRVal << " bytes of data back to the client" << std::endl;
+                    std::cout << "Sent " << sendResult << " bytes of data back to the client" << std::endl;
                 }
             }
         } // while true
     } // while true
 
     // Close the client socket
-    close(clientSocket);
+    close(mClientSocket);
 }
 
 int main() {
-    Echo_SocketServer server;
-    server.InitializeSocket("127.0.0.1", 4949);
+    EchoSocketServer server;
+    server.initializeSocket("127.0.0.1", 4949);
 }

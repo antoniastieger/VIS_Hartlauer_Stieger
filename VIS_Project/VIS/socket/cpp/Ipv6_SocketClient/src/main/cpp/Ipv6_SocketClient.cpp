@@ -1,28 +1,22 @@
-//
-// Created by Antonia Stieger on 13.12.23.
-//
-
 #include <iostream>
 #include <unistd.h>
 #include <arpa/inet.h>
 
 #define BUFFER_SIZE 1024
 
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
-
-    if (sendRVal == -1) {
-        std::cerr << "Error sending command" << std::endl;
-    } else {
-        std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
-    }
-}
+/**
+ * @brief Sends a command to the specified socket.
+ *
+ * @param _socket The socket to send the command to.
+ * @param _command The command to be sent.
+ */
+void sendCommand(int _socket, const std::string& _command);
 
 int main() {
     // Create a socket
     int v6ClientSocket = socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
     if (v6ClientSocket == -1) {
-        std::cerr << "Error creating client socket" << std::endl;
+        cerr << "Error creating client socket" << endl;
         return -1;
     }
 
@@ -35,38 +29,38 @@ int main() {
 
     int res = inet_pton(AF_INET6, "::1", &(server_address.sin6_addr));
     if (res == -1) {
-        std::cerr << "Error converting IPv6 address" << std::endl;
+        cerr << "Error converting IPv6 address" << endl;
         close(v6ClientSocket);
         return -1;
     }
 
     int connectRVal = connect(v6ClientSocket, (struct sockaddr*)&server_address, sizeof(sockaddr_in6));
     if (connectRVal == -1) {
-        std::cerr << "Error connecting to the server" << std::endl;
+        cerr << "Error connecting to the server" << endl;
         close(v6ClientSocket);
         return -1;
     }
 
-    std::cout << "Connected to server" << std::endl;
+    cout << "Connected to server" << endl;
 
     while(true) {
         // Read a line from the command line
         std::string input;
-        std::cout << "Enter a line: " << std::endl;
-        std::getline(std::cin, input);
+        cout << "Enter a line: " << endl;
+        getline(cin, input);
         input.append("\0");
 
         // Check for the quit command
         if (input == "quit") {
-            std::cout << "Shutting down gracefully..." << std::endl;
+            cout << "Shutting down gracefully..." << endl;
             sendCommand(v6ClientSocket, "quit");
             break;
         } else if (input == "drop") {
-            std::cout << "Sending 'drop' command to the server..." << std::endl;
+            cout << "Sending 'drop' command to the server..." << endl;
             sendCommand(v6ClientSocket, "drop");
             break; // Exit the loop and close the socket
         } else if (input == "shutdown") {
-            std::cout << "Sending 'shutdown' command to the server..." << std::endl;
+            cout << "Sending 'shutdown' command to the server..." << endl;
             sendCommand(v6ClientSocket, "shutdown");
             break;
         }
@@ -74,10 +68,10 @@ int main() {
         // Send the line to the server
         int sendRVal = send(v6ClientSocket, input.c_str(), input.size(), 0);
         if (sendRVal == -1) {
-            std::cerr << "Error sending data" << std::endl;
+            cerr << "Error sending data" << endl;
             break;
         } else {
-            std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+            cout << "Sent " << sendRVal << " bytes of data" << endl;
         }
 
         // Receive acknowledgment from the server
@@ -85,11 +79,11 @@ int main() {
         int recvRVal = recv(v6ClientSocket, ackBuffer, BUFFER_SIZE, 0);
 
         if (recvRVal == -1) {
-            std::cerr << "Error receiving acknowledgment" << std::endl;
+            cerr << "Error receiving acknowledgment" << endl;
             break;
         } else {
             ackBuffer[recvRVal] = '\0'; // Null-terminate the acknowledgment
-            std::cout << "Received acknowledgment from server: " << ackBuffer << std::endl;
+            cout << "Received acknowledgment from server: " << ackBuffer << endl;
         }
     } // while true
 
@@ -97,4 +91,20 @@ int main() {
     close(v6ClientSocket);
 
     return 0;
+}
+
+/**
+ * @brief Sends a command to the specified socket.
+ *
+ * @param _socket The socket to send the command to.
+ * @param _command The command to be sent.
+ */
+void sendCommand(int _socket, const std::string& _command) {
+    int sendRVal = send(_socket, _command.c_str(), _command.size(), 0);
+
+    if (sendRVal == -1) {
+        cerr << "Error sending command" << endl;
+    } else {
+        cout << "Sent " << sendRVal << " bytes of data" << endl;
+    }
 }

@@ -10,6 +10,12 @@
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
 
+/**
+ * Sends a command to the connected client.
+ *
+ * @param socket The socket connected to the client.
+ * @param command The command to be sent.
+ */
 void sendCommand(int socket, const std::string& command) {
     int sendRVal = send(socket, command.c_str(), command.size(), 0);
 
@@ -20,6 +26,11 @@ void sendCommand(int socket, const std::string& command) {
     }
 }
 
+/**
+ * Entry point of the server application.
+ *
+ * @return 0 on successful execution.
+ */
 int main() {
 
     // create a socket

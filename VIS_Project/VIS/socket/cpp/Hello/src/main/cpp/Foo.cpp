@@ -1,3 +1,9 @@
 #include "Foo.h"
 
-string Foo::Bar() { return "CPP"; }
+/**
+ * @brief Returns the string "CPP".
+ * @return std::string The string "CPP".
+ */
+std::string Foo::Bar() {
+    return "CPP";
+}

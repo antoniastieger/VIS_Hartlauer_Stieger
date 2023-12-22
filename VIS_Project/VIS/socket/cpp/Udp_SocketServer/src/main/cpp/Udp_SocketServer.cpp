@@ -10,9 +10,15 @@
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
 
-void sendCommand(int socket, const std::string& command, const sockaddr_in& toAddr) {
-    ssize_t sendRVal = sendto(socket, command.c_str(), command.size(), 0,
-                              (struct sockaddr*)&toAddr, sizeof(toAddr));
+/**
+ * @brief Sends a command to the specified socket and address.
+ * @param _socket The socket to which the command is sent.
+ * @param _command The command to be sent.
+ * @param _toAddr The destination address.
+ */
+void sendCommand(int _socket, const std::string& _command, const sockaddr_in& _toAddr) {
+    ssize_t sendRVal = sendto(_socket, _command.c_str(), _command.size(), 0,
+                              (struct sockaddr*)&_toAddr, sizeof(_toAddr));
 
     if (sendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
@@ -21,8 +27,12 @@ void sendCommand(int socket, const std::string& command, const sockaddr_in& toAd
     }
 }
 
+/**
+ * @brief Main function for the UDP server.
+ * @return 0 on successful execution, -1 on error.
+ */
 int main() {
-    // create socket
+    // Create socket
     int udpServerSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     if (udpServerSocket == -1) {
@@ -30,7 +40,7 @@ int main() {
         return -1;
     }
 
-    // bind socket to an IP address and port
+    // Bind socket to an IP address and port
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(4949);
@@ -48,7 +58,7 @@ int main() {
 
     std::cout << "Server is waiting for a message from the client" << std::endl;
 
-    // receive and respond to data in a loop
+    // Receive and respond to data in a loop
     while (true) {
         char buffer[BUFFER_SIZE];
         sockaddr_in from;
@@ -64,7 +74,7 @@ int main() {
             std::cout << "Received " << recvRVal << " bytes of data: " << buffer << std::endl;
 
             // Check for client commands
-            if (strcmp(buffer, "quit") == 0) { // TODO: noch zu machen
+            if (strcmp(buffer, "quit") == 0) {
                 std::cout << "Client requested to quit. Closing the connection." << std::endl;
                 break;
             } else if(strcmp(buffer, "drop") == 0) {
@@ -92,7 +102,7 @@ int main() {
         }
     } // while true
 
-    // close server socket
+    // Close server socket
     close(udpServerSocket);
 
     return 0;

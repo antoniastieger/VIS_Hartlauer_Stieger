@@ -12,8 +12,13 @@
 
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
 
-void sendCommand(int socket, const std::string& command) {
-    int sendRVal = send(socket, command.c_str(), command.size(), 0);
+/**
+ * @brief Sends a command to the specified socket.
+ * @param _socket The socket to which the command is sent.
+ * @param _command The command to be sent.
+ */
+void sendCommand(int _socket, const std::string& _command) {
+    int sendRVal = send(_socket, _command.c_str(), _command.size(), 0);
 
     if (sendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
@@ -22,12 +27,20 @@ void sendCommand(int socket, const std::string& command) {
     }
 }
 
-int mPort;
-
+/**
+ * @brief Main function for the primitive socket server.
+ * @param _argc Number of command-line arguments.
+ * @param _argv Command-line arguments.
+ * @return 0 on successful execution, -1 on error.
+ */
 int main(int _argc, char* _argv[]) {
+
+    // Declare and initialize member variable
+    int mPort;
 
     if (_argc == 2) {
         try {
+            // Manually initialize member variable
             mPort = atoi(_argv[1]);
         } catch (const std::exception& ex) {
             perror(STRING_CONVERSION_ERROR);
@@ -53,7 +66,7 @@ int main(int _argc, char* _argv[]) {
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(4949);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
-    memset(&(serverAddress.sin_zero),'\0',8);
+    memset(&(serverAddress.sin_zero), '\0', 8);
 
     socklen_t length = sizeof(sockaddr);
     int rValBind = bind(serverSocket, (struct sockaddr*)&serverAddress, length);
@@ -81,7 +94,7 @@ int main(int _argc, char* _argv[]) {
         // Accept a client connection
         sockaddr_in clientAddress;
         socklen_t clientAddressSize = sizeof(clientAddress);
-        int clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressSize);
+        int clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
 
         if (clientSocket == -1) {
             std::cerr << "Error accepting connection" << std::endl;
@@ -89,7 +102,7 @@ int main(int _argc, char* _argv[]) {
             return -1;
         }
 
-        std::cout << "connection established with client on …\n"
+        std::cout << "Connection established with client on ...\n"
                      "SOCKET[client (" << inet_ntoa(clientAddress.sin_addr) << ", " << ntohs(clientAddress.sin_port)
                   << "); server (" << inet_ntoa(clientAddress.sin_addr) << ", " << ntohs(clientAddress.sin_port) << ")]" << std::endl;
 
@@ -126,7 +139,7 @@ int main(int _argc, char* _argv[]) {
             }
 
             // Send to client
-            char *sendMsg = "Server received your message!\0";
+            char* sendMsg = "Server received your message!\0";
             int sendMsgSize = strlen(sendMsg);
             int sendRVal = send(clientSocket, sendMsg, sendMsgSize, 0);
 

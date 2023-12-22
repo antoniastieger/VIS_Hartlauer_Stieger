@@ -9,9 +9,15 @@
 
 #define BUFFER_SIZE 1024
 
-void sendCommand(int socket, const std::string& command, const sockaddr_in& toAddr) {
-    ssize_t sendRVal = sendto(socket, command.c_str(), command.size(), 0,
-                              (struct sockaddr*)&toAddr, sizeof(toAddr));
+/**
+ * @brief Sends a command to the specified socket and address.
+ * @param _socket The socket to which the command is sent.
+ * @param _command The command to be sent.
+ * @param _toAddr The destination address.
+ */
+void sendCommand(int _socket, const std::string& _command, const sockaddr_in& _toAddr) {
+    ssize_t sendRVal = sendto(_socket, _command.c_str(), _command.size(), 0,
+                              (struct sockaddr*)&_toAddr, sizeof(_toAddr));
 
     if (sendRVal == -1) {
         std::cerr << "Error sending command" << std::endl;
@@ -20,6 +26,10 @@ void sendCommand(int socket, const std::string& command, const sockaddr_in& toAd
     }
 }
 
+/**
+ * @brief Main function for the UDP client.
+ * @return 0 on successful execution, -1 on error.
+ */
 int main() {
     // Create a socket
     int udpClientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -90,6 +100,4 @@ int main() {
     close(udpClientSocket);
 
     return 0;
-};
-
-
+}
