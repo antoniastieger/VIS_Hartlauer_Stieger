@@ -10,6 +10,8 @@
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
 
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
+
 void sendCommand(int socket, const std::string& command) {
     int sendRVal = send(socket, command.c_str(), command.size(), 0);
 
@@ -20,7 +22,22 @@ void sendCommand(int socket, const std::string& command) {
     }
 }
 
-int main() {
+int mPort;
+
+int main(int _argc, char* _argv[]) {
+
+    if (_argc == 2) {
+        try {
+            mPort = atoi(_argv[1]);
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+    }
+
     // Create a socket
     int serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -28,6 +45,8 @@ int main() {
         std::cerr << "Error creating socket" << std::endl;
         return -1;
     }
+
+    bool shouldExit = false;
 
     // Bind the socket to an IP address and port
     sockaddr_in serverAddress;
@@ -96,11 +115,12 @@ int main() {
                 } else if(strcmp(buffer, "drop") == 0) {
                     std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
                     sendCommand(clientSocket, "drop");
+                    close(clientSocket);
                     break;
                 } else if(strcmp(buffer, "shutdown") == 0) {
                     std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
                     sendCommand(clientSocket, "shutdown");
-                    // You can implement the shutdown logic here
+                    shouldExit = true;
                     break;
                 }
             }
@@ -118,14 +138,18 @@ int main() {
             }
         } // while true
 
+        if(shouldExit) {
+            break;
+        }
+
         // Close the sockets
         int closeClient = close(clientSocket);
 
     } // while true
     int closeServer = close(serverSocket);
 
-    std::cerr << "Client closed" << std::endl;
-    std::cerr << "Server closed" << std::endl;
+    std::cout << "Client closed" << std::endl;
+    std::cout << "Server closed" << std::endl;
 
     return 0;
 }

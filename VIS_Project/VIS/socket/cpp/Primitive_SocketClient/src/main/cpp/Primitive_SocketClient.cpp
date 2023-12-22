@@ -9,6 +9,8 @@
 
 #define BUFFER_SIZE 1024
 
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
+
 void sendCommand(int socket, const std::string& command) {
     int sendRVal = send(socket, command.c_str(), command.size(), 0);
 
@@ -19,7 +21,26 @@ void sendCommand(int socket, const std::string& command) {
     }
 }
 
-int main(int _argc, char** _argv) {
+int mPort;
+std::string mIPAddress;
+
+int main(int _argc, char* _argv[]) {
+
+    if (_argc == 3) {
+        try {
+            mPort = atoi(_argv[1]);
+            mIPAddress = _argv[2];
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+        std::cout << "Enter the IP Address: ";
+        std::cin >> mIPAddress;
+    }
+
     // Create a socket
     int clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -27,6 +48,8 @@ int main(int _argc, char** _argv) {
         std::cerr << "Error creating socket" << std::endl;
         return -1;
     }
+
+    bool shouldExit = false;
 
     // Connect to the server
     sockaddr_in serverAddress;
@@ -60,8 +83,7 @@ int main(int _argc, char** _argv) {
             break;
         } else if (input == "drop") {
             std::cout << "Sending 'drop' command to the server..." << std::endl;
-            sendCommand(clientSocket, "drop");
-            break; // Exit the loop and close the socket
+            shouldExit = true;
         } else if (input == "shutdown") {
             std::cout << "Sending 'shutdown' command to the server..." << std::endl;
             sendCommand(clientSocket, "shutdown");
@@ -79,6 +101,10 @@ int main(int _argc, char** _argv) {
             break;
         } else {
             std::cout << "Sent " << sendRVal << " bytes of data" << std::endl;
+        }
+
+        if (shouldExit) {
+            break;
         }
 
         // Receive acknowledgment from the server
