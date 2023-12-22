@@ -9,6 +9,7 @@
 
 #define BACKLOG 5
 #define BUFFER_SIZE 1024
+#define STRING_CONVERSION_ERROR "Error converting string to integer"
 
 /**
  * Sends a command to the connected client.
@@ -27,11 +28,26 @@ void sendCommand(int socket, const std::string& command) {
 }
 
 /**
- * Entry point of the server application.
- *
- * @return 0 on successful execution.
+ * Main function for the primitive socket server.
+ * @param _argc Number of command-line arguments.
+ * @param _argv Command-line arguments.
+ * @return 0 on successful execution, -1 on error.
  */
-int main() {
+int main(int _argc, char* _argv[]) {
+
+    int mPort;
+
+    if (_argc == 2) {
+        try {
+            mPort = atoi(_argv[1]);
+        } catch (const std::exception& ex) {
+            perror(STRING_CONVERSION_ERROR);
+            return -1;
+        }
+    } else {
+        std::cout << "Enter the Port: ";
+        std::cin >> mPort;
+    }
 
     // create a socket
     int v6ServerSocket = socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP);
@@ -41,7 +57,9 @@ int main() {
         return -1;
     }
 
-    // bind the socket to an IP address and port
+    bool mShouldExit = false;
+
+    // Bind the socket to an IP address and port
     struct sockaddr_in6 server;
     server.sin6_family = AF_INET6;
     server.sin6_flowinfo = 0;
@@ -69,7 +87,7 @@ int main() {
 
     std::cout << "Server is listening for connections..." << std::endl;
 
-    std::cout << "IPv6 Socket Server waiting for clients on port 4949" << std::endl;
+    std::cout << "IPv6 Socket Server waiting for client on port 4949" << std::endl;
 
     while(true) {
         // accept a client connection
@@ -84,7 +102,7 @@ int main() {
         }
 
         while(true) {
-            // receive data from the client
+            // Receive data from the client
             char buffer[BUFFER_SIZE];
             int recvRVal = recv(clientSocket, buffer, BUFFER_SIZE, 0);
 
@@ -107,11 +125,12 @@ int main() {
             } else if(strcmp(buffer, "drop") == 0) {
                 std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
                 sendCommand(clientSocket, "drop");
+                close(clientSocket);
                 break;
             } else if(strcmp(buffer, "shutdown") == 0) {
                 std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
                 sendCommand(clientSocket, "shutdown");
-                // You can implement the shutdown logic here
+                mShouldExit = true;
                 break;
             }
 
@@ -128,6 +147,10 @@ int main() {
             }
         } // while true
 
+        if(mShouldExit) {
+            break;
+        }
+
         // close the client socket
         int closeClient = close(clientSocket);
     } // while true
@@ -135,8 +158,8 @@ int main() {
     // close the server socket
     int closeServer = close(v6ServerSocket);
 
-    std::cerr << "Client closed" << std::endl;
-    std::cerr << "Server closed" << std::endl;
+    std::cout << "Client closed" << std::endl;
+    std::cout << "Server closed" << std::endl;
 
     return 0;
 }
