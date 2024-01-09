@@ -23,5 +23,7 @@ include(
     ":socket:java:Echo_SocketServer",
     ":socket:java:Echo_SocketClient",
     ":socket:java:Environment_SocketClient",
-    ":general:EnvironmentI"
+    ":general:EnvironmentI",
+    ":rmi:Hello_RmiClient",
+    ":rmi:Hello_RmiServer"
     )
