@@ -9,14 +9,17 @@ import java.rmi.registry.Registry;
 public class Hello_RmiClient {
 
     public static void main(String[] args) {
-        try {
-            String address = "Hello_RmiService";
-            Registry reg = LocateRegistry.getRegistry();
-            Hello_RmiInterface hello = (Hello_RmiInterface) reg.lookup(address);
+        while (true) {
+            try {
+                String addr = "Hello";
+                Registry reg = LocateRegistry.getRegistry();
+                Hello_RmiInterface hello = (Hello_RmiInterface) reg.lookup(addr);
 
-            System.out.println("The server says: ");
-        } catch (Exception e) {
-            System.out.println("Client exception: " + e);
+                System.out.println("The server says: ");
+            } catch (Exception e) {
+                System.out.println("Client exception: " + e);
+            }
         }
+
     }
 }

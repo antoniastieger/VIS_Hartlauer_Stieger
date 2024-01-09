@@ -14,6 +14,7 @@ public class Hello_RmiServer
     implements Hello_RmiInterface {
 
     public Hello_RmiServer() throws RemoteException { super(); }
+    public String saySomething() throws RemoteException { return "cookies!"; }
 
     public static void main(String[] _args) {
         try {
@@ -24,9 +25,5 @@ public class Hello_RmiServer
         } catch (Exception _e) {
             System.out.println("Server failed: " + _e);
         }
-    }
-
-    public String saySomething() throws RemoteException {
-        return "cookies!";
     }
 }

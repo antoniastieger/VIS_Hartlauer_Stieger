@@ -5,7 +5,6 @@ package at.fhooe.sail.vis;
 
 import java.rmi.*;
 public interface Hello_RmiInterface extends Remote {
-
-    //throws RemoteException
+    public String saySomething() throws RemoteException;
 
 }
