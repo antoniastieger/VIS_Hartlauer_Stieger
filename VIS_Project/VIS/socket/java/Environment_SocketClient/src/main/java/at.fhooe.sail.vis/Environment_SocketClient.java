@@ -54,6 +54,7 @@ public class Environment_SocketClient implements IEnvService {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
+        /*
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
 
@@ -104,9 +105,9 @@ public class Environment_SocketClient implements IEnvService {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
-        /*IEnvService service = new Environment_SocketClient();
+        IEnvService service = new Environment_SocketClient();
         while (true) {
             String[] sensors = service.requestEnvironmentDataTypes();
 
@@ -130,7 +131,7 @@ public class Environment_SocketClient implements IEnvService {
             } catch (Exception _e) {
                 _e.printStackTrace();
             }
-        } // while true*/
+        } // while true
     }
 
     /**

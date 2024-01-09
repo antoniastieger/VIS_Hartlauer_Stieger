@@ -1,8 +1,5 @@
 package at.fhooe.sail.vis;
 
-import at.fhooe.sail.vis.general.EnvData;
-import at.fhooe.sail.vis.general.IEnvService;
-
 /**
  * The `runClientMain` class is the entry point for the environment data visualization client application.
  * It continuously retrieves environment data from an `IEnvService` implementation (in this case, an `Environment_SocketClient`)
@@ -16,7 +13,7 @@ public class runClientMain {
      *
      * @param args Command-line arguments (not used in this application).
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         // Create an instance of the Environment_SocketClient to communicate with the environment service
         IEnvService service = new Environment_SocketClient();
 
@@ -50,6 +47,6 @@ public class runClientMain {
                 _e.printStackTrace();
             }
         } // while true
-    }
+    }*/
 }
 
