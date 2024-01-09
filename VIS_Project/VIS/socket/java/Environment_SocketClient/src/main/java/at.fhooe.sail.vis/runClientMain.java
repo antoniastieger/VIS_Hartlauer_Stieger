@@ -1,7 +1,7 @@
 package at.fhooe.sail.vis;
 
-import at.fhooe.sail.env.EnvData;
-import at.fhooe.sail.env.IEnvService;
+import at.fhooe.sail.vis.general.EnvData;
+import at.fhooe.sail.vis.general.IEnvService;
 
 public class runClientMain {
 

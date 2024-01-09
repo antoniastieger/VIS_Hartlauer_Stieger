@@ -1,4 +1,0 @@
-See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
-compiling Primitive_SocketClient.cpp successful.
-
-Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketClient/build/tmp/compileDebugCpp/output.txt.
