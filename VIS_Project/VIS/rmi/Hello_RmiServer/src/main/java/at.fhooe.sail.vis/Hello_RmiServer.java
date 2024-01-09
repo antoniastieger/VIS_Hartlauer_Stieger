@@ -2,8 +2,12 @@
 // Created by Antonia Stieger on 09.01.24.
 //
 
-import java.rmi.*;
-import at.fhooe.sail.vis.Hello_RmiInterface;
+package at.fhooe.sail.vis;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class Hello_RmiServer
     extends UnicastRemoteObject

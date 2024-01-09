@@ -2,7 +2,11 @@
 // Created by Sandra Hartlauer on 09.01.2024.
 //
 
-import java.rmi.*;
+package at.fhooe.sail.vis;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 import at.fhooe.sail.vis.Hello_RmiInterface;
 
 public class Hello_RmiClient {
@@ -13,7 +17,7 @@ public class Hello_RmiClient {
             Registry reg = LocateRegistry.getRegistry();
             Hello_RmiInterface hello = (Hello_RmiInterface) reg.lookup(address);
 
-            System.out.printl("The server says: ");
+            System.out.println("The server says: ");
         } catch (Exception e) {
             System.out.println("Client exception: " + e);
         }
