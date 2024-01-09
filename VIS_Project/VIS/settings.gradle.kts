@@ -25,5 +25,6 @@ include(
     ":socket:java:Environment_SocketClient",
     ":general:EnvironmentI",
     ":rmi:Hello_RmiClient",
-    ":rmi:Hello_RmiServer"
+    ":rmi:Hello_RmiServer",
+    ":rmi:Hello_RmiInterface"
     )

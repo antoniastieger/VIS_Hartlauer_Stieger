@@ -18,12 +18,12 @@ application {
 
 val nameJar: String = "Hello_RmiInterface"
 tasks.jar {
-    archiveBaseName.set(jarName)
+    archiveBaseName.set(nameJar)
     doLast {
         copy {
             println("*** copying jar to libs folder ... ")
             val bDir: String = layout.buildDirectory.get().toString()
-            val fromS: String = "${bDir}\\libs\\$jarName.jar"
+            val fromS: String = "${bDir}\\libs\\$nameJar.jar"
             val intoS: String = "${rootProject.projectDir.absolutePath}\\libs"
             from(fromS)
             into(intoS)
@@ -31,6 +31,6 @@ tasks.jar {
     }
 }
 tasks.clean {
-    val fN: String = "${rootProject.projectDir.absolutePath}\\libs\\$jarName.jar"
+    val fN: String = "${rootProject.projectDir.absolutePath}\\libs\\$nameJar.jar"
     delete(files(fN))
 }
