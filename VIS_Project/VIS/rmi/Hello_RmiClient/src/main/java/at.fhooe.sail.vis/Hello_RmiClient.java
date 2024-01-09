@@ -6,9 +6,6 @@ package at.fhooe.sail.vis;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
-import at.fhooe.sail.vis.Hello_RmiInterface;
-
 public class Hello_RmiClient {
 
     public static void main(String[] args) {
