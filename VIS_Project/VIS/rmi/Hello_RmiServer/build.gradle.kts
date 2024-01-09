@@ -11,7 +11,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.0.1-jre")
-    implementation(project(":rmi:Hello-Interface"))
+    implementation(project(":rmi:Hello_RmiInterface"))
 }
 
 application {

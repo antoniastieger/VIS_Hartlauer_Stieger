@@ -3,7 +3,7 @@
 //
 
 import java.rmi.*;
-import rmiserver.Hello_RmiInterface;
+import at.fhooe.sail.vis.Hello_RmiInterface;
 
 public class Hello_RmiClient {
 

@@ -3,6 +3,7 @@
 //
 
 import java.rmi.*;
+import at.fhooe.sail.vis.Hello_RmiInterface;
 
 public class Hello_RmiServer
     extends UnicastRemoteObject
