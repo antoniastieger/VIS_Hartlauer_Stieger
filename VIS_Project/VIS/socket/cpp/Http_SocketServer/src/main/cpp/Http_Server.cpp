@@ -3,6 +3,7 @@
 //
 
 #include "../headers/Http_Server.h"
+#include <sstream>
 
 #define BUFFER_SIZE 1024
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
@@ -115,7 +116,35 @@ void HttpServer::initializeSocket(const char* _ipAddress, int _port) {
                 std::cout << "Received from the client: " << buffer << std::endl;
 
                 std::string responseHeader = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n";
-                std::string responseBody = "<html><body><h1>ECHO: " + std::string(buffer) + "</h1></body></html>";
+                std::string responseBody = "<html>\n"
+                                           "    <head>\n"
+                                           "        <style>\n"
+                                           "            body {\n"
+                                           "                font-family: Arial, sans-serif;\n"
+                                           "                background-color: #f0f0f0;\n"
+                                           "            }\n"
+                                           "            .container {\n"
+                                           "                margin: 20px;\n"
+                                           "                padding: 20px;\n"
+                                           "                background-color: #ffffff;\n"
+                                           "                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n"
+                                           "            }\n"
+                                           "            h1 {\n"
+                                           "                color: #333333;\n"
+                                           "            }\n"
+                                           "            pre {\n"
+                                           "                white-space: pre-wrap;\n"
+                                           "                word-wrap: break-word;\n"
+                                           "            }\n"
+                                           "        </style>\n"
+                                           "    </head>\n"
+                                           "    <body>\n"
+                                           "        <div class=\"container\">\n"
+                                           "            <h1>Browser Request:</h1>\n"
+                                           "            <pre>" + std::string(buffer) + "</pre>\n"
+                                           "        </div>\n"
+                                           "    </body>\n"
+                                           "</html>";
 
                 int sendResultHeader = send(mClientSocket, responseHeader.c_str(), responseHeader.length(), 0);
                 if (sendResultHeader == -1) {
