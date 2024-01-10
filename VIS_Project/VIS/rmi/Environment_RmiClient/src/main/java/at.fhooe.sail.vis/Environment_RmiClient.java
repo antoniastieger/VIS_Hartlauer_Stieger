@@ -6,7 +6,7 @@ import at.fhooe.sail.vis.general.IEnvService;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-public class Environment_RmiClient implements IEnvService {sss
+public class Environment_RmiClient implements IEnvService {
 
     private final EnvironmentI serverProxy;
     public Environment_RmiClient(EnvironmentI _serverProxy) {
