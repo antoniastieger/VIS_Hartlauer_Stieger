@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/rmi/Hello_RmiClient" />
             <option value="$PROJECT_DIR$/rmi/Hello_RmiInterface" />
             <option value="$PROJECT_DIR$/rmi/Hello_RmiServer" />
+            <option value="$PROJECT_DIR$/servlet" />
+            <option value="$PROJECT_DIR$/servlet/Hello_Servlet" />
             <option value="$PROJECT_DIR$/socket" />
             <option value="$PROJECT_DIR$/socket/cpp" />
             <option value="$PROJECT_DIR$/socket/cpp/Echo_SocketServer" />
