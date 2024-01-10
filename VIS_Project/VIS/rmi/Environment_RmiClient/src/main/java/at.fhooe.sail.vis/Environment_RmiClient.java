@@ -3,9 +3,7 @@ package at.fhooe.sail.vis;
 import at.fhooe.sail.vis.general.EnvData;
 import at.fhooe.sail.vis.general.IEnvService;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -15,16 +13,8 @@ public class Environment_RmiClient implements IEnvService {
     private Scanner mScanner;
 
     public Environment_RmiClient() {
-        try {
-            Socket socket = new Socket("127.0.0.1", 4949);
-
-            // Initialize mOut and mScanner using the socket's streams
-            mOut = new PrintWriter(socket.getOutputStream(), true);
-            mScanner = new Scanner(socket.getInputStream());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        mScanner = new Scanner(System.in);
+        mOut = new PrintWriter(System.out);
     }
 
     @Override
