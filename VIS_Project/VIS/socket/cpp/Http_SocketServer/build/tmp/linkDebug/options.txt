@@ -1,0 +1,5 @@
+-o
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Http_SocketServer/build/exe/main/debug/Http_SocketServer
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Http_SocketServer/build/obj/main/debug/7lnjqz4s86ewkeu9871ejo2w/Http_Server.o
+-arch
+x86_64
