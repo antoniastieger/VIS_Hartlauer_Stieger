@@ -20,11 +20,13 @@ include(
     ":socket:cpp:Ipv6_SocketServer",
     ":socket:cpp:Ipv6_SocketClient",
     ":socket:cpp:Environment_SocketServer",
-    ":socket:java:Echo_SocketServer",
     ":socket:java:Echo_SocketClient",
+    ":socket:java:Echo_SocketServer",
     ":socket:java:Environment_SocketClient",
     ":general:EnvironmentI",
     ":rmi:Hello_RmiClient",
     ":rmi:Hello_RmiServer",
-    ":rmi:Hello_RmiInterface"
+    ":rmi:Hello_RmiInterface",
+    ":rmi:Environment_RmiClient",
+    ":rmi:Environment_RmiServer"
     )
