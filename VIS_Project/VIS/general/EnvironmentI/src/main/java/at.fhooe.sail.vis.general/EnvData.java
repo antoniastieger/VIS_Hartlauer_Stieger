@@ -18,14 +18,28 @@ public class EnvData {
 
 package at.fhooe.sail.vis.general;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 
 /**
  * Represents environmental data, including sensor name, timestamp, and values.
  */
-public class EnvData {
+public class EnvData implements Remote {
+
+    /**
+     * The name of the sensor.
+     */
     private String mSensorName;
+
+    /**
+     * The timestamp of the environmental data.
+     */
     private long mTimestamp;
+
+    /**
+     * The array of sensor values.
+     */
     private int[] mValues;
 
     /**
@@ -60,5 +74,15 @@ public class EnvData {
                 ", timestamp=" + mTimestamp +
                 ", values=" + Arrays.toString(mValues) +
                 '}';
+    }
+
+    /**
+     * Returns a string representing the greeting or message.
+     *
+     * @return a String representing the greeting or message.
+     * @throws RemoteException if there is a communication-related issue during the remote method invocation.
+     */
+    public String saySomething() throws RemoteException {
+        return "EnvData says: " + toString();
     }
 }

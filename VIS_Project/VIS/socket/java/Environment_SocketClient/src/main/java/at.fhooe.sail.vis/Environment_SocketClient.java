@@ -5,6 +5,7 @@ import at.fhooe.sail.vis.general.IEnvService;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
@@ -53,7 +54,7 @@ public class Environment_SocketClient implements IEnvService {
      *
      * @param args Command-line arguments (not used).
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
         /*
         try {
             Socket socket = new Socket("127.0.0.1", 4949);
