@@ -1,11 +1,12 @@
 package at.fhooe.sail.vis.general;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
  * Interface for requesting environmental data from a service.
  */
-public interface IEnvService {
+public interface IEnvService extends Remote {
 
     /**
      * Requests available environment data types.

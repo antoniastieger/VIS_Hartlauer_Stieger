@@ -3,70 +3,40 @@ package at.fhooe.sail.vis;
 import at.fhooe.sail.vis.general.EnvData;
 import at.fhooe.sail.vis.general.IEnvService;
 
-import java.io.PrintWriter;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Environment_RmiClient implements IEnvService {
 
-    private PrintWriter mOut;
-    private Scanner mScanner;
+    private IEnvService remoteService;
 
-    public Environment_RmiClient() {
-        mScanner = new Scanner(System.in);
-        mOut = new PrintWriter(System.out);
+    public Environment_RmiClient() throws RemoteException {
+        try {
+            String addr = "EnvironmentService";
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", Registry.REGISTRY_PORT);
+            remoteService = (IEnvService) reg.lookup(addr);
+            System.out.println("Connected to remote service: " + remoteService);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error: EnvironmentService not bound.", e);
+        }
     }
 
     @Override
     public String[] requestEnvironmentDataTypes() throws RemoteException {
-        mOut.print("getSensortypes()#");
-        mOut.flush();
-
-        String response = mScanner.next();
-        if (response.charAt(0) == 0) {
-            response = response.substring(1);
-        }
-
-        response = response.replaceAll("#", "");
-
-        return response.split(";");
+        return remoteService.requestEnvironmentDataTypes();
     }
 
     @Override
     public EnvData requestEnvironmentData(String _type) throws RemoteException {
-        mOut.print("getSensor(" + _type + ")#");
-        mOut.flush();
-
-        String response = mScanner.next();
-
-        // Remove trailing '#' character
-        response = response.replaceAll("#", "");
-
-        String[] parts = response.split("\\|");
-
-        long timestamp = Long.parseLong(parts[0].substring(1));
-        String[] values = parts[1].split(";");
-
-        int getLength = values.length;
-        int[] intValues = new int[getLength];
-
-        for (int i = 0; i < getLength; i++) {
-            intValues[i] = Integer.parseInt(values[i]);
-        }
-
-        return new EnvData(_type, timestamp, intValues);
+        return remoteService.requestEnvironmentData(_type);
     }
 
     @Override
     public EnvData[] requestAll() throws RemoteException {
-        String[] allSensorTypes = requestEnvironmentDataTypes();
-
-        EnvData[] allData = new EnvData[allSensorTypes.length];
-        for (int i = 0; i < allData.length; i++) {
-            allData[i] = requestEnvironmentData(allSensorTypes[i]);
-        }
-
-        return allData;
+        return remoteService.requestAll();
     }
 
     public static void main(String[] _args) throws RemoteException {
