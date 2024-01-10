@@ -19,7 +19,6 @@ include(
     ":socket:cpp:Udp_SocketClient",
     ":socket:cpp:Ipv6_SocketServer",
     ":socket:cpp:Ipv6_SocketClient",
-    ":socket:cpp:Environment_SocketServer",
     ":socket:java:Echo_SocketClient",
     ":socket:java:Echo_SocketServer",
     ":socket:java:Environment_SocketClient",
@@ -28,5 +27,6 @@ include(
     ":rmi:Hello_RmiServer",
     ":rmi:Hello_RmiInterface",
     ":rmi:Environment_RmiClient",
-    ":rmi:Environment_RmiServer"
+    ":rmi:Environment_RmiServer",
+    ":socket:cpp:Http_SocketServer",
     )
