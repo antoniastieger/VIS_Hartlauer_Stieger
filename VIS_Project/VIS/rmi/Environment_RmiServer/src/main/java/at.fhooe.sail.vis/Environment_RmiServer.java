@@ -2,10 +2,15 @@
 // Created by Antonia Stieger on 10.01.24.
 //
 
-import java.rmi.*;
-import java.rmi.registry.*;
+package at.fhooe.sail.vis;
+
+import at.fhooe.sail.vis.general.EnvData;
+import at.fhooe.sail.vis.general.IEnvService;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
 
 public class Environment_RmiServer extends UnicastRemoteObject implements IEnvService {
     public Environment_RmiServer() throws RemoteException {

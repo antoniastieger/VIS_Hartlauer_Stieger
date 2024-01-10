@@ -2,8 +2,12 @@
 // Created by Antonia Stieger on 10.01.24.
 //
 
-import java.rmi.*;
-import java.rmi.registry.*;
+package at.fhooe.sail.vis;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
@@ -66,7 +70,7 @@ public class ServiceMgmt {
         System.out.println("Environment_RmiServer started.");
     }
 
-    private static void stopRmiService() throws RemoteException {
+    private static void stopRmiService() throws RemoteException, NotBoundException {
         // Unbind and unexport the Environment_RmiServer
         registry.unbind("EnvironmentService");
         UnicastRemoteObject.unexportObject(registry.lookup("EnvironmentService"), true);
