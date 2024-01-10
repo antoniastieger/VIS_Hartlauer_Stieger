@@ -1,4 +1,4 @@
-See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/linkDebug/output.txt for all output for linkDebug.
-linking Udp_SocketServer.exe successful.
+See file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/linkDebug/output.txt for all output for linkDebug.
+linking Udp_SocketServer successful.
 
-Finished linkDebug, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/linkDebug/output.txt.
+Finished linkDebug, see full log file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Udp_SocketServer/build/tmp/linkDebug/output.txt.

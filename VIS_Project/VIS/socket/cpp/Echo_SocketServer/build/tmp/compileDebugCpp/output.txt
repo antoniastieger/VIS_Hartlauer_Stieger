@@ -1,4 +1,4 @@
-See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+See file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
 compiling Echo_SocketServer.cpp successful.
 
-Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/compileDebugCpp/output.txt.
+Finished compileDebugCpp, see full log file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Echo_SocketServer/build/tmp/compileDebugCpp/output.txt.

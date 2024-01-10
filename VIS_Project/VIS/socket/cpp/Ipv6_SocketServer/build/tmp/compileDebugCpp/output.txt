@@ -1,8 +1,14 @@
-See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
-compiling Ipv6_SocketServer.cpp successful.
-C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Ipv6_SocketServer\src\main\cpp\Ipv6_SocketServer.cpp: In function 'int main(int, char**)':
-C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Ipv6_SocketServer\src\main\cpp\Ipv6_SocketServer.cpp:138:29: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
-  138 |             char *sendMsg = "Server received your message!\0";
-      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+See file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+compiling Ipv6_SocketServer.cpp failed.
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/src/main/cpp/Ipv6_SocketServer.cpp:68:24: error: expected expression
+    server.sin6_addr = IN6ADDR_ANY_INIT; // sometimes IN6ADDR_ANY_INIT
+                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/netinet6/in6.h:186:2: note: expanded from macro 'IN6ADDR_ANY_INIT'
+        {{{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \
+        ^
+/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/src/main/cpp/Ipv6_SocketServer.cpp:138:29: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
+            char *sendMsg = "Server received your message!\0";
+                            ^
+1 warning and 1 error generated.
 
-Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/build/tmp/compileDebugCpp/output.txt.
+Finished compileDebugCpp, see full log file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketServer/build/tmp/compileDebugCpp/output.txt.
