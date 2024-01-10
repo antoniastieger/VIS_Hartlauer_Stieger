@@ -1,8 +1,8 @@
 //
-// Created by Sandra Hartlauer on 06.12.2023.
+// Created by Antonia Stieger on 10.01.2024.
 //
 
-#include "../headers/Echo_SocketServer.h"
+#include "../headers/Http_Server.h"
 
 #define BUFFER_SIZE 1024
 #define STRING_CONVERSION_ERROR "Error converting string to integer"
@@ -23,9 +23,9 @@ void sendCommand(int _socket, const std::string& _command) {
     }
 }
 
-EchoSocketServer::EchoSocketServer() : mServerSocket(-1), mClientSocket(-1) {}
+HttpServer::HttpServer() : mServerSocket(-1), mClientSocket(-1) {}
 
-EchoSocketServer::~EchoSocketServer() {
+HttpServer::~HttpServer() {
     if (mServerSocket != -1) {
         close(mServerSocket);
     }
@@ -40,7 +40,7 @@ EchoSocketServer::~EchoSocketServer() {
  * @param _ipAddress The IP address to bind the server to.
  * @param _port The port number to bind the server to.
  */
-void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
+void HttpServer::initializeSocket(const char* _ipAddress, int _port) {
 
     int mPort;
 
@@ -157,6 +157,6 @@ void EchoSocketServer::initializeSocket(const char* _ipAddress, int _port) {
 }
 
 int main() {
-    EchoSocketServer server;
+    HttpServer server;
     server.initializeSocket("127.0.0.1", 4949);
 }
