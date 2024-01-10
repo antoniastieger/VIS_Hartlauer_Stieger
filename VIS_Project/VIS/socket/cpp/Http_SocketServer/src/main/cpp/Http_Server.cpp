@@ -101,7 +101,6 @@ void HttpServer::initializeSocket(const char* _ipAddress, int _port) {
                   << ")]" << std::endl;
 
         while (true) {
-            // Receive message from client
             char buffer[BUFFER_SIZE];
             int recvResult = recv(mClientSocket, buffer, BUFFER_SIZE, 0);
 
@@ -113,48 +112,37 @@ void HttpServer::initializeSocket(const char* _ipAddress, int _port) {
                 break;
             } else {
                 buffer[recvResult] = '\0';
-
                 std::cout << "Received from the client: " << buffer << std::endl;
 
-                // Check for client commands
-                if (strcmp(buffer, "quit") == 0) {
-                    std::cout << "Client requested to quit. Closing the connection." << std::endl;
-                    break;
-                } else if(strcmp(buffer, "drop") == 0) {
-                    std::cout << "Client requested to drop. Closing the connection to the client." << std::endl;
-                    sendCommand(mClientSocket, "drop");
-                    close(mClientSocket);
-                    break;
-                } else if(strcmp(buffer, "shutdown") == 0) {
-                    std::cout << "Client requested shutdown. Closing all connections and shutting down gracefully." << std::endl;
-                    sendCommand(mClientSocket, "shutdown");
-                    mShouldExit = true;
+                std::string responseHeader = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n";
+                std::string responseBody = "<html><body><h1>ECHO: " + std::string(buffer) + "</h1></body></html>";
+
+                int sendResultHeader = send(mClientSocket, responseHeader.c_str(), responseHeader.length(), 0);
+                if (sendResultHeader == -1) {
+                    std::cerr << "Error sending HTTP response header" << std::endl;
                     break;
                 }
 
-                // Send message to client
-                std::string echoMsg = "ECHO: ";
-                echoMsg.append(buffer);
-                int sendResult = send(mClientSocket, echoMsg.c_str(), echoMsg.length(), 0);
-
-                if (sendResult == -1) {
-                    std::cerr << "Error sending data" << std::endl;
+                int sendResultBody = send(mClientSocket, responseBody.c_str(), responseBody.length(), 0);
+                if (sendResultBody == -1) {
+                    std::cerr << "Error sending HTTP response body" << std::endl;
                     break;
-                } else {
-                    std::cout << "Sent " << sendResult << " bytes of data back to the client" << std::endl;
                 }
+
+                std::cout << "Sent " << sendResultHeader + sendResultBody << " bytes of HTTP response to the client" << std::endl;
+                break;
             }
         } // while true
 
-        if(mShouldExit) {
+        if (mShouldExit) {
             break;
         }
-
     } // while true
 
     // Close the client socket
     close(mClientSocket);
 }
+
 
 int main() {
     HttpServer server;
