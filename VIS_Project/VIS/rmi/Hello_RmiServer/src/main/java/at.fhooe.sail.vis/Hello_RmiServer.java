@@ -29,7 +29,11 @@ public class Hello_RmiServer
      * @return a String representing the greeting message.
      * @throws RemoteException if an RMI communication-related issue occurs.
      */
-    public String saySomething() throws RemoteException { return "cookies!"; }
+    public String saySomething() throws RemoteException {
+        String cookies = "cookies!";
+        System.out.println("Server says: " + cookies);
+        return cookies;
+    }
 
     /**
      * Starts the RMI server and binds it to the registry.
