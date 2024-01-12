@@ -11,11 +11,22 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+/**
+ * Manages RMI services, including starting, stopping, and listing available services.
+ */
 public class ServiceMgmt {
 
+    /**
+     * The RMI registry.
+     */
     private static Registry registry;
 
-    public static void main(String[] args) {
+    /**
+     * Main method to start the RMI service management.
+     *
+     * @param _args Command-line arguments (not used in this application).
+     */
+    public static void main(String[] _args) {
         try {
             registry = LocateRegistry.getRegistry();
             Dummy_RmiServer dummyServer = new Dummy_RmiServer("DummyServer");
@@ -51,11 +62,16 @@ public class ServiceMgmt {
                         System.out.println("Invalid choice. Please enter a valid option.");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception _e) {
+            _e.printStackTrace();
         }
     }
 
+    /**
+     * Lists the available RMI services on the registry.
+     *
+     * @throws RemoteException If a remote communication error occurs.
+     */
     private static void listAvailableServices() throws RemoteException {
         String[] services = registry.list();
         System.out.println("Available Services on the Registry:");
@@ -64,6 +80,11 @@ public class ServiceMgmt {
         }
     }
 
+    /**
+     * Starts the Environment_RmiServer and binds it to the registry.
+     *
+     * @throws RemoteException If a remote communication error occurs.
+     */
     private static void startRmiService() throws RemoteException {
         // Start the Environment_RmiServer
         Environment_RmiServer server = new Environment_RmiServer();
@@ -71,6 +92,12 @@ public class ServiceMgmt {
         System.out.println("Environment_RmiServer started.");
     }
 
+    /**
+     * Stops the Environment_RmiServer by unbinding and unexporting it.
+     *
+     * @throws RemoteException    If a remote communication error occurs.
+     * @throws NotBoundException  If the specified name is not currently bound.
+     */
     private static void stopRmiService() throws RemoteException, NotBoundException {
         // Unbind and unexport the Environment_RmiServer
         registry.unbind("EnvironmentService");
@@ -78,6 +105,11 @@ public class ServiceMgmt {
         System.out.println("Environment_RmiServer stopped.");
     }
 
+    /**
+     * Quits the service management and exits the program.
+     *
+     * @throws RemoteException If a remote communication error occurs.
+     */
     private static void quitServiceManagement() throws RemoteException {
         System.out.println("Service Management is shutting down.");
         System.exit(0);

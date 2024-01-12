@@ -24,6 +24,8 @@ import java.util.Arrays;
 
 /**
  * Represents environmental data, including sensor name, timestamp, and values.
+ * This class implements the Serializable interface for object serialization,
+ * and it may be used remotely by implementing the Remote interface.
  */
 public class EnvData implements Serializable, Remote {
 
@@ -86,17 +88,18 @@ public class EnvData implements Serializable, Remote {
         try {
             // Your logic here
             return "EnvData says: " + toString();
-        } catch (Exception e) {
-            throw new EnvDataException("Error in saySomething method", e);
+        } catch (Exception _e) {
+            throw new EnvDataException("Error in saySomething method", _e);
         }
     }
 
     /**
-     * Custom exception class for saySomething method
+     * Custom exception class for saySomething method.
+     * This exception is thrown if there is an issue during the remote method invocation.
      */
     public static class EnvDataException extends Exception {
-        public EnvDataException(String message, Throwable cause) {
-            super(message, cause);
+        public EnvDataException(String _message, Throwable _cause) {
+            super(_message, _cause);
         }
     }
 }

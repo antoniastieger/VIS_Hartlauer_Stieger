@@ -12,15 +12,40 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * Represents an RMI server for providing environmental data.
+ * Implements the {@link IEnvService} interface to define methods for requesting environmental data.
+ */
 public class Environment_RmiServer extends UnicastRemoteObject implements IEnvService {
+
+    /**
+     * Default constructor for the RMI server.
+     *
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public Environment_RmiServer() throws RemoteException {
         super();
     }
 
+    /**
+     * Requests the available types of environmental data.
+     *
+     * @return An array of strings representing the available environment data types.
+     * @throws RemoteException If a remote communication error occurs.
+     */
+    @Override
     public String[] requestEnvironmentDataTypes() throws RemoteException {
         return new String[]{"light", "noise", "air"};
     }
 
+    /**
+     * Requests environmental data for a specific type.
+     *
+     * @param _type The type of environmental data to request.
+     * @return The requested environmental data.
+     * @throws RemoteException If a remote communication error occurs.
+     */
+    @Override
     public EnvData requestEnvironmentData(String _type) throws RemoteException {
         if (_type.equals("light") || _type.equals("noise") || _type.equals("air")) {
             return generateRandomEnvData(_type);
@@ -29,6 +54,13 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
         }
     }
 
+    /**
+     * Requests all available environmental data.
+     *
+     * @return An array of EnvData objects representing all available environmental data.
+     * @throws RemoteException If a remote communication error occurs.
+     */
+    @Override
     public EnvData[] requestAll() throws RemoteException {
         return new EnvData[]{
                 generateRandomEnvData("light"),
@@ -37,6 +69,12 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
         };
     }
 
+    /**
+     * Generates random environmental data for demonstration purposes.
+     *
+     * @param _sensorType The type of sensor for which to generate data.
+     * @return An EnvData object containing randomly generated environmental data.
+     */
     private EnvData generateRandomEnvData(String _sensorType) {
         // Simulate random sensor data for demonstration purposes
         long timestamp = System.currentTimeMillis();
@@ -53,18 +91,28 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
         return new EnvData(sensorName, timestamp, values);
     }
 
+    /**
+     * Generates a random number for demonstration purposes.
+     *
+     * @return A randomly generated integer.
+     */
     private int randomNumberGenerator() {
         return (int) (Math.random() * 100);
     }
 
+    /**
+     * The main method to start the RMI server and bind it to the registry.
+     *
+     * @param _args Command-line arguments (not used in this application).
+     */
     public static void main(String[] _args) {
         try {
             Environment_RmiServer server = new Environment_RmiServer();
             Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             registry.rebind("EnvironmentService", server);
             System.out.println("RMI Server is running...");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception _e) {
+            _e.printStackTrace();
         }
     }
 }
