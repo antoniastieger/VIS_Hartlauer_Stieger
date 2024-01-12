@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\Environment_RmiServer.jar;%APP_HOME%\lib\Environmen
 
 
 @rem Execute Environment_RmiServer
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %ENVIRONMENT_RMI_SERVER_OPTS%  -classpath "%CLASSPATH%" at.fhooe.sail.vis.Environment_RmiServer %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %ENVIRONMENT_RMI_SERVER_OPTS%  -classpath "%CLASSPATH%" at.fhooe.sail.vis.Dummy_RmiServer %*
 
 :end
 @rem End local scope for the variables with windows NT shell
