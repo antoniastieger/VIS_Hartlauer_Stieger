@@ -18,14 +18,14 @@ public class EnvData {
 
 package at.fhooe.sail.vis.general;
 
+import java.io.Serializable;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Arrays;
 
 /**
  * Represents environmental data, including sensor name, timestamp, and values.
  */
-public class EnvData implements Remote {
+public class EnvData implements Serializable, Remote {
 
     /**
      * The name of the sensor.
@@ -80,9 +80,23 @@ public class EnvData implements Remote {
      * Returns a string representing the greeting or message.
      *
      * @return a String representing the greeting or message.
-     * @throws RemoteException if there is a communication-related issue during the remote method invocation.
+     * @throws EnvDataException if there is an issue during the remote method invocation.
      */
-    public String saySomething() throws RemoteException {
-        return "EnvData says: " + toString();
+    public String saySomething() throws EnvDataException {
+        try {
+            // Your logic here
+            return "EnvData says: " + toString();
+        } catch (Exception e) {
+            throw new EnvDataException("Error in saySomething method", e);
+        }
+    }
+
+    /**
+     * Custom exception class for saySomething method
+     */
+    public static class EnvDataException extends Exception {
+        public EnvDataException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 }

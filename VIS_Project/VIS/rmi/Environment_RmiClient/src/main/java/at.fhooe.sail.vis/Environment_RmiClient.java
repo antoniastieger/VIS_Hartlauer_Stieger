@@ -31,7 +31,8 @@ public class Environment_RmiClient implements IEnvService {
 
     @Override
     public EnvData requestEnvironmentData(String _type) throws RemoteException {
-        return remoteService.requestEnvironmentData(_type);
+        EnvData result = remoteService.requestEnvironmentData(_type);
+        return result;
     }
 
     @Override
