@@ -1,5 +1,4 @@
 -o
-/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/exe/main/debug/Primitive_SocketServer
-/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/obj/main/debug/aypd6wu6f2nhspln6iqplqtfs/Primitive_SocketServer.o
--arch
-x86_64
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Primitive_SocketServer\\build\\exe\\main\\debug\\Primitive_SocketServer.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Primitive_SocketServer\\build\\obj\\main\\debug\\5suajhnugrhf01sdqk8wccp0d\\Primitive_SocketServer.obj
+-m64

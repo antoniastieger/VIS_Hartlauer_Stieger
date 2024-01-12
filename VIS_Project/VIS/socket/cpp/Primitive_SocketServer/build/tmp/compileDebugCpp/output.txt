@@ -1,8 +1,8 @@
-See file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
 compiling Primitive_SocketServer.cpp successful.
-/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/src/main/cpp/Primitive_SocketServer.cpp:139:29: warning: conversion from string literal to 'char *' is deprecated [-Wc++11-compat-deprecated-writable-strings]
-            char* sendMsg = "Server received your message!\0";
-                            ^
-1 warning generated.
+C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Primitive_SocketServer\src\main\cpp\Primitive_SocketServer.cpp: In function 'int main(int, char**)':
+C:\Users\sandr\OneDrive\Desktop\Git\VIS_Hartlauer_Stieger\VIS_Project\VIS\socket\cpp\Primitive_SocketServer\src\main\cpp\Primitive_SocketServer.cpp:139:29: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  139 |             char* sendMsg = "Server received your message!\0";
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finished compileDebugCpp, see full log file:///Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/compileDebugCpp/output.txt.
+Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/compileDebugCpp/output.txt.

@@ -1,5 +1,4 @@
 -o
-/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketClient/build/exe/main/debug/Ipv6_SocketClient
-/Users/antonia/Desktop/Desktoop/3SEM/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Ipv6_SocketClient/build/obj/main/debug/32oopcopfisn3nh6g29h1276m/Ipv6_SocketClient.o
--arch
-x86_64
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Ipv6_SocketClient\\build\\exe\\main\\debug\\Ipv6_SocketClient.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Ipv6_SocketClient\\build\\obj\\main\\debug\\5snxvf8weiikjhjrdv5l8ye4h\\Ipv6_SocketClient.obj
+-m64
