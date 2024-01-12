@@ -9,7 +9,15 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Dummy_RmiServer extends UnicastRemoteObject {
 
-    public Dummy_RmiServer() throws RemoteException {
+    private String serverName;
+
+    public Dummy_RmiServer(String serverName) throws RemoteException {
         // Initialization as needed for the dummy server
+        this.serverName = serverName;
+        System.out.println("Dummy_RmiServer '" + serverName + "' is initialized.");
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 }

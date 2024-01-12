@@ -18,7 +18,7 @@ public class ServiceMgmt {
     public static void main(String[] args) {
         try {
             registry = LocateRegistry.getRegistry();
-            Dummy_RmiServer dummyServer = new Dummy_RmiServer();
+            Dummy_RmiServer dummyServer = new Dummy_RmiServer("DummyServer");
             registry.rebind("DummyService", dummyServer);
 
             // Print available services on the client side
@@ -44,6 +44,7 @@ public class ServiceMgmt {
                         stopRmiService();
                         break;
                     case 3:
+                        scanner.close();
                         quitServiceManagement();
                         return;
                     default:
