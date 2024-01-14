@@ -1,4 +1,5 @@
 plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.8.20"
     war
 }
 
@@ -7,26 +8,14 @@ repositories {
 }
 
 dependencies {
-// https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
     implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
 }
 
-// Specify the subprojects and their settings
-subprojects {
-    apply(plugin = "war")
-
-    tasks.war {
-        destinationDirectory.set(file("$buildDir/webapp"))
-        archiveBaseName.set(name)
-    }
-
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-}
+val nameWar: String = "InfoServlet"
 
 // Configuration for the specific subproject
-project(":VIS:servlet:Info_Servlet") {
+project(":servlet:Info_Servlet") {
     apply(plugin = "java")
     apply(plugin = "war")
 
@@ -35,24 +24,24 @@ project(":VIS:servlet:Info_Servlet") {
     }
 
     tasks.war {
-        destinationDirectory.set(file("$buildDir/webapp"))
-        archiveBaseName.set("Info_Servlet")
-        from("webapp/index.html")
+        destinationDirectory.set(file("./webapp"))
+        archiveBaseName.set(nameWar)
+        //from("webapp/index.html") // only integrate if index.html should be provided/used
+        doLast {
+            copy {
+                println("*** copying war to root webapps folder ... ")
+                val fromS: String = "${project.projectDir.absolutePath}\\webapp\\$nameWar.war"
+                val intoS: String = "${rootProject.projectDir.absolutePath}\\webapps"
+                from(fromS)
+                into(intoS)
+            }
+        }
     }
 }
 
 tasks.clean {
-    val fN_a: String = "${project.projectDir.absolutePath}\\webapp\\$nameWar.war"
-    val fN_b: String = "${rootProject.projectDir.absolutePath}\\webapps\\$nameWar.war"
+    val fN_a: String = "${project.projectDir.absolutePath}/webapp/${project.name}.war"
+    val fN_b: String = "${rootProject.projectDir.absolutePath}/webapps/${project.name}.war"
     delete(files(fN_a))
     delete(files(fN_b))
-}
-
-// Exclude duplicates while integrating libraries through dependencies
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }

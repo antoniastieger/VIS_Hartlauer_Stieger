@@ -29,5 +29,7 @@ include(
     ":rmi:Environment_RmiClient",
     ":rmi:Environment_RmiServer",
     ":socket:cpp:Http_SocketServer",
-    ":servlet:Hello_Servlet"
+    ":servlet:Hello_Servlet",
+    ":servlet:Info_Servlet"
+
     )
