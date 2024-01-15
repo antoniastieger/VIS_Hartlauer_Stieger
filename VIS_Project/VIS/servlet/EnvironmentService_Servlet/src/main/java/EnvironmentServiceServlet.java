@@ -18,7 +18,7 @@ import java.rmi.RemoteException;
  * Servlet implementation class EnvironmentServiceServlet.
  * This servlet fetches environmental data from RMI and Socket clients and displays it on a JSP page.
  */
-@WebServlet("/EnvironmentServiceServlet")
+@WebServlet(name = "EnvironmentServiceServlet", urlPatterns = {"/environment"})
 public class EnvironmentServiceServlet extends HttpServlet {
 
     /**
