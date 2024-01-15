@@ -16,17 +16,12 @@ public class Environment_SocketClient implements IEnvService {
     private PrintWriter mOut;
     private Scanner mScanner;
 
-    public Environment_SocketClient() {
-        try {
+    public Environment_SocketClient() throws IOException {
             Socket socket = new Socket("127.0.0.1", 4949);
 
             // Initialize mOut and mScanner using the socket's streams
             mOut = new PrintWriter(socket.getOutputStream(), true);
             mScanner = new Scanner(socket.getInputStream());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -54,7 +49,7 @@ public class Environment_SocketClient implements IEnvService {
      *
      * @param args Command-line arguments (not used).
      */
-    public static void main(String[] args) throws RemoteException {
+    public static void main(String[] args) throws IOException {
         /*
         try {
             Socket socket = new Socket("127.0.0.1", 4949);

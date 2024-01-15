@@ -2,62 +2,89 @@
 // Created by Antonia Stieger on 14.01.2024.
 //
 
-import at.fhooe.sail.vis.Environment_RmiClient;
+import at.fhooe.sail.vis.general.IEnvService;
 import at.fhooe.sail.vis.Environment_SocketClient;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import at.fhooe.sail.vis.general.EnvData;
-import at.fhooe.sail.vis.general.IEnvService;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import at.fhooe.sail.vis.general.EnvData;
 
-/**
- * Servlet implementation class EnvironmentServiceServlet.
- * This servlet fetches environmental data from RMI and Socket clients and displays it on a JSP page.
- */
-@WebServlet(name = "EnvironmentServiceServlet", urlPatterns = {"/environment"})
+@WebServlet(name = "EnvironmentServiceServlet", urlPatterns = {"/", "/environment"})
 public class EnvironmentServiceServlet extends HttpServlet {
 
-    /**
-     * Handles GET requests and fetches environmental data from RMI and Socket clients.
-     * Displays the data on a JSP page.
-     *
-     * @param _request  The HttpServletRequest object.
-     * @param _response The HttpServletResponse object.
-     * @throws ServletException If a servlet-specific error occurs.
-     * @throws IOException      If an I/O error occurs.
-     */
-    protected void doGet(HttpServletRequest _request, HttpServletResponse _response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest _request, HttpServletResponse _response) throws ServletException, IOException {
+        _response.setIntHeader("Refresh", 5);
+        _response.setContentType("text/html");
+        PrintWriter out = _response.getWriter();
+
+        out.println("<html>");
+        out.println("<head><title>Environment Service Servlet</title></head>");
+        out.println("<body>");
+
+        // C++ Server
         try {
-            // Instantiate the RMI client
-            IEnvService rmiClient = new Environment_RmiClient();
-
-            // Instantiate the Socket client
             IEnvService socketClient = new Environment_SocketClient();
+            out.println(createTable("C++ Server", socketClient));
 
-            // Fetch data from RMI client
-            String[] rmiSensors = rmiClient.requestEnvironmentDataTypes();
-            EnvData[] rmiData = rmiClient.requestAll();
-
-            // Fetch data from Socket client
-            String[] socketSensors = socketClient.requestEnvironmentDataTypes();
-            EnvData[] socketData = socketClient.requestAll();
-
-            // Process the data and set it as a request attribute
-            _request.setAttribute("rmiSensors", rmiSensors);
-            _request.setAttribute("rmiData", rmiData);
-            _request.setAttribute("socketSensors", socketSensors);
-            _request.setAttribute("socketData", socketData);
-
-            // Forward the request to a JSP page for rendering
-            _request.getRequestDispatcher("/webapp/environment.jsp").forward(_request, _response);
-
-        } catch (RemoteException _e) {
-            _e.printStackTrace();
-            _response.getWriter().println("Error: Remote server communication failed.");
+        } catch (Exception e){
+            System.out.println("Exception in C++ Server Request");
+            out.println("<p>C++ Server is offline</p>");
         }
+
+        // RMI Server
+        try {
+            String adr = "Environment_RmiServer";
+            Registry reg = LocateRegistry.getRegistry();
+            IEnvService lookup = (IEnvService) reg.lookup(adr);
+
+            out.println(createTable("RMI Server", lookup));
+
+        } catch (Exception e){
+            System.out.println("Exception in RMI Server Request");
+            out.println("<p>RMI Server is offline</p>");
+        }
+
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+    private String createTable(String serverName, IEnvService envService) throws RemoteException {
+        StringBuilder ret = new StringBuilder();
+
+        EnvData[] envData = envService.requestAll();
+
+        ret.append("<h2>" + serverName + "</h2>");
+        ret.append("<table>");
+        ret.append("<tr>");
+        ret.append("<th>Timestamp</th>");
+        ret.append("<th>Sensor</th>");
+        ret.append("<th>Value(s)</th>");
+        ret.append("</tr>");
+
+        for (EnvData sensData : envData){
+            ret.append("<tr>");
+            ret.append("<td>" + sensData.getTimestamp() + "</td>");
+            ret.append("<td>" + sensData.getSensorName() + "</td>");
+            ret.append("<td>");
+            for (int i = 0; i < sensData.getValues().length; i++){
+                ret.append(sensData.getValues()[i]);
+                if(i < sensData.getValues().length - 1){
+                    ret.append("; ");
+                }
+            }
+            ret.append("</td>");
+            ret.append("</tr>");
+        }
+
+        ret.append("</table>");
+
+        return ret.toString();
     }
 }

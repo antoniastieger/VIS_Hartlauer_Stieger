@@ -52,9 +52,33 @@ public class EnvData implements Serializable, Remote {
      * @param _values     The array of sensor values.
      */
     public EnvData(String _sensorName, long _timestamp, int[] _values) {
-        mSensorName = _sensorName;
-        mTimestamp = _timestamp;
-        mValues = _values;
+        this.mSensorName = _sensorName;
+        this.mTimestamp = _timestamp;
+        this.mValues = _values;
+    }
+
+    /**
+     * Getter for mSensorName
+     * @return value of mSensorName
+     */
+    public String getSensorName() {
+        return mSensorName;
+    }
+
+    /**
+     * Getter for mTimestamp
+     * @return value of getTimestamp
+     */
+    public long getTimestamp() {
+        return mTimestamp;
+    }
+
+    /**
+     * Getter for mValues
+     * @return value of getValues
+     */
+    public int[] getValues() {
+        return mValues;
     }
 
     /**
