@@ -10,9 +10,9 @@ repositories {
 dependencies {
     // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
     implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
-    implementation(project(mapOf("path" to ":general:EnvironmentI")))
-    implementation(project(mapOf("path" to ":rmi:Environment_RmiClient")))
-    implementation(project(mapOf("path" to ":socket:java:Environment_SocketClient")))
+    implementation(project(":general:EnvironmentI"))
+    implementation(project(":rmi:Environment_RmiClient"))
+    implementation(project(":socket:java:Environment_SocketClient"))
 }
 
 val nameWar: String = "EnvironmentServiceServlet"
