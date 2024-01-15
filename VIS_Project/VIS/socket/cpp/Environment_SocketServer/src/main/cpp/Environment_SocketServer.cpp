@@ -10,6 +10,7 @@
 #include <thread>
 #include <vector>
 #include <random>
+#include <chrono>
 
 #define BUFFER_SIZE 1024
 #define PORT 4949
@@ -289,7 +290,10 @@ int randomNumberGenerator() {
  * @param _request The request received from the client.
  */
 void handleClientRequest(int _clientSocket, const std::string& _request) {
-    int timestamp = randomNumberGenerator();
+    std::chrono::system_clock::time_point currentTimePoint = std::chrono::system_clock::now();
+
+    std::chrono::milliseconds duration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTimePoint.time_since_epoch());
+    int timestamp = static_cast<int>(duration.count());
 
     std::string cleanedRequest = _request;
 
