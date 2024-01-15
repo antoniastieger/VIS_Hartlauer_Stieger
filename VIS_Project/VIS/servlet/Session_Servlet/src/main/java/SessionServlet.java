@@ -24,31 +24,28 @@ public class SessionServlet extends HttpServlet {
     /**
      * Handles the GET request to the servlet.
      *
-     * @param request  The HttpServletRequest object.
-     * @param response The HttpServletResponse object.
+     * @param _request  The HttpServletRequest object.
+     * @param _response The HttpServletResponse object.
      * @throws IOException If an I/O error occurs while handling the request.
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest _request, HttpServletResponse _response) throws IOException {
         // Get browser information from the User-Agent header
-        String userAgent = request.getHeader("User-Agent");
+        String userAgent = _request.getHeader("User-Agent");
 
         // Extract only the browser name from the User-Agent string
         String browser = extractBrowser(userAgent);
 
         // Get the magic number from the URL parameter
-        String magicNumberParam = request.getParameter("magicNumber");
+        String magicNumberParam = _request.getParameter("magicNumber");
 
         // Get or create the session
-        HttpSession session = request.getSession();
+        HttpSession session = _request.getSession();
 
         // Retrieve the last magic number from the session
         String lastMagicNumber = (String) session.getAttribute("lastMagicNumber");
 
-        // Set the response content type
-        response.setContentType("text/html");
-
-        // Get the response writer
-        PrintWriter out = response.getWriter();
+        _response.setContentType("text/html");
+        PrintWriter out = _response.getWriter();
 
         // Generate the HTML content based on the information
         out.println("<html>");
@@ -71,12 +68,12 @@ public class SessionServlet extends HttpServlet {
     /**
      * Extracts the browser name from the User-Agent string.
      *
-     * @param userAgent The User-Agent string.
+     * @param _userAgent The User-Agent string.
      * @return The extracted browser name.
      */
-    private String extractBrowser(String userAgent) {
+    private String extractBrowser(String _userAgent) {
         Pattern pattern = Pattern.compile("(?i)\\b(Firefox|Chrome|Safari|Edge|IE|Opera)\\b");
-        Matcher matcher = pattern.matcher(userAgent);
+        Matcher matcher = pattern.matcher(_userAgent);
         if (matcher.find()) {
             return matcher.group();
         } else {

@@ -57,7 +57,6 @@ public class EnvironmentServiceServlet extends HttpServlet {
 
         } catch (RemoteException e) {
             e.printStackTrace();
-            // Handle RemoteException appropriately
             response.getWriter().println("Error: Remote server communication failed.");
         }
     }
