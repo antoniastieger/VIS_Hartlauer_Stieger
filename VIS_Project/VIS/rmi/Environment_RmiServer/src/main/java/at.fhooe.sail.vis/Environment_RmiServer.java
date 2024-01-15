@@ -8,8 +8,6 @@ import at.fhooe.sail.vis.general.EnvData;
 import at.fhooe.sail.vis.general.IEnvService;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -111,7 +109,7 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
      *
      * @param _args Command-line arguments (not used in this application).
      */
-    public static void main(String[] _args) {
+    /*public static void main(String[] _args) {
         try {
             Environment_RmiServer server = new Environment_RmiServer();
             Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
@@ -120,5 +118,5 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
         } catch (Exception _e) {
             _e.printStackTrace();
         }
-    }
+    }*/
 }

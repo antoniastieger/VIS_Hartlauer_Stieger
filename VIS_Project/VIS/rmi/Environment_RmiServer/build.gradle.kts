@@ -16,7 +16,8 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("at.fhooe.sail.vis.Environment_RmiServer")
+    //mainClass.set("at.fhooe.sail.vis.Environment_RmiServer")
+    mainClass.set("at.fhooe.sail.vis.ServiceMgmt")
 }
 
 tasks.named<JavaExec>("run") {

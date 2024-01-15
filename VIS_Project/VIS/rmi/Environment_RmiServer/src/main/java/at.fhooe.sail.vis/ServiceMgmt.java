@@ -5,6 +5,7 @@
 package at.fhooe.sail.vis;
 
 import java.rmi.NotBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,7 +29,7 @@ public class ServiceMgmt {
      */
     public static void main(String[] _args) {
         try {
-            registry = LocateRegistry.getRegistry();
+            registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
             Dummy_RmiServer dummyServer = new Dummy_RmiServer("DummyServer");
             registry.rebind("DummyService", dummyServer);
 
@@ -99,9 +100,15 @@ public class ServiceMgmt {
      * @throws NotBoundException  If the specified name is not currently bound.
      */
     private static void stopRmiService() throws RemoteException, NotBoundException {
-        // Unbind and unexport the Environment_RmiServer
-        registry.unbind("EnvironmentService");
-        UnicastRemoteObject.unexportObject(registry.lookup("EnvironmentService"), true);
+        String serviceName = "EnvironmentService";
+
+        // Unbind the Environment_RmiServer
+        Remote remoteObject = registry.lookup(serviceName);
+        registry.unbind(serviceName);
+
+        // Unexport the remote object
+        UnicastRemoteObject.unexportObject(remoteObject, true);
+
         System.out.println("Environment_RmiServer stopped.");
     }
 
