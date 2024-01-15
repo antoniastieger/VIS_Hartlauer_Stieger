@@ -2,20 +2,20 @@
 // Created by Antonia Stieger on 14.01.2024.
 //
 
-import at.fhooe.sail.vis.Environment_RmiClient;
-import at.fhooe.sail.vis.general.IEnvService;
 import at.fhooe.sail.vis.Environment_SocketClient;
+import at.fhooe.sail.vis.general.EnvData;
+import at.fhooe.sail.vis.general.IEnvService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import at.fhooe.sail.vis.general.EnvData;
 
 @WebServlet(name = "EnvironmentServiceServlet", urlPatterns = {"/", "/environment"})
 public class EnvironmentServiceServlet extends HttpServlet {
@@ -29,7 +29,6 @@ public class EnvironmentServiceServlet extends HttpServlet {
         out.println("<head><title>Environment Service Servlet</title></head>");
         out.println("<body>");
 
-        // C++ Server
         try {
             IEnvService socketClient = new Environment_SocketClient();
             out.println(createTable("C++ Server", socketClient));
@@ -38,9 +37,8 @@ public class EnvironmentServiceServlet extends HttpServlet {
             out.println("<p>C++ Server is offline</p>");
         }
 
-        // RMI Server
         try {
-            String adr = "Environment_RmiClient";
+            String adr = "EnvironmentService";
             Registry reg = LocateRegistry.getRegistry();
             IEnvService lookup = (IEnvService) reg.lookup(adr);
             out.println(createTable("RMI Server", lookup));
@@ -53,26 +51,26 @@ public class EnvironmentServiceServlet extends HttpServlet {
         out.println("</html>");
     }
 
-    private String createTable(String serverName, IEnvService envService) throws RemoteException {
+    private String createTable(String _serverName, IEnvService _envService) throws RemoteException {
         StringBuilder ret = new StringBuilder();
-        EnvData[] envData = envService.requestAll();
+        EnvData[] envData = _envService.requestAll();
 
-        ret.append("<h2>" + serverName + "</h2>");
-        ret.append("<table>");
-        ret.append("<tr>");
-        ret.append("<th>Timestamp</th>");
-        ret.append("<th>Sensor</th>");
-        ret.append("<th>Value(s)</th>");
+        ret.append("<h2>" + _serverName + "</h2>");
+        ret.append("<table style='border-collapse: collapse; width: 100%;'>");
+        ret.append("<tr style='background-color: #f2f2f2;'>");
+        ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Timestamp</th>");
+        ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Sensor</th>");
+        ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Value(s)</th>");
         ret.append("</tr>");
 
-        for (EnvData sensData : envData){
+        for (EnvData sensData : envData) {
             ret.append("<tr>");
-            ret.append("<td>" + sensData.getTimestamp() + "</td>");
-            ret.append("<td>" + sensData.getSensorName() + "</td>");
-            ret.append("<td>");
-            for (int i = 0; i < sensData.getValues().length; i++){
+            ret.append("<td style='padding: 8px; border-bottom: 1px solid #ddd;'>" + sensData.getTimestamp() + "</td>");
+            ret.append("<td style='padding: 8px; border-bottom: 1px solid #ddd;'>" + sensData.getSensorName() + "</td>");
+            ret.append("<td style='padding: 8px; border-bottom: 1px solid #ddd;'>");
+            for (int i = 0; i < sensData.getValues().length; i++) {
                 ret.append(sensData.getValues()[i]);
-                if(i < sensData.getValues().length - 1){
+                if (i < sensData.getValues().length - 1) {
                     ret.append("; ");
                 }
             }
