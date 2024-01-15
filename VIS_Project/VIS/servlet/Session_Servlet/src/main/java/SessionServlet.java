@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * constructs a webpage displaying the browser information along
  * with the provided magic number.
  */
-@WebServlet(name = "SessionServlet", urlPatterns = {"/session"})
+@WebServlet(name = "SessionServlet", urlPatterns = {"/", "/session"})
 public class SessionServlet extends HttpServlet {
 
     /**

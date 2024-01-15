@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
@@ -33,7 +32,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs while handling the request
      */
-    public void doGet(HttpServletRequest _request, HttpServletResponse _response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest _request, HttpServletResponse _response) throws IOException {
         _response.setIntHeader("Refresh", 5);
         _response.setContentType("text/html");
         PrintWriter out = _response.getWriter();
@@ -47,7 +46,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             out.println(createTable("C++ Server", socketClient));
         } catch (Exception e){
             System.out.println("Exception in C++ Server Request");
-            out.println("<h2 style='text-align: center;'> C++ Server is offline</h2>");
+            out.println("<h2 style='text-align: center;'> C++ Server is offline :(</h2>");
         }
 
         try {
@@ -57,7 +56,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             out.println(createTable("RMI Server", lookup));
         } catch (Exception e){
             System.out.println("Exception in RMI Server Request");
-            out.println("<h2 style='text-align: center;'> RMI Server is offline</h2>");
+            out.println("<h2 style='text-align: center;'> RMI Server is offline :(</h2>");
         }
 
         out.println("</body>");

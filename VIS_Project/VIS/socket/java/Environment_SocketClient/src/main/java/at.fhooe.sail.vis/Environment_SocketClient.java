@@ -5,7 +5,6 @@ import at.fhooe.sail.vis.general.IEnvService;
 
 import java.io.*;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
@@ -27,13 +26,13 @@ public class Environment_SocketClient implements IEnvService {
     /**
      * Sends a command to the specified socket.
      *
-     * @param socket  The socket to send the command to.
-     * @param command The command to be sent.
+     * @param _socket  The socket to send the command to.
+     * @param _command The command to be sent.
      */
-    private static void sendCommand(Socket socket, String command) {
+    private static void sendCommand(Socket _socket, String _command) {
         try {
-            OutputStream outputStream = socket.getOutputStream();
-            byte[] commandBytes = command.getBytes();
+            OutputStream outputStream = _socket.getOutputStream();
+            byte[] commandBytes = _command.getBytes();
             outputStream.write(commandBytes, 0, commandBytes.length);
             outputStream.flush();
 
@@ -47,9 +46,9 @@ public class Environment_SocketClient implements IEnvService {
     /**
      * The main entry point of the Environment_SocketClient application.
      *
-     * @param args Command-line arguments (not used).
+     * @param _args Command-line arguments (not used).
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] _args) throws IOException {
         /*
         try {
             Socket socket = new Socket("127.0.0.1", 4949);

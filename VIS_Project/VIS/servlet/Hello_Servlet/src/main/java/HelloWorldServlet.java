@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * It is annotated with @WebServlet to specify its name and URL patterns for mapping.
  * The servlet maintains a hit count, which increments with each incoming request.
  */
-@WebServlet(name = "No of hits", urlPatterns = {"/hits", "/hitCounter"})
+@WebServlet(name = "HelloWorldServlet", urlPatterns = {"/", "/hits", "/hitCounter"})
 public class HelloWorldServlet extends HttpServlet {
     /**
      * The hitCount variable stores the total number of hits to this servlet.

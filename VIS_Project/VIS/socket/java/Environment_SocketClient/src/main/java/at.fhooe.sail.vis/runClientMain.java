@@ -11,9 +11,9 @@ public class runClientMain {
     /**
      * The main method of the application.
      *
-     * @param args Command-line arguments (not used in this application).
+     * @param _args Command-line arguments (not used in this application).
      */
-    /*public static void main(String[] args) {
+    /*public static void main(String[] _args) {
         // Create an instance of the Environment_SocketClient to communicate with the environment service
         IEnvService service = new Environment_SocketClient();
 
