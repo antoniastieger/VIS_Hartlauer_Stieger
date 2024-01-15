@@ -41,8 +41,11 @@ public class EnvironmentServiceServlet extends HttpServlet {
 
         // RMI Server
         try {
-            IEnvService rmiClient = new Environment_RmiClient();
-            out.println(createTable("C++ Server", rmiClient));
+            String adr = "Environment_RmiClient";
+            Registry reg = LocateRegistry.getRegistry();
+            IEnvService lookup = (IEnvService) reg.lookup(adr);
+
+            out.println(createTable("RMI Server", lookup));
 
         } catch (Exception e){
             System.out.println("Exception in RMI Server Request");
