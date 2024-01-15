@@ -47,7 +47,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             out.println(createTable("C++ Server", socketClient));
         } catch (Exception e){
             System.out.println("Exception in C++ Server Request");
-            out.println("<p>C++ Server is offline</p>");
+            out.println("<h2 style='text-align: center;'> C++ Server is offline</h2>");
         }
 
         try {
@@ -57,7 +57,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             out.println(createTable("RMI Server", lookup));
         } catch (Exception e){
             System.out.println("Exception in RMI Server Request");
-            out.println("<p>RMI Server is offline</p>");
+            out.println("<h2 style='text-align: center;'> RMI Server is offline</h2>");
         }
 
         out.println("</body>");
