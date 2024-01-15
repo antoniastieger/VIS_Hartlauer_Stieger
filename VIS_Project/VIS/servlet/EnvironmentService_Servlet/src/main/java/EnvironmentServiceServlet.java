@@ -25,12 +25,12 @@ public class EnvironmentServiceServlet extends HttpServlet {
      * Handles GET requests and fetches environmental data from RMI and Socket clients.
      * Displays the data on a JSP page.
      *
-     * @param request  The HttpServletRequest object.
-     * @param response The HttpServletResponse object.
+     * @param _request  The HttpServletRequest object.
+     * @param _response The HttpServletResponse object.
      * @throws ServletException If a servlet-specific error occurs.
      * @throws IOException      If an I/O error occurs.
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest _request, HttpServletResponse _response) throws ServletException, IOException {
         try {
             // Instantiate the RMI client
             IEnvService rmiClient = new Environment_RmiClient();
@@ -47,17 +47,17 @@ public class EnvironmentServiceServlet extends HttpServlet {
             EnvData[] socketData = socketClient.requestAll();
 
             // Process the data and set it as a request attribute
-            request.setAttribute("rmiSensors", rmiSensors);
-            request.setAttribute("rmiData", rmiData);
-            request.setAttribute("socketSensors", socketSensors);
-            request.setAttribute("socketData", socketData);
+            _request.setAttribute("rmiSensors", rmiSensors);
+            _request.setAttribute("rmiData", rmiData);
+            _request.setAttribute("socketSensors", socketSensors);
+            _request.setAttribute("socketData", socketData);
 
             // Forward the request to a JSP page for rendering
-            request.getRequestDispatcher("/webapp/environment.jsp").forward(request, response);
+            _request.getRequestDispatcher("/webapp/environment.jsp").forward(_request, _response);
 
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            response.getWriter().println("Error: Remote server communication failed.");
+        } catch (RemoteException _e) {
+            _e.printStackTrace();
+            _response.getWriter().println("Error: Remote server communication failed.");
         }
     }
 }
