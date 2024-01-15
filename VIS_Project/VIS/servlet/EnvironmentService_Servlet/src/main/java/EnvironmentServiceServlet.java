@@ -55,8 +55,8 @@ public class EnvironmentServiceServlet extends HttpServlet {
         StringBuilder ret = new StringBuilder();
         EnvData[] envData = _envService.requestAll();
 
-        ret.append("<h2>" + _serverName + "</h2>");
-        ret.append("<table style='border-collapse: collapse; width: 100%;'>");
+        ret.append("<h2 style='text-align: center;'>" + _serverName + "</h2>");
+        ret.append("<table style='border-collapse: collapse; width: 100%; margin-top: 20px;'>");
         ret.append("<tr style='background-color: #f2f2f2;'>");
         ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Timestamp</th>");
         ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Sensor</th>");
@@ -80,4 +80,5 @@ public class EnvironmentServiceServlet extends HttpServlet {
         ret.append("</table>");
         return ret.toString();
     }
+
 }
