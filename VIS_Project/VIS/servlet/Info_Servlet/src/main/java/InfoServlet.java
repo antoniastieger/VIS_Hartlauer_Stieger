@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  * It can be extended with the option to use URL parameters and generate a different web page depending on the parameter value.
  * Available parameters: "server" - display server information, "client" - display client information.
  */
-@WebServlet(name = "InfoServlet", urlPatterns = {"/","/info"})
+@WebServlet(name = "InfoServlet", urlPatterns = {"/info"})
 public class InfoServlet extends HttpServlet {
 
     /**
