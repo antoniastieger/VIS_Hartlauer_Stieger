@@ -35,7 +35,8 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
      */
     @Override
     public String[] requestEnvironmentDataTypes() throws RemoteException {
-        return new String[]{"light", "noise", "air"};
+        //return new String[]{"light", "noise", "air"};
+        return new String[]{"pressure"};
     }
 
     /**
@@ -47,7 +48,9 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
      */
     @Override
     public EnvData requestEnvironmentData(String _type) throws RemoteException {
-        if (_type.equals("light") || _type.equals("noise") || _type.equals("air")) {
+        /*if (_type.equals("light") || _type.equals("noise") || _type.equals("air")) {
+            return generateRandomEnvData(_type);*/
+        if (_type.equals("pressure")) {
             return generateRandomEnvData(_type);
         } else {
             throw new RemoteException("Unsupported sensor type: " + _type);
@@ -62,10 +65,13 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
      */
     @Override
     public EnvData[] requestAll() throws RemoteException {
-        return new EnvData[]{
+        /*return new EnvData[]{
                 generateRandomEnvData("light"),
                 generateRandomEnvData("noise"),
                 generateRandomEnvData("air")
+        };*/
+        return new EnvData[]{
+                generateRandomEnvData("pressure")
         };
     }
 
@@ -81,7 +87,7 @@ public class Environment_RmiServer extends UnicastRemoteObject implements IEnvSe
         int[] values;
         String sensorName = _sensorType;
 
-        if (_sensorType.equals("light") || _sensorType.equals("noise")) {
+        if (_sensorType.equals("light") || _sensorType.equals("noise") || _sensorType.equals("pressure")) {
             values = new int[]{randomNumberGenerator()};
         } else if (_sensorType.equals("air")) {
             values = new int[]{randomNumberGenerator(), randomNumberGenerator(), randomNumberGenerator()};
