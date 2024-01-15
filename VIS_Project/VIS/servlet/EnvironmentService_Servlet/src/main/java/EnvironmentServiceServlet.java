@@ -2,6 +2,7 @@
 // Created by Antonia Stieger on 14.01.2024.
 //
 
+import at.fhooe.sail.vis.Environment_RmiClient;
 import at.fhooe.sail.vis.general.IEnvService;
 import at.fhooe.sail.vis.Environment_SocketClient;
 import jakarta.servlet.ServletException;
@@ -40,11 +41,8 @@ public class EnvironmentServiceServlet extends HttpServlet {
 
         // RMI Server
         try {
-            String adr = "Environment_RmiServer";
-            Registry reg = LocateRegistry.getRegistry();
-            IEnvService lookup = (IEnvService) reg.lookup(adr);
-
-            out.println(createTable("RMI Server", lookup));
+            IEnvService rmiClient = new Environment_RmiClient();
+            out.println(createTable("C++ Server", rmiClient));
 
         } catch (Exception e){
             System.out.println("Exception in RMI Server Request");
