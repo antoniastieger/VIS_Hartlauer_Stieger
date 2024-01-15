@@ -43,8 +43,8 @@ project(":servlet:EnvironmentService_Servlet") {
 }
 
 tasks.clean {
-    val fN_a: String = "${project.projectDir.absolutePath}/webapp/${project.name}.war"
-    val fN_b: String = "${rootProject.projectDir.absolutePath}/webapps/${project.name}.war"
+    val fN_a = "${project.projectDir.absolutePath}/webapp/${project.name}.war"
+    val fN_b = "${rootProject.projectDir.absolutePath}/webapps/${project.name}.war"
     delete(files(fN_a))
     delete(files(fN_b))
 }

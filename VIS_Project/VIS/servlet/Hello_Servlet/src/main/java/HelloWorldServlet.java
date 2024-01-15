@@ -33,17 +33,17 @@ public class HelloWorldServlet extends HttpServlet {
      * Handles HTTP GET requests. Increments the hit count and sends a response
      * displaying the total number of hits.
      *
-     * @param request  the HttpServletRequest object containing the request parameters
-     * @param response the HttpServletResponse object for sending the responses
+     * @param _request  the HttpServletRequest object containing the request parameters
+     * @param _response the HttpServletResponse object for sending the responses
      * @throws IOException      if an I/O error occurs during the processing of the request
      */
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest _request, HttpServletResponse _response)
             throws IOException {
         hitCount++;
+        _response.setContentType("text/html");
+        PrintWriter out = _response.getWriter();
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h2>Total Number of Hits</h2>");
         out.println("<p>Number of calls: " + hitCount + "</p>");

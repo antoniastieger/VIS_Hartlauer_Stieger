@@ -41,10 +41,7 @@ public class InfoServlet extends HttpServlet {
         // Get URL parameters
         String parameterValue = _request.getParameter("parameterName");
 
-        // Set the response content type
         _response.setContentType("text/html");
-
-        // Get the response writer
         PrintWriter out = _response.getWriter();
 
         // Generate the HTML content based on the parameter value
