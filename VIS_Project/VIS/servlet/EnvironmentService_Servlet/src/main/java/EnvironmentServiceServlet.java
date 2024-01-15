@@ -60,7 +60,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
         ret.append("<tr style='background-color: #f2f2f2;'>");
         ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Timestamp</th>");
         ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Sensor</th>");
-        ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd;'>Value(s)</th>");
+        ret.append("<th style='padding: 12px; text-align: left; border-bottom: 1px solid #ddd; min-width: 200px;'>Value(s)</th>");
         ret.append("</tr>");
 
         for (EnvData sensData : envData) {
