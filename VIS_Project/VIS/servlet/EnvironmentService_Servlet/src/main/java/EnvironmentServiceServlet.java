@@ -33,7 +33,6 @@ public class EnvironmentServiceServlet extends HttpServlet {
         try {
             IEnvService socketClient = new Environment_SocketClient();
             out.println(createTable("C++ Server", socketClient));
-
         } catch (Exception e){
             System.out.println("Exception in C++ Server Request");
             out.println("<p>C++ Server is offline</p>");
@@ -44,9 +43,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             String adr = "Environment_RmiClient";
             Registry reg = LocateRegistry.getRegistry();
             IEnvService lookup = (IEnvService) reg.lookup(adr);
-
             out.println(createTable("RMI Server", lookup));
-
         } catch (Exception e){
             System.out.println("Exception in RMI Server Request");
             out.println("<p>RMI Server is offline</p>");
@@ -58,7 +55,6 @@ public class EnvironmentServiceServlet extends HttpServlet {
 
     private String createTable(String serverName, IEnvService envService) throws RemoteException {
         StringBuilder ret = new StringBuilder();
-
         EnvData[] envData = envService.requestAll();
 
         ret.append("<h2>" + serverName + "</h2>");
@@ -83,9 +79,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
             ret.append("</td>");
             ret.append("</tr>");
         }
-
         ret.append("</table>");
-
         return ret.toString();
     }
 }
