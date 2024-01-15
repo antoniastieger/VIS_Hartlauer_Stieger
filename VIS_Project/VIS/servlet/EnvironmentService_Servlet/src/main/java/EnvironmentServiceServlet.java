@@ -2,20 +2,20 @@
 // Created by Antonia Stieger on 14.01.2024.
 //
 
-import at.fhooe.sail.vis.Environment_RmiClient;
-import at.fhooe.sail.vis.general.IEnvService;
 import at.fhooe.sail.vis.Environment_SocketClient;
+import at.fhooe.sail.vis.general.EnvData;
+import at.fhooe.sail.vis.general.IEnvService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import at.fhooe.sail.vis.general.EnvData;
 
 @WebServlet(name = "EnvironmentServiceServlet", urlPatterns = {"/", "/environment"})
 public class EnvironmentServiceServlet extends HttpServlet {
@@ -41,7 +41,7 @@ public class EnvironmentServiceServlet extends HttpServlet {
 
         // RMI Server
         try {
-            String adr = "Environment_RmiClient";
+            String adr = "EnvironmentService";
             Registry reg = LocateRegistry.getRegistry();
             IEnvService lookup = (IEnvService) reg.lookup(adr);
 
