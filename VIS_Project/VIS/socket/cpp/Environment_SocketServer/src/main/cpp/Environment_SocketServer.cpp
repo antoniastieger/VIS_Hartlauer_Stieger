@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <thread>
 #include <vector>
+#include <random>
 
 #define BUFFER_SIZE 1024
 #define PORT 4949
@@ -22,6 +23,9 @@ struct SocketParam {
     int mSocket; /**< The client socket. */
     sockaddr_in mSocketAddress; /**< The client socket address. */
 };
+
+std::random_device rd;
+std::mt19937 generator(rd());
 
 /**
  * Vector to store client sockets.
@@ -274,7 +278,8 @@ void sendCommand(int _socket, const std::string& _command) {
  * @return int The generated random number.
  */
 int randomNumberGenerator() {
-    return rand() % 100;
+    std::uniform_int_distribution<int> distribution(0, 99);
+    return distribution(generator);
 }
 
 /**
@@ -284,7 +289,7 @@ int randomNumberGenerator() {
  * @param _request The request received from the client.
  */
 void handleClientRequest(int _clientSocket, const std::string& _request) {
-    int timestamp = 123456879;
+    int timestamp = randomNumberGenerator();
 
     std::string cleanedRequest = _request;
 

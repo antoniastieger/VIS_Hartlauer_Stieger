@@ -3,7 +3,9 @@ package at.fhooe.sail.vis;
 import at.fhooe.sail.vis.general.EnvData;
 import at.fhooe.sail.vis.general.IEnvService;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -122,7 +124,7 @@ public class Environment_SocketClient implements IEnvService {
             } // for data
 
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (Exception _e) {
                 _e.printStackTrace();
             }
