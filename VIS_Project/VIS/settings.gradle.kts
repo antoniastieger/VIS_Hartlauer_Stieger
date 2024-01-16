@@ -35,6 +35,7 @@ include(
     ":servlet:Session_Servlet",
     ":servlet:EnvironmentService_Servlet",
     "jaxb:BruteForce",
+    ":jaxb:parser:XML:WindXMLParser",
+    ":jaxb:parser:JSON:HighscoreParser",
     "jaxb:XML"
-
     )

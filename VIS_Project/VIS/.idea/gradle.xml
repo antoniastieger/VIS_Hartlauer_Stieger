@@ -16,7 +16,10 @@
             <option value="$PROJECT_DIR$/java/HelloWorld" />
             <option value="$PROJECT_DIR$/jaxb" />
             <option value="$PROJECT_DIR$/jaxb/BruteForce" />
+            <option value="$PROJECT_DIR$/jaxb/XML" />
             <option value="$PROJECT_DIR$/jaxb/parser" />
+            <option value="$PROJECT_DIR$/jaxb/parser/JSON" />
+            <option value="$PROJECT_DIR$/jaxb/parser/JSON/HighscoreParser" />
             <option value="$PROJECT_DIR$/jaxb/parser/XML" />
             <option value="$PROJECT_DIR$/jaxb/parser/XML/WindXMLParser" />
             <option value="$PROJECT_DIR$/rmi" />
