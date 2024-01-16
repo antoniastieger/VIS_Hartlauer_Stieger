@@ -33,6 +33,7 @@ include(
     ":servlet:Hello_Servlet",
     ":servlet:Info_Servlet",
     ":servlet:Session_Servlet",
-    ":servlet:EnvironmentService_Servlet"
+    ":servlet:EnvironmentService_Servlet",
+    "jaxb:BruteForce"
 
     )

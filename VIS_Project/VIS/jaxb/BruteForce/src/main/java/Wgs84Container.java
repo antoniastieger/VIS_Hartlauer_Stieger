@@ -2,8 +2,6 @@
 // Created by Antonia Stieger on 16.01.2024.
 //
 
-package BruteForce;
-
 public class Wgs84Container {
     private String latitude;
     private String longitude;
