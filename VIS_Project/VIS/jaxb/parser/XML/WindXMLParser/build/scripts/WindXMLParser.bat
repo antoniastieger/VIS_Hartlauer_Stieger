@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\WindXMLParser.jar
 
 
 @rem Execute WindXMLParser
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %WIND_XML_PARSER_OPTS%  -classpath "%CLASSPATH%" at.fhooe.sail.vis.WindXMLParser %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %WIND_XML_PARSER_OPTS%  -classpath "%CLASSPATH%" at.fhooe.sail.vis.WindXmlParser %*
 
 :end
 @rem End local scope for the variables with windows NT shell
