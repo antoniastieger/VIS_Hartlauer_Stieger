@@ -34,6 +34,7 @@ include(
     ":servlet:Info_Servlet",
     ":servlet:Session_Servlet",
     ":servlet:EnvironmentService_Servlet",
-    "jaxb:BruteForce"
+    "jaxb:BruteForce",
+    "jaxb:XML"
 
     )
