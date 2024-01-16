@@ -1,0 +1,6 @@
+See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Hello/build/tmp/compileDebugCpp/output.txt for all output for compileDebugCpp.
+compiling Foo.cpp successful.
+
+compiling main.cpp successful.
+
+Finished compileDebugCpp, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Hello/build/tmp/compileDebugCpp/output.txt.

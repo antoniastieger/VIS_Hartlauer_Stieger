@@ -1,0 +1,4 @@
+See file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/linkDebug/output.txt for all output for linkDebug.
+linking Primitive_SocketServer.exe successful.
+
+Finished linkDebug, see full log file:///C:/Users/sandr/OneDrive/Desktop/Git/VIS_Hartlauer_Stieger/VIS_Project/VIS/socket/cpp/Primitive_SocketServer/build/tmp/linkDebug/output.txt.

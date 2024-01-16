@@ -1,0 +1,4 @@
+-o
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Http_SocketServer\\build\\exe\\main\\debug\\Http_SocketServer.exe
+C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Http_SocketServer\\build\\obj\\main\\debug\\cezknoa9sypdkamjzhpabmeva\\Http_Server.obj
+-m64
