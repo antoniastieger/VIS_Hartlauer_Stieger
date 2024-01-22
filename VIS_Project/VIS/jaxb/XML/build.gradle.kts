@@ -15,5 +15,5 @@ dependencies {
 
 application {
 // Define the main class for the application.
-    mainClass.set("Pet")
+    mainClass.set("at.fhooe.sail.vis.Pet")
 }

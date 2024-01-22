@@ -2,6 +2,8 @@
 // Created by Antonia Stieger on 16.01.2024.
 //
 
+package at.fhooe.sail.vis;
+
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -12,7 +14,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Represents a pet with various attributes such as name, nickname, birthday, type, vaccinations, and ID.
@@ -38,7 +39,7 @@ public class Pet {
      * The type of the pet (e.g., CAT, DOG).
      */
     @XmlElement(name = "type")
-    private Type mType;
+    private PetTypes.Type mType;
 
     /**
      * The ID of the pet.
@@ -60,69 +61,80 @@ public class Pet {
     @XmlElement(name = "vaccination")
     private String[] mVaccinations;
 
-    /**
-     * Enumeration representing different types of pets.
-     * Each constant corresponds to a specific type such as CAT, DOG, MOUSE, or BIRD.
-     */
-    public enum Type {
-        CAT, DOG, MOUSE, BIRD
-    }
-
 
     /**
-     * Main method to demonstrate XML serialization and deserialization of a Pet object.
+     * Main method to demonstrate XML serialization and deserialization of a at.fhooe.sail.vis.Pet object.
      *
      * @param _args Command-line arguments (not used).
      */
     public static void main(String[] _args) {
-        // Create a Pet object with the specified data
-        Pet pet = new Pet();
-        pet.mNickname = "Tom";
-        pet.mName = "Thomas";
-        pet.mType = Type.CAT;
-        pet.mID = "123456789";
-        pet.mBirthday = Calendar.getInstance();
-        pet.mVaccinations = new String[]{"cat flu", "feline distemper", "rabies", "leucosis"};
+        // Create Pet objects with the specified data
+        Pet tom = new Pet();
+        tom.mNickname = "Tom";
+        tom.mName = "Thomas";
+        tom.mType = PetTypes.Type.CAT;
+        tom.mID = "123456789";
+        tom.mBirthday = Calendar.getInstance();
+        tom.mBirthday.set(1940, Calendar.FEBRUARY, 10);
+        tom.mVaccinations = new String[]{"cat flu", "feline distemper", "rabies", "leucosis"};
 
+        Pet mimi = new Pet();
+        mimi.mNickname = "Mimi";
+        mimi.mName = "Miriam";
+        mimi.mType = PetTypes.Type.BIRD;
+        mimi.mID = "378291025";
+        mimi.mBirthday = Calendar.getInstance();
+        mimi.mBirthday.set(2003, Calendar.OCTOBER, 25);
+        mimi.mVaccinations = new String[]{"bird hunger", "syphilis", "ear infection", "urinary tract infection"};
 
-        // Serialize the Pet object to XML
+        Pet paul = new Pet();
+        paul.mNickname = "Pauli";
+        paul.mName = "Paul";
+        paul.mType = PetTypes.Type.DOG;
+        paul.mID = "879500463";
+        paul.mBirthday = Calendar.getInstance();
+        paul.mBirthday.set(2016, Calendar.JUNE, 7);
+        paul.mVaccinations = new String[]{"gonorrhea", "skin infection", "lung cancer"};
+
+        Pets pets = new Pets(new Pet[]{tom, mimi, paul});
+
+        // Serialize Pet objects to XML
         StringWriter sw = new StringWriter();
         try {
-            JAXBContext context = JAXBContext.newInstance(Pet.class);
+            // Create JAXBContext with both Pet and Pets classes
+            JAXBContext context = JAXBContext.newInstance(Pet.class, Pets.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(pet, sw);
+            marshaller.marshal(pets, sw);
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
 
         String xml = sw.toString();
-        System.out.println("Serialized XML:\n" + xml);
+        System.out.println("Serialized XMLs:\n" + xml);
 
-        // Deserialize the XML back to a Pet object
+        // Deserialize the XML back to Pet objects
         try {
-            JAXBContext context = JAXBContext.newInstance(Pet.class);
+            // Create JAXBContext with both Pet and Pets classes
+            JAXBContext context = JAXBContext.newInstance(Pet.class, Pets.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             StringReader reader = new StringReader(xml);
-            Pet deserializedPet = (Pet) unmarshaller.unmarshal(reader);
+            Pets deserializedPets = (Pets) unmarshaller.unmarshal(reader);
 
-            // Check if the deserialized Pet object is not null
-            if (deserializedPet != null) {
-                System.out.println("\nDeserialized Pet object:");
+            System.out.println("\nDeserialized Pet objects:");
+            for (Pet deserializedPet : deserializedPets.pets) {
                 System.out.println("Nickname: " + deserializedPet.mNickname);
                 System.out.println("Name: " + deserializedPet.mName);
                 System.out.println("Type: " + deserializedPet.mType);
                 System.out.println("ID: " + deserializedPet.mID);
-                System.out.println("Birthday: " + deserializedPet.mBirthday);
+                System.out.println("Birthday: " + deserializedPet.mBirthday.getTime());
                 System.out.println("Vaccinations: " + Arrays.toString(deserializedPet.mVaccinations));
-
-            } else {
-                System.out.println("Deserialization failed. The deserializedPet is null.");
+                System.out.println();
             }
+
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-
     }
 }

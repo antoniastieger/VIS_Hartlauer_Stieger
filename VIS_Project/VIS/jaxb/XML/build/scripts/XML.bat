@@ -72,7 +72,7 @@ set CLASSPATH=%APP_HOME%\lib\XML.jar;%APP_HOME%\lib\jaxb-runtime-4.0.4.jar;%APP_
 
 
 @rem Execute XML
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %XML_OPTS%  -classpath "%CLASSPATH%" Pet %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %XML_OPTS%  -classpath "%CLASSPATH%" at.fhooe.sail.vis.Pet %*
 
 :end
 @rem End local scope for the variables with windows NT shell

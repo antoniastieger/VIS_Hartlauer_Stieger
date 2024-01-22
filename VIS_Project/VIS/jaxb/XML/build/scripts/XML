@@ -210,7 +210,7 @@ DEFAULT_JVM_OPTS=""
 
 set -- \
         -classpath "$CLASSPATH" \
-        Pet \
+        at.fhooe.sail.vis.Pet \
         "$@"
 
 # Stop when "xargs" is not available.
