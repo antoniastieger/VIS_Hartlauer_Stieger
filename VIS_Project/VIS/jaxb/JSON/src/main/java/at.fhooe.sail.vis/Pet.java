@@ -4,6 +4,7 @@
 
 package at.fhooe.sail.vis;
 
+import jakarta.json.stream.JsonParser;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -22,7 +23,6 @@ import java.util.Calendar;
  * Represents a pet with various attributes such as name, nickname, birthday, type, vaccinations, and ID.
  * Provides JAXB annotations for customized XML serialization and deserialization.
  */
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Pet {
 
@@ -71,7 +71,7 @@ public class Pet {
      * @param _args Command-line arguments (not used).
      */
     public static void main(String[] _args) {
-        // Create Pet objects with the specified data
+        // Create Pet object with the specified data
         Pet tom = new Pet();
         tom.mNickname = "Tom";
         tom.mName = "Thomas";
@@ -81,70 +81,50 @@ public class Pet {
         tom.mBirthday.set(1940, Calendar.FEBRUARY, 10);
         tom.mVaccinations = new String[]{"cat flu", "feline distemper", "rabies", "leucosis"};
 
-        Pet mimi = new Pet();
-        mimi.mNickname = "Mimi";
-        mimi.mName = "Miriam";
-        mimi.mType = PetTypes.Type.BIRD;
-        mimi.mID = "378291025";
-        mimi.mBirthday = Calendar.getInstance();
-        mimi.mBirthday.set(2003, Calendar.OCTOBER, 25);
-        mimi.mVaccinations = new String[]{"bird hunger", "syphilis", "ear infection", "urinary tract infection"};
-
-        Pet paul = new Pet();
-        paul.mNickname = "Pauli";
-        paul.mName = "Paul";
-        paul.mType = PetTypes.Type.DOG;
-        paul.mID = "879500463";
-        paul.mBirthday = Calendar.getInstance();
-        paul.mBirthday.set(2016, Calendar.JUNE, 7);
-        paul.mVaccinations = new String[]{"gonorrhea", "skin infection", "lung cancer"};
-
-        Pets pets = new Pets(new Pet[]{tom, mimi, paul});
-
-        // Serialize Pet objects to XML
+        // Serialize Pet object to JSON
         StringWriter sw = new StringWriter();
         try {
             // Create JAXBContext with both Pet and Pets classes
-            JAXBContext context = JAXBContext.newInstance(Pet.class, Pets.class);
+            JAXBContext context = JAXBContext.newInstance(Pet.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(MarshallerProperties.MEDIA_TYPE,
                     MediaType.APPLICATION_JSON);
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(pets, sw);
+            marshaller.marshal(tom, sw);
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
 
-        String xml = sw.toString();
-        System.out.println("Serialized JSONs:\n" + xml);
+        String json = sw.toString();
+        System.out.println("Serialized JSON:\n" + json);
 
-        // Deserialize the XML back to Pet objects
+        /*
+        // Deserialize the XML back to Pet object
         try {
-            // Create JAXBContext with both Pet and Pets classes
-            JAXBContext context = JAXBContext.newInstance(Pet.class, Pets.class);
+            // Create JAXBContext with Pet class
+            JAXBContext context = JAXBContext.newInstance(Pet.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             unmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE,
                     MediaType.APPLICATION_JSON);
             unmarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT,
                     Boolean.FALSE);
 
-            StringReader reader = new StringReader(xml);
-            Pets deserializedPets = (Pets) unmarshaller.unmarshal(reader);
+            StringReader reader = new StringReader(json);
+            Pet deserializedTom = (Pet) unmarshaller.unmarshal(reader);
 
-            System.out.println("\nDeserialized Pet objects:");
-            for (Pet deserializedPet : deserializedPets.pets) {
-                System.out.println("Nickname: " + deserializedPet.mNickname);
-                System.out.println("Name: " + deserializedPet.mName);
-                System.out.println("Type: " + deserializedPet.mType);
-                System.out.println("ID: " + deserializedPet.mID);
-                System.out.println("Birthday: " + deserializedPet.mBirthday.getTime());
-                System.out.println("Vaccinations: " + Arrays.toString(deserializedPet.mVaccinations));
-                System.out.println();
-            }
+            System.out.println("\nDeserialized Tom object:");
+            System.out.println("Nickname: " + deserializedTom.mNickname);
+            System.out.println("Name: " + deserializedTom.mName);
+            System.out.println("Type: " + deserializedTom.mType);
+            System.out.println("ID: " + deserializedTom.mID);
+            System.out.println("Birthday: " + deserializedTom.mBirthday.getTime());
+            System.out.println("Vaccinations: " + Arrays.toString(deserializedTom.mVaccinations));
+            System.out.println();
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
+        */
     }
 }

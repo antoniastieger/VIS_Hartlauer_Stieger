@@ -6,8 +6,6 @@ package at.fhooe.sail.vis;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Represents a collection of pets with JAXB annotations for XML serialization and deserialization.
@@ -18,7 +16,6 @@ public class Pets {
     /**
      * An array of Pet objects representing the pets in the collection.
      */
-    @XmlElement(name = "pet")
     protected Pet[] pets = null;
 
     /**

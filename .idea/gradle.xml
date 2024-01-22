@@ -22,6 +22,10 @@
             <option value="$PROJECT_DIR$/VIS_Project/VIS/jaxb/parser/JSON/HighscoreParser" />
             <option value="$PROJECT_DIR$/VIS_Project/VIS/jaxb/parser/XML" />
             <option value="$PROJECT_DIR$/VIS_Project/VIS/jaxb/parser/XML/WindXMLParser" />
+            <option value="$PROJECT_DIR$/VIS_Project/VIS/rest" />
+            <option value="$PROJECT_DIR$/VIS_Project/VIS/rest/Environment_RestClient" />
+            <option value="$PROJECT_DIR$/VIS_Project/VIS/rest/Environment_RestServer" />
+            <option value="$PROJECT_DIR$/VIS_Project/VIS/rest/Hello_RestServer" />
             <option value="$PROJECT_DIR$/VIS_Project/VIS/rmi" />
             <option value="$PROJECT_DIR$/VIS_Project/VIS/rmi/Environment_RmiClient" />
             <option value="$PROJECT_DIR$/VIS_Project/VIS/rmi/Environment_RmiServer" />
