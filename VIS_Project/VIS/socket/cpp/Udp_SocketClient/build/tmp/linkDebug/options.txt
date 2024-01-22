@@ -1,4 +1,0 @@
--o
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Udp_SocketClient\\build\\exe\\main\\debug\\Udp_SocketClient.exe
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Udp_SocketClient\\build\\obj\\main\\debug\\2l0gw1754nixdnx7vcym9zyr6\\Udp_SocketClient.obj
--m64

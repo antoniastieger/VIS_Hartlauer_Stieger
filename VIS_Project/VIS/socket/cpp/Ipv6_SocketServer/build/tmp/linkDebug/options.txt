@@ -1,4 +1,0 @@
--o
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Ipv6_SocketServer\\build\\exe\\main\\debug\\Ipv6_SocketServer.exe
-C:\\Users\\sandr\\OneDrive\\Desktop\\Git\\VIS_Hartlauer_Stieger\\VIS_Project\\VIS\\socket\\cpp\\Ipv6_SocketServer\\build\\obj\\main\\debug\\b12clrj0yh5k7m6x9l6qfu1u4\\Ipv6_SocketServer.obj
--m64
