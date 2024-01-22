@@ -37,5 +37,9 @@ include(
     "jaxb:BruteForce",
     ":jaxb:parser:XML:WindXMLParser",
     ":jaxb:parser:JSON:HighscoreParser",
-    "jaxb:XML"
+    "jaxb:XML",
+    "jaxb:JSON",
+    ":rest:Hello_RestServer",
+    ":rest:Environment_RestServer",
+    ":rest:Environment_RestClient"
     )
